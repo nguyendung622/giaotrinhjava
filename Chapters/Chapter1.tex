@@ -1,0 +1,940 @@
+
+\setcounter{chapter}{1}
+\chapter* {\begin{flushleft}
+CHƯƠNG 1\\
+\end{flushleft}TỔNG QUAN VỀ NGÔN NGỮ LẬP TRÌNH JAVA} 
+\addcontentsline{toc}{chapter}{Chương 1. TỔNG QUAN VỀ NGÔN NGỮ LẬP TRÌNH JAVA}
+
+
+\section{ Giới thiệu về ngôn ngữ lập trình Java }
+\label{sec:Chap1 } 
+Java là ngôn ngữ lập trình bậc cao, hướng đối tượng (tựa C/C++) do hãng Sun Microsystem phát triển và phát hành vào năm 1995. Mục tiêu chung của ngôn ngữ lập trình Java là cho phép các nhà phát triển ứng dụng “Viết một lần chạy mọi nơi” (WORA – Write once run anywhere), nghĩa là mã Java đã được biên dịch có thể chạy trên tất cả nền tảng hỗ trợ Java mà không cần biên dịch lại.\\
+\indent Java được James Gosling và các cộng sự của Công ty Sun Microsystem (Sau được công ty Oracle mua lại) khởi xướng và phát triển vào đầu những năm 90. Ban đầu ngôn ngữ này có tên là Oak theo tên một cây sồi bên ngoài văn phòng của Gosling. Sau đó dự án có tên là Green và cuối cùng là Java. Java là tên gọi của một hòn đảo ở Indonexia. Đây là nơi nhóm nghiên cứu đã chọn để đặt tên cho ngôn ngữ lập trình của mình trong một chuyến đi tham quan và làm việc trên hòn đảo này. Hòn đảo Java này là nơi rất nổi tiếng với nhiều khu vườn trồng café, đó chính là lý do chúng ta thường thấy biểu tượng ly café trong nhiều sản phẩm phần mềm, công cụ lập trình Java của Sun.\\
+\indent Một số đặc trưng của ngôn ngữ Java là:
+\begin{itemize}
+\item Hướng đối tượng: Trong Java, mọi thứ đều là Đối tượng. Do đó chương trình viết bằng Java có thể dễ dàng được mở rộng vì nó dựa trên mô hình đối tượng.
+\item Độc lập nền tảng: Không giống như nhiều ngôn ngữ lập trình khác bao gồm C và C++, khi Java được biên dịch, nó không được biên dịch trực tiếp thành mã máy cụ thể, thay vào đó là mã bytecode độc lập với nền tảng. Mã bytecode này được Máy ảo Java (JVM – Java Virtual Machine) thông dịch và chạy trên bất kỳ nền tảng nào mà máy ảo này đang được chạy như: Window, Linux, Sun Solaris, Mac/OS,... Với cách thiết kế này mà Java đã đáp ứng được phương châm mà họ đã đưa ra: “Viết một lần, Chạy mọi nơi”.
+\item Đơn giản: Java được thiết kế để dễ học. Cú pháp của Java dựa trên C/C++, trong đó đã loại bỏ nhiều tính năng phức tạp như: Con trỏ, quá tải toán tử,… Đặc biệt trong Java có tính năng Bộ thu gom rác tự động (Garbage Collection), do đó chúng ta không cần phải loại bỏ các đối tượng khi không dùng nữa như C++.
+\item Bảo mật: Java bảo mật bởi vì:
+\begin{itemize}
+\item Không có con trỏ tường minh.
+\item Chương trình chạy bên trong máy ảo.
+\item Classloader: Nó bổ sung tính bảo mật bằng cách tách gói cho các lớp của hệ thống tệp cục bộ từ các gói được nhập từ các nguồn mạng.
+\item Bytecode Vertifier: Kiểm tra các đoạn mã để tìm ra các phần mã truy cập trái phép tới các đối tượng.
+\item Security Manager: Nó xác định những tài nguyên mà một lớp có thể truy cập được như đọc và ghi đĩa cục bộ.
+\item Những tính năng bảo mật này được cung cấp bởi Ngôn ngữ Java. Ngoài ra, một vài tính năng bảo mật khác được cung cấp thông qua nhà phát triển như SSL, JAAS, cryptography, ...
+\end{itemize}
+\item Mạnh mẽ: Java quản lý bộ nhớ rất tốt, có bộ thu gom rác tự động; không sử dụng con trỏ để tránh các vấn đề về bảo mật; Có cơ chế xử lý ngoại và kiểm tra kiểu dữ liệu tốt.
+\item Kiến trúc trung lập: Java là kiến trúc trung lập vì không có các tính năng phụ thuộc vào môi trường phát triển và thực thi; ví dụ, kích thước của các kiểu dữ liệu cơ bản là cố định. Như trong ngôn ngữ lập trình C, kiểu dữ liệu int chiếm 2byte trong bộ nhớ cho kiến trúc 32bit và 4byte bộ nhớ cho kiến trúc 64bit. Tuy nhiên, nó chiếm 4byte bộ nhớ cho cả kiến trúc 32 và 64bit trong Java.
+\item Linh động: Vì Java biển dịch mã thành bytecode, do đó chương trình có thể chạy trên bất kỳ nền tảng nào có máy ảo Java mà không cần phải viết lại.
+\item Đa luồng: Với tính năng đa luồng của Java, có thể viết các chương trình có thể thực hiện đồng thời nhiều tác vụ. Tính năng thiết kế này cho phép các nhà phát triển xây dựng các ứng dụng tương tác có thể chạy trơn tru.
+\item Thông dịch: Mã bytecode của Java được dịch một cách nhanh chóng sang tập lệnh của máy thực thi chương trình và không được lưu trữ ở bất cứ đâu.
+\item Hiệu suất cao: Với việc sử dụng các trình biên dịch, thông dịch đúng lúc, Java cho phép tạo ra các ứng dụng có hiệu năng cao. Java nhanh hơn các ngôn ngữ lập trình thông dịch truyền thống khác vì mã bytecode của Java "gần" với mã mãy. Nó vẫn chậm hơn một chút so với ngôn ngữ biên dịch như C++. Java là một ngôn ngữ thông dịch, đó là lý do tại sao nó chậm hơn các ngôn ngữ biên dịch như C/C ++.
+\item Phân tán: Java được thiết kế cho môi trường phân tán của internet. RMI và EJB là hai bộ thư viện được sử dụng để tạo các ứng dụng phân tán. Tính năng này của Java làm cho chúng ta có thể gọi các phương thức từ bất kỳ máy nào trên internet.
+\item Động: Java là một ngôn ngữ động. Nó hỗ trợ tải động các lớp, tức là các lớp được tải theo yêu cầu. Nó cũng hỗ trợ gọi các chức năng từ các ngôn ngữ khác như C/C++. Java hỗ trợ biên dịch động và quản lý bộ nhớ tự động.
+\end{itemize}
+Một số loại ứng dụng được viết bởi Java:
+\begin{itemize}
+\item Ứng dụng Desktop
+\item Ứng dụng Web
+\item Ứng dụng di động
+\item Hệ thống nhúng
+\item Thẻ thông minh
+\item Hệ thống Robotic
+\item Game, …
+\end{itemize}
+
+\section{Mô hình biên dịch và thông dịch của Java}
+\indent Các chương trình trong các ngôn ngữ lập trình bậc cao trước khi có thể chạy, chúng phải được dịch sang ngôn ngữ cấp thấp, còn được gọi là ngôn ngữ máy. Việc chuyển đổi này đôi khi là một nhược điểm nhỏ của các ngôn ngữ bậc cao. Tuy nhiên các ngôn ngữ bậc cao có hai ưu điểm:
+\begin{itemize}
+\item Dễ lập trình: Các chương trình được viết ra tốn ít thời gian lập trình, mã lệnh ngắn gọn, dễ đọc và có tính chính xác cao.
+\item Có thể chạy được trên nhiều nền tảng khác nhau mà chỉ cần một ít sửa đổi nhỏ hoặc không cần sửa đổi. 
+\end{itemize}
+
+\indent Có hai loại chương trình dịch để dịch ngôn ngữ bậc cao sang ngôn ngữ bậc thấp: trình thông dịch (interpreter) và trình biên dịch (compiler). Trình thông dịch đọc một chương trình bậc cao và thực hiện nó. Nó thực hiện chương trình theo từng lệnh một mà nó đã đọc, thay vì đọc toàn bộ các dòng và thực hiện tính toán. Hình \ref{hinh11} cho thấy cấu trúc của một trình thông dịch.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{Figures//Hinh11.png}
+\caption{Cấu trúc một chương trình thông dịch}\label{hinh11} 
+\end{figure}
+
+\indent Ngược lại, một trình biên dịch đọc toàn bộ chương trình và dịch nó hoàn toàn trước khi chương trình bắt đầu chạy. Trong ngữ cảnh này, chương trình bậc cao được gọi là mã nguồn và chương trình đã dịch được gọi là mã đối tượng (object code) hoặc tệp thực thi. Khi một chương trình được biên dịch, chúng ta có thể chạy nó nhiều lần mà không cần dịch lại. Kết quả là, các chương trình được biên dịch thường chạy nhanh hơn các chương trình thông dịch.\\
+\indent Java là ngôn ngữ vừa biên dịch và thông dịch. Thay vì dịch các chương trình trực tiếp sang mã máy, trình biên dịch Java tạo ra mã bytecode. Tương tự như mã máy, mã bytecode dễ dàng được thông dịch thành mã máy một cách nhanh chóng và dễ dàng. Và nhờ vào mã bytecode này, mà một chương trình có thể được biên dịch trên một máy và sau đó có thể được thông dịch và chạy trên máy khác. Trình thông dịch này được gọi là Máy ảo Java (JVM – Java Virtual Machine).\\
+\indent Hình \ref{hinh12} cho thấy các bước của quy trình này. Mặc dù có vẻ phức tạp, các bước này được tự động hóa cho chúng ta trong hầu hết các môi trường phát triển tích hợp (IDE – Intergrated Development Enviroment). Thông thường, chúng ta chỉ phải nhấn một nút hoặc gõ một lệnh duy nhất để biên dịch chương trình. Mặt khác, điều quan trọng là chúng ta cần phải biết những bước nào đang diễn ra, để nếu có sự cố xảy ra, chúng ta có thể tìm ra nó là gì và khắc phục nó.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.4]{Figures//Hinh12.png}
+\caption{Mô hình biên dịch và thông dịch của chương trình Java}\label{hinh12} 
+\end{figure}
+\section{Cấu trúc chương trình Java}
+\indent Thông thường, chương trình đầu tiên chúng ta viết khi học một ngôn ngữ lập trình mới được gọi là chương trình {\ttfamily Hello World}. Tất cả những gì nó làm là hiển thị dòng chữ {\ttfamily Hello, World} trên màn hình. Trong Java, nó trông như thế này:
+\begin{lstlisting}[escapechar=',language=java]	
+public class Hello {
+	public static void main(String[] args) {
+	'//Xuất kết quả ra màn hình'
+	System.out.println("Hello, World");
+	}
+}
+ \end{lstlisting}
+
+\indent Khi chương trình này chạy, nó cho kết quả:\\
+\centerline {\ttfamily Hello, World} \\
+\indent Các chương trình Java được tạo thành từ các định nghĩa lớp và phương thức, và các phương thức được tạo thành từ các câu lệnh. Một câu lệnh là một dòng mã thực hiện một hoạt động cơ bản. Trong chương trình {\ttfamily Hello World}, dòng sau là một câu lệnh nhằm hiển thị thông báo trên màn hình: \\
+\centerline {\ttfamily System.out.println("Hello, World");}\\
+\indent {\ttfamily System.out.println} hiển thị kết quả trên màn hình và xuống hàng; tên {\ttfamily println} là viết tắt của dòng chữ {\ttfamily "print line"}. {\ttfamily "print"} có nghĩa là hiển thị trên màn hình hoặc gửi đến máy in. Trong giáo trình này, khi chúng tôi nói hiển thị, nghĩa là chúng tôi muốn xuất kết quả ra màn hình. Giống như hầu hết các câu lệnh, câu lệnh in kết thúc bằng dấu chấm phẩy (;).\\
+\indent Java là phân biệt chữ hoa chữ thường, có nghĩa là chữ hoa và chữ thường không giống nhau. Trong ví dụ này, {\ttfamily System} phải bắt đầu bằng một chữ cái viết hoa; trường hợp chúng ta viết {\ttfamily system} hoặc {\ttfamily SYSTEM} thì chương trình sẽ không hoạt động được.\\
+\indent Một phương thức là một chuỗi các câu lệnh được đặt tên. Chương trình này định nghĩa một phương thức có tên là main: \\
+\centerline{\ttfamily  public static void main(String[] args)}
+
+\indent Tên và định dạng của phương thức main rất đặc biệt: khi chương trình chạy, nó bắt đầu ở câu lệnh đầu tiên trong main và kết thúc khi nó kết thúc câu lệnh cuối cùng. \\
+\indent Một lớp là một tập hợp các phương thức và thuộc tính. Chương trình này định nghĩa một lớp có tên {\ttfamily Hello}. Chúng ta có thể đặt cho một lớp bất kỳ tên nào (nhưng phải phù hợp với quy tắc đặt tên, sẽ được đề cập ở bên dưới), nhưng thông thường bắt đầu bằng chữ in hoa. Tên của lớp phải khớp với tên của tệp mà nó nằm trong, vì vậy lớp này phải nằm trong một tệp có tên {\ttfamily Hello.java}.\\
+\indent Java sử dụng cặp dấu ngoặc nhọn ({}) để nhóm các câu lệnh lại với nhau. Trong {\ttfamily Hello.java}, cặp dấu ngoặc ngoài cùng chứa định nghĩa lớp {\ttfamily Hello} và cặp dấu ngoặc bên trong định nghĩa phương thức {\ttfamily main}.
+Dòng bắt đầu bằng hai dấu gạch chéo (//) là một ghi chú, đó là một đoạn giải thích ngắn ý nghĩa của mã lệnh. Khi trình biên dịch nhìn thấy dấu //, nó bỏ qua mọi thứ từ đó cho đến hết dòng. Ghi chú không có tác dụng trong việc thực hiện chương trình, nhưng chúng giúp các lập trình viên khác (và bản thân của bạn trong tương lai) dễ hiểu hơn những gì bạn muốn làm.
+\section{Bộ từ khóa}
+\indent Từ khóa là những từ có một ý nghĩa nhất định trong các ngôn ngữ lập trình. Ngôn ngữ lập trình Java có khoảng 50 từ khóa khác nhau và được viết bằng chữ thường. Chúng ta cần nhớ những từ khóa này vì chúng sẽ được dùng rất nhiều trong quá trình lập trình sau này.
+\begin{itemize}
+
+\item
+abstract: Khai báo lớp, phương thức, interface trừu tượng không có thể hiện (instance) cụ thể 
+\item
+assert: Kiểm tra điều kiện đúng hay sai (thường dùng trong Unit Test) 
+\item
+boolean: Kiểu dữ liệu logic với 2 giá trị:  true, false. 
+\item
+break: Thoát ra khỏi vòng lặp hoặc lệnh switch-case. 
+\item
+byte: Kiểu byte với các giá trị nguyên chiếm 8bit (1byte). 
+\item
+case: Trường hợp được tuyển chọn theo switch (chỉ được dùng khi đi kèm switch) 
+\item
+catch: Được sử dụng để bắt ngoại lệ, được sử dụng cùng với try để xử lý các ngoại lệ xảy ra trong chương trình 
+\item
+char: Kiểu ký tự Unicode, mỗi ký tự chiếm 16bit (2byte). 
+\item
+class: Được sử dụng để định nghĩa lớp 
+\item
+const: Chưa được sử dụng vì vậy chúng ta không thể dùng nó trong ngôn ngữ Java 
+\item
+continue: Dừng chu trình lặp hiện tại và bắt đầu chu trình tiếp theo 
+\item
+default: Mặc định được thực thi khi không có case nào trả về giá trị true (dùng trong switch-case) 
+\item
+do: Dùng trong vòng lặp do…while 
+\item
+double: Kiểu số thực với các giá trị biểu diễn theo dạng dấu phẩy động 64bit (8byte) 
+\item
+else: Rẽ nhánh theo điều kiện ngược lại của if. 
+\item
+enum: Định nghĩa kiểu dữ liệu enum 
+\item
+extends: Được sử dụng để định nghĩa lớp con kế thừa các thuộc tính và phương thức từ lớp cha. 
+\item
+final: Chỉ ra các biến, phương thức không được thay đổi sau khi đã được định nghĩa. Các phương thức final không thể được kế thừa và override 
+\item
+finally: Thực hiện một khối lệnh đến cùng bất chấp các ngoại lệ có thể xảy ra. Được sử dụng trong try-catch 
+\item
+float: Kiểu số thực với các giá trị biểu diễn theo dạng dấu phẩy động 32bit. 
+\item
+for: Sử dụng cho vòng lặp for với bước lặp được xác định trước 
+\item
+goto: Chưa được sử dụng 
+\item
+if: Lệnh chọn theo điều kiện logic 
+\item
+implements: Xây dựng một lớp mới cài đặt những phương thức từ interface xác định trước. 
+\item
+import: Yêu cầu một hay một số lớp ở các gói chỉ định cần nhập vào để sử dụng trong ứng dụng hiện thời. 
+\item
+instanceof: Kiểm tra xem một đối tượng nào đó có phải là một thể hiện của một lớp được định nghĩa trước hay không 
+\item
+int: Kiểu số nguyên với các giá trị chiếm 32bit (4byte). 
+\item
+interface: Được sử dụng để định nghĩa interface 
+\item
+long: Kiểu số nguyên lớn với các giá trị chiếm 64bit (8byte). 
+\item
+native: Giúp lập trình viên có thể sử dụng code được viết bằng các ngôn ngữ khác 
+\item
+new: Khởi tạo đối tượng 
+\item
+package: Xác định một gói sẽ chứa một số lớp ở trong file mã nguồn. 
+\item
+private: Khai báo biến dữ liệu, phương thức riêng trong từng lớp và chỉ cho phép truy cập trong lớp đó. 
+\item
+protected: Khai báo biến dữ liệu, phương thức chỉ được truy cập ở lớp cha và các lớp con của lớp đó. 
+\item
+public: Khai báo lớp, biến dữ liệu, phương thức công khai có thể truy cập ở mọi nơi trong hệ thống. 
+\item
+return: Kết thúc phương thức và trả về giá trị cho phương thức 
+\item
+short: Kiểu số nguyên ngắn với các giá trị chiếm 16 bit (2 byte). 
+\item
+static: Định nghĩa biến, phương thức của một lớp có thể được truy cập trực tiếp từ lớp mà không thông qua khởi tạo đôi tượng của lớp 
+\item
+super: Biến chỉ tới đối tượng ở lớp cha 
+\item
+switch: Sử dụng trong câu lệnh điều khiển switch case 
+\item
+synchronized: Chỉ ra là ở mỗi thời điểm chỉ có một đối tượng hoặc một lớp có thể truy nhập đến biến dữ liệu, hoặc phương thức loại đó, thường được sử dụng trong lập trình đa luồng (multithreading) 
+\item
+this: Biến chỉ tới đối tượng hiện thời. 
+\item
+throw: Tạo một đối tượng exception để chỉ định một trường hợp ngoại lệ xảy ra 
+\item
+throws: Chỉ định cho qua ngoại lệ khi exception xảy ra 
+\item
+transient: Chỉ định rằng nếu một đối tượng được serialized, giá trị của biến sẽ không cần được lưu trữ 
+\item
+try: Thử thực hiện cho đến khi gặp một ngoại lệ. 
+\item
+void: Chỉ định một phương thức không trả về giá trị 
+\item
+volatile: Báo cho chương trình dịch biết là biến khai báo volatile có thể thay đổi tùy ý trong các luồng (thread). 
+\item
+while: Được sử dụng trong lệnh điều khiển while 
+\end{itemize}
+
+
+\section{Quy tắc đặt tên}
+\indent Quy tắc đặt tên được áp dụng cho tên gói, tên lớp, tên phương thức, tên thuộc tính, tên biến, tên hằng, … Quy tắc này được mô tả như sau:\\
+\begin{itemize}
+\item Phân biệt hoa thường
+\item Chỉ chứa các ký tự là chữ cái, số, 
+\item Không chứa các ký tự đặc biệt, không chứa khoảng trắng, ngoài dấu "\_" và "\$".
+\item Không được bắt đầu bằng số
+\item Không được trùng với từ khóa
+\end{itemize}
+\section{Ghi chú}
+\indent Các ghi chú trong Java được sử dụng để cung cấp thêm thông tin hoặc giải thích về biến, phương thức, lớp, hoặc bất kỳ câu lệnh nào. Nó cũng có thể được sử dụng để tạm thời vô hiệu hóa một đoạn mã nào đó trong Java. Các ghi chú không được thực thi bởi các trình biên dịch và trình thông dịch.\\
+\indent Trong Java, để ghi chú, chúng ta có 3 cách:
+\subsection{Ghi chú trên một dòng}
+\indent Cú pháp: \\
+\centerline{\ttfamily //Nội dung ghi chú} \\
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=',language=java]	
+int i = 10; '//Đây là một biến kiểu int'
+\end{lstlisting}
+\subsection{Ghi chú trên nhiều dòng}
+\indent Cú pháp:\\
+{\ttfamily
+/*\\
+Nội dung ghi chú thứ nhất\\
+Nội dung ghi chú thứ hai\\
+… \\
+*/}\\
+\indent Ví dụ:
+
+\begin{lstlisting}[escapechar=',language=java]	
+'/*'
+'- Khai báo biến'
+'- In giá trị của nó ra màn hình '
+'*/ '
+int i = 10; 
+System.out.println(i);
+\end{lstlisting}
+
+\subsection{Ghi chú tài liệu}
+\indent Ghi chú dạng tài liệu là ghi chú được sử dụng để tạo ra tài liệu cho các API. Được dùng chủ yếu để giải thích ý nghĩa, tham số đầu vào, kết quả đầu ra của các API mà tác giả đã xây dựng. Sau đó, chúng ta có thể sử dụng công cụ javadoc để kết xuất tài liệu này ra dạng tài liệu HTML.\\
+\indent Cú pháp:\\
+{\ttfamily 
+/** \\
+Đây là ghi chú dạng tài liệu\\
+*/}
+\section{Biến}
+\indent Biến là vùng nhớ dùng để lưu trữ dữ liệu khi chương trình chạy. Dữ liệu lưu trong một biến được gọi là giá trị của biến đó. Chúng ta có thể truy cập, gán hay thay đổi giá trị của các biến, khi biến được gán một giá trị mới, giá trị cũ sẽ bị ghi đè. Mỗi biến gắn liền với một kiểu dữ liệu và một định danh duy nhất gọi là tên biến. Trong java, biến có thể được khai báo ở bất kỳ nơi đâu trong chương trình.\\
+\indent Cách khai báo:\\
+{\ttfamily <kiểu\_dữ\_liệu> <tên\_biến>;\\
+<kiểu\_dữ\_liệu> <tên\_biến> = <giá\_trị>;}\\
+\indent Gán giá trị cho biến:\\
+{\ttfamily <tên\_biến> = <giá\_trị>;}\\
+\indent Chẳng hạn:
+\begin{lstlisting}[escapechar=',language=java]	
+int x, y = 10;
+x = 20;
+\end{lstlisting}
+\indent Trong Java có 3 loại kiểu biến bao gồm:
+\begin{itemize}
+\item Biến local
+\item Biến instance
+\item Biến static
+\end{itemize}
+\subsection{Biến local (biến địa phương)}
+\indent Biến local được khai báo trong các phương thức, hàm tạo hoặc trong các khối lệnh {}. Đặc điểm của biến local:
+\begin{itemize}
+\item Biến local sẽ bị phá hủy khi kết thúc các phương thức, hàm tạo và khối lệnh. 
+\item Không được sử dụng từ khóa chỉ mức độ truy cập (access modifier) khi khai báo biến local. 
+\item Các biến local được lưu trên vùng nhớ stack của bộ nhớ.
+\item Cần khởi tạo giá trị mặc định cho biến local trước khi có thể sử dụng.
+\end{itemize}
+\indent Ví dụ: Biến sum bên dưới là một biến local
+\begin{lstlisting}[escapechar=!,language=java]	
+int cong2So(int n1, int n2){
+	int sum = 0;
+	sum = n1 + n2;
+	return sum;
+}
+\end{lstlisting}
+\subsection{Biến instance (biến toàn cục)}
+\indent Biến instance được khai báo trong một lớp, bên ngoài các phương thức, hàm tạo và các khối lệnh ({}). Đặc điểm của loại biến này:\\
+\begin{itemize}
+\item Biến instance được lưu trong bộ nhớ heap.
+\item Biến instance được tạo khi một đối tượng được tạo bằng việc sử dụng từ khóa {\ttfamily "new"} và sẽ bị phá hủy khi đối tượng bị phá hủy.
+\item Biến instance có thể được sử dụng bởi các phương thức, hàm tạo, khối lệnh, ... Nhưng nó phải được sử dụng thông qua một đối tượng cụ thể.
+\item Chúng ta được phép sử dụng từ khóa chỉ mức độ truy cập khi khai báo biến instance, mặc định là "private".
+\item Biến instance có giá trị mặc định phụ thuộc vào kiểu dữ liệu của nó. Ví dụ nếu là kiểu {\ttfamily int, short, byte} thì giá trị mặc định là 0, kiểu {\ttfamily double} thì là {\ttfamily 0.0d}, ... Vì vậy, chúng ta sẽ không cần khởi tạo giá trị cho biến instance trước khi sử dụng.
+\item Bên trong lớp mà chúng ta khai báo biến instance, chúng ta có thể gọi nó trực tiếp bằng tên khi sử dụng ở khắp nới bên trong lớp đó.
+\end{itemize}
+\indent Cú pháp:
+\begin{lstlisting}[escapechar=',language=java]	
+class '<Tên\_Lớp> '
+{ 
+	'<mức\_độ\_truy\_cập> <kiểu\_dữ\_liệu> <biến\_instanse\_1>;'
+	'<mức\_độ\_truy\_cập> <kiểu\_dữ\_liệu> <biến\_instanse\_2>;'
+}
+\end{lstlisting}
+
+
+\subsection{Biến static}
+\indent Biến static được khai báo trong một lớp với từ khóa {\ttfamily "static"}, phía bên ngoài các phương thức, hàm tạo và khối lệnh. Đặc điểm của loại biến này:
+\begin{itemize}
+\item Sẽ chỉ có duy nhất một bản sao của các biến static được tạo ra, dù bạn tạo bao nhiêu đối tượng từ lớp tương ứng.
+\item Biến static được lưu trữ trong bộ nhớ static riêng.
+\item Biến static được tạo khi chương trình bắt đầu chạy và chỉ bị phá hủy khi chương trình dừng.
+\item Giá trị mặc định của biến static phụ thuộc vào kiểu dữ liệu chúng ta khai báo tương tự biến instance.
+\item Biến static được truy cập thông qua tên của class chứa nó, với cú pháp: TenClass.tenBien
+\item Trong lớp, các phương thức sử dụng biến static bằng cách gọi tên của nó khi phương thức đó cũng được khai báo với từ khóa {\ttfamily "static"}.
+\end{itemize}
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=',language=java]	
+class '<Tên\_Lớp>' 
+{ 
+	'<mức\_độ\_truy\_cập> static <kiểu\_dữ\_liệu> <biến\_static\_1>; '
+	'<mức\_độ\_truy\_cập> static <kiểu\_dữ\_liệu> <biến\_static\_2>;'
+}
+\end{lstlisting}
+
+\section{Kiểu dữ liệu}
+\indent Kiểu dữ liệu trong Java chia làm 2 nhóm:
+\begin{itemize}
+\item Kiểu dữ liệu cơ bản (hay còn gọi là nguyên thủy): {\ttfamily byte, short, int, long, float, double, boolean và char}
+\item Kiểu dữ liệu tham chiếu: {\ttfamily String, Array, Class}
+\end{itemize}
+\indent Một kiểu dữ liệu cơ bản có kích thước cố định và không có phương thức bổ sung. Kiểu dữ liệu dạng số chia làm 2 nhóm:\\
+\begin{itemize}
+\item Kiểu số nguyên:{\ttfamily byte, short, int và long}
+\item Kiểu số thực: {\ttfamily float và double}.
+\end{itemize}
+\indent Có tám kiểu dữ liệu nguyên thủy trong Java:\\
+\begin{tabular}{ lll}
+\hline
+Kiểu&Kích thước&Vùng\\
+\hline
+byte&1 byte&-128 $\Rightarrow$ 127\\
+\hline
+short&2 bytes&-32,768 $\Rightarrow$ 32,767\\
+\hline
+int&4 bytes&-2,147,483,648 $\Rightarrow$ 2,147,483,647\\
+\hline
+long&8 bytes&-9,223,372,036,854,775,808 $\Rightarrow$ 9,223,372,036,854,775,807\\
+\hline
+float&4 bytes&Độ chính xác đơn. Lưu 6 to 7 chữ số thập phân\\
+\hline
+double&8 bytes&Độ chính xác kép. Lưu 15 chữ số thập phân\\
+\hline
+boolean&1 bit&True/False\\
+\hline
+char&2 bytes&Lưu 1 ký tự đơn trong bảng mã Unicode\\
+\hline
+\end{tabular}
+\section{Hằng}
+\indent Hằng là một giá trị bất biến trong chương trình, nghĩa là chúng ta không thể dùng phép gán để gán lại giá trị cho hằng sau khi đã định nghĩa. Một số đặc điểm của hằng trong Java:
+\begin{itemize}
+\item Tên hằng được đặt theo qui ước giống như tên biến.
+\item Hằng số nguyên: trường hợp giá trị hằng ở dạng long ta thêm vào cuối chuỗi số chữ "l" hay "L". Chẳng hạn: 1L
+\item Hằng số thực: truờng hợp giá trị hằng có kiểu float ta thêm tiếp vị ngữ "f" hay "F", còn kiểu số double thì ta thêm tiếp vị ngữ "d" hay "D". Chẳng hạn: 2.3f
+\item Hằng Boolean: java có 2 hằng boolean là {\ttfamily true, false}.
+\item Hằng ký tự: là một ký tự đơn nằm giữa nằm giữa 2 dấu ngoặc đơn (chẳng hạn: 'a'). Một số hằng ký tự đặc biệt:
+
+\begin{verbatim}
+\b: Xóa lùi (BackSpace)
+\t: Tab
+\n: Xuống hàng
+\r: Dấu enter
+\": Nháy kép
+\': Nháy đơn
+\\: Số ngược
+\f: Đẩy trang
+\uxxxx: Ký tự unicode
+\end{verbatim}
+
+\item Hằng chuỗi: là tập hợp các ký tự được đặt giữa hai dấu nháy kép "". Một hằng chuỗi không có ký tự nào là một hằng chuỗi rỗng. Chẳng hạn: "Hello, world!".
+\end{itemize}
+
+\indent Cú pháp:\\
+{\ttfamily final <kiểu\_dữ\_liệu> <tên\_hằng> = <giá\_trị\_hằng>; }\\
+\indent Ví dụ:\\
+{\ttfamily final double PI = 3.1415926535897;}
+\section{Các phép toán cơ bản}
+\subsection{Phép toán số học}
+\indent Java hỗ trợ năm phép toán số học sau:\\
+(bảng)\\
+\indent Các phép toán này chỉ áp dụng được cho các biến kiểu cơ bản và không áp dụng được cho các kiểu tham chiếu. Lưu ý với phép chia được thực hiện cho hai giá trị kiểu nguyên sẽ cho kết quả là thương nguyên.\\
+\indent Chẳng hạn: biểu thức {\ttfamily 10/3} cho kết quả bằng {\ttfamily 1}, còn {\ttfamily 3/5} cho kết quả bằng {\ttfamily 0}.
+\subsection{Phép toán tăng giảm}
+(bảng)\\
+\indent Các phép toán ++ và – có đặt trước hoặc sau biến và sự khác nhau ở chỗ:
+\begin{itemize}
+\item Nếu đặt trước biến a thì tăng/giảm giá trị biến a rồi mới sử dụng giá trị của a
+\item Nếu đặt sau biến a thì sử dụng giá trị của biến a rồi mới tiến hành tăng/giảm giá trị của a.
+\end{itemize}
+\indent Chẳng hạn:\\
+\begin{lstlisting}[escapechar=',language=java]	
+int a = 5;
+int x = ++a; '// thì x = 6, a = 6'
+'//còn '
+int x = a++; '// thì x = 5, a = 6'
+\end{lstlisting}
+
+\subsection{Toán tử trên bit}
+\begin{center}
+\centering
+\begin{tabular}{ lll}
+\hline
+Toán tử&Ý nghĩa&Dạng thức\\
+\hline
+\& &AND&a \& b\\
+\hline
+| &OR&a | b\\
+%\hline
+%\^ &X & a \^ b\\
+\hline
+< < &Dịch trái&a < < b\\
+\hline
+> > &Dịch phải&a > > b\\
+\hline
+> > > &Dịch phải và điền 0 vào bit trống&a > > > b\\
+%\hline
+%$~$ &Bù bit&~a\\
+\hline
+\end{tabular}
+\end{center}
+\indent Các toán tử xử lý bit là các toán tử chỉ thực hiện trên các toán hạng có kiểu dữ liệu là số nguyên. Bảng sau cho kết quả của các phép toán:\\
+\begin{center}
+\begin{tabular}{ llllll}
+\hline
+a&b&~a&a\&b&a|b&a\^b\\
+\hline
+0&0&1&0&0&0\\
+\hline
+0&1&1&0&1&1\\
+\hline
+1&0&0&0&1&1\\
+\hline
+1&1&0&1&1&0\\
+\hline
+\end{tabular}
+\end{center}
+\subsection{Phép toán quan hệ \& logic}
+\begin{center}
+\begin{tabular}{ lll}
+\hline
+Toán tử&Ý nghĩa&Dạng thức\\
+\hline
+== &So sánh bằng&a == b\\
+\hline
+!= &So sánh khác&a != b\\
+\hline
+> &So sánh lớn hơn&a > b\\
+\hline
+< &So sánh nhỏ hơn&a < b\\
+\hline
+>= &So sánh lớn hơn hay bằng&a >= b\\
+\hline
+<= &So sánh nhỏ hơn hay bằng&a <= b\\
+\hline
+||&Phép hoặc&a || b\\
+\hline
+\&\&&Phép giao&a \&\& b\\
+\hline
+!&Phủ định&!a\\
+\hline
+
+\end{tabular}
+\end{center}
+\indent Chú ý: Kết quả của phép toán quan hệ và logic là True/False. \\
+\indent Ý nghĩa của phép toán logic được cho ở bảng sau:\\
+\begin{center}
+\begin{tabular}{ lllll}
+\hline
+a&b&!a&a\&\&b&a||b\\
+\hline
+true&true&false&true&true\\
+\hline
+true&false&false&false&true\\
+\hline
+false&true&true&false&true\\
+\hline
+false&false&true&false&false\\
+\hline
+\end{tabular}
+\end{center}
+\subsection{Phép toán điều kiện}
+\indent Cú pháp: \\
+{\ttfamily
+<điều\_kiện> ? <biểu\_thức\_1> : < biểu\_thức\_2>}\\
+\indent Nếu điều kiện đúng thì có giá trị, hay thực hiện {\ttfamily<biểu\_thức\_1>}, còn ngược lại là {\ttfamily<biểu\_thức\_2>}. Trong đó:
+\begin{itemize}
+\item {\ttfamily <điều\_kiện>}: là một biểu thức logic
+\item {\ttfamily <biểu\_thức\_1>, <biểu\_thức\_2>}: có thể là hai giá trị, hai biểu thức hoặc hai hành động.
+\end{itemize}
+\indent Chẳng hạn: {\ttfamily z = ((x < y) ? (x) : (y));} sẽ gán giá trị nhỏ nhất của {\ttfamily x và y cho z}.
+\subsection{Phép gán}
+\indent Phép gán là cách gắn một giá trị cho một biến hoặc thay đổi giá trị của một biến. Lệnh gán trong Java có công thức: {\ttfamily biến = biểu\_thức;}\\
+\indent Trong đó, dấu bằng (=) được gọi là dấu gán hay toán tử gán, biểu thức ở vế phải dấu gán được tính rồi lấy kết quả gán cho biến nằm ở vế trái.\\
+\indent Biểu thức tại vế phải có thể là một giá trị trực tiếp, một biến, hoặc một biểu thức phức tạp.
+\indent Ngoài ra chúng ta có thể kết hợp phép gán với các phép toán khác theo cách gộp như ví dụ sau:
+\begin{itemize}
+\item a += b; tương đương với a = a + b;
+\item a -= b; tương đương với a = a - b;
+\item a *= b; tương đương với a = a * b;
+\item a /= b; tương đương với a = a / b;
+\item a \%= b; tương đương với a = a \% b;
+\end{itemize}
+\subsection{Chuyển đổi kiểu}
+\indent Trong một biểu thức, các toán hạng có thể có các kiểu dữ liệu khác nhau, để việc tính toán được chính xác, đôi lúc cần phải chuyển đổi kiểu dữ liệu cho phù hợp. Có 2 cách chuyển đổi kiểu dữ liệu: 
+\begin{itemize}
+\item Chuyển kiểu tự động:\\
+Khi 2 toán hạng trong một phép toán có kiểu dữ liệu khác nhau thì toán hạng có kiểu dữ liệu bé hơn sẽ tự động chuyển thành kiểu dữ liệu lớn hơn của toán hạng kia trước khi thực hiện phép toán. Đối với lệnh gán thì sự chuyển kiểu căn cứ vào kiểu dữ liệu của biến ở vế trái.
+\item Chuyển kiểu ép buộc: \\
+Thực hiện theo cú pháp sau: {\ttfamily (kiểu) biểu\_thức}. Nếu chuyển từ kiểu dữ liệu nhỏ sang lớn thì sẽ không làm mất mát thông tin. Ngược lại nó sẽ mất mát một phần thông tin.
+\end{itemize}
+
+\indent Chẳng hạn: \\
+{\ttfamily
+float a = 10.3f;\\
+int b = (int)a;}\\
+\indent Lúc này b sẽ có giá trị là 10.
+\section{Các cấu trúc điều khiển}
+\subsection{Cấu trúc if}
+\indent Cú pháp:\\
+\begin{lstlisting}[escapechar=',language=java]	
+if ('<điều\_kiện\_exp>') {
+	'<khối\_lệnh\_1>;'
+} [else {
+	'<khối\_lệnh\_2>;'
+}]
+\end{lstlisting}
+
+\indent Sơ đồ thực hiện:
+\begin{figure}[!ht]
+\centering
+\input{Figures/if.tex}
+\caption{Sơ đồ thực hiện cấu trúc if}\label{hinh13} 
+\end{figure}
+
+\indent Ý nghĩa: Nếu biểu thức điều kiện exp là True thì chương trình sẽ thực hiện {\ttfamily khối\_lệnh\_1}, ngược lại thì thực hiện {\ttfamily khối\_lệnh\_2} (nếu có phần else). Các câu lệnh sau if hoặc else có thể là một khối lệnh. Nếu các câu lệnh if lồng nhau trong phạm vi một khối thì else sẽ đi với if gần nó nhất.\\
+\indent Ví dụ 1:
+\begin{lstlisting}[escapechar=!,language=java]	
+int a = 20, b = 10, c = 0;
+c = a;
+System.out.print("So lon nhat la: ");
+if (a < b) {
+	c = b;
+}
+System.out.print(c);
+\end{lstlisting}
+
+\indent Kết quả:\\
+{\ttfamily So lon nhat la 20}\\
+
+\indent Ví dụ 2:
+\begin{lstlisting}[escapechar=!,language=java]	
+int number = 13;
+if (number % 2 == 0) {
+	System.out.println("So " + number + " la so chan");
+} else {
+	System.out.println("So " + number + " la so le.");
+}
+\end{lstlisting}
+
+\indent Kết quả:\\
+{\ttfamily So 13 la so le}
+\subsection{Cấu trúc switch}
+\indent Cú pháp:\\
+{\ttfamily
+switch (<biểu\_thức>) \{\\
+\indent case <giá\_trị\_1>:\\
+\indent \indent <khối\_lệnh\_1>;\\
+\indent \indent break;\\
+\indent \indent …\\
+\indent case <giá\_trị\_n>:\\
+\indent \indent <khối\_lệnh\_n>;\\
+\indent \indent break;\\
+\indent default:\\
+\indent \indent <khối\_lệnh\_default>;\\
+\}}\\
+\indent Ý nghĩa: Nếu {\ttfamily <biểu\_thức>} có giá trị bằng {\ttfamily giá\_trị\_k} nào đó thì chương trình sẽ chuyển điều khiển đến {\ttfamily case giá\_trị\_k} và thực hiện {\ttfamily <khối\_lệnh\_k>} cho đến khi gặp lệnh {\ttfamily break} mới thoát khỏi cấu trúc {\ttfamily switch}. Ngược lại nếu giá trị của {\ttfamily <biểu\_thức>} không có giá trị trong các giá trị được liệt kê sau {\ttfamily case} thì chương trình sẽ thực hiện {\ttfamily <khối\_lệnh\_default>} (nếu có).\\
+\indent Trong đó:\\
+{\ttfamily <biểu\_thức>, <giá\_trị\_1>, …, <giá\_trị\_n>}: phải có giá trị nguyên\\
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=!,language=java]	
+int day = 4;
+switch (day) {
+	case 1:
+		System.out.println("Thu hai");
+		break;
+	case 2:
+		System.out.println("Thu ba");
+		break;
+	case 3:
+		System.out.println("Thu tu");
+		break;
+	case 4:
+		System.out.println("Thu nam");
+		break;
+	case 5:
+		System.out.println("Thu sau");
+		break;
+	case 6:
+		System.out.println("Thu bay");
+		break;
+	case 7:
+		System.out.println("Chu nhat");
+		break;
+}
+\end{lstlisting}
+\subsection{Cấu trúc for}
+\indent Cú pháp:\\
+{\ttfamily 
+for (<biểu\_thức\_1>;<biểu\_thức\_2>;<biểu\_thức\_3>) {\\
+\indent <khối\_lệnh>;\\
+}}\\
+\indent Sơ đồ thực hiện (hình \ref{hinh14}):\\
+\begin{figure}[!ht]
+\centering
+\input{Figures/for.tex}
+\caption{Sơ đồ thực hiện cấu trúc for}\label{hinh14} 
+\end{figure}
+
+\indent Ý nghĩa: 
+\begin{itemize}
+\item Đầu tiên {\ttfamily biểu\_thức\_1} được thực hiện. Đây thường là phép khởi gán để khởi động một hay nhiều biến. {\ttfamily Biếu\_thức\_1} chỉ được thực hiện 1 lần duy nhất khi bắt đầu thực hiện cấu trúc.
+\item Tiếp theo, {\ttfamily biểu\_thức\_2} được thực hiện. Đây là phần điều kiện thực hiện {\ttfamily khối\_lệnh} của cấu trúc for. Nếu {\ttfamily biểu\_thức\_2} sai thì chương trình sẽ thoát khỏi cấu trúc for. Nếu {\ttfamily biểu\_thức\_2} đúng thì chương trình sẽ thực hiện {\ttfamily khối\_lệnh}.
+\item Sau khi thực hiện {\ttfamily khối\_lệnh} thi các biến tăng/giảm ở {\ttfamily biểu\_thức\_3} mới được thực hiện và cấu trúc sẽ lặp lại việc kiểm tra {\ttfamily biểu\_thức\_2}.
+\end{itemize}
+\indent Ví dụ:\\
+\begin{lstlisting}[escapechar=',language=java]	
+for (int i = 0; i <= 10; i = i + 2) {
+  System.out.println(i);
+}
+\end{lstlisting}
+
+\indent Kết quả:
+\begin{verbatim}
+0
+2
+4
+6
+8
+10
+\end{verbatim}
+\subsection{Cấu trúc while}
+\indent Cú pháp:\\
+{\ttfamily
+while (<điều\_kiện\_lặp>) {\\
+\indent <khối\_lệnh>;\\
+}}\\
+\indent Sơ đồ thực hiện (hình \ref{hinh15}):
+\begin{figure}[!ht]
+\centering
+\input{Figures/while.tex}
+\caption{Sơ đồ thực hiện cấu trúc while}\label{hinh15} 
+\end{figure}
+
+\indent Ý nghĩa: Trong khi {\ttfamily điều\_kiện\_lặp} vẫn còn đúng thì thực hiện {\ttfamily khối\_lệnh}.\\
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=',language=java]	
+int i = 0;
+while (i < 5) {
+	System.out.println(i);
+	i++;
+}\end{lstlisting}
+
+\indent Kết quả:
+\begin{verbatim}
+0
+1
+2
+3
+4
+\end{verbatim}
+\subsection{Cấu trúc do...while}
+\indent Cú pháp:
+{\ttfamily
+do {\\
+\indent <khối\_lệnh>;\\
+} while (<điều\_kiện\_lặp>);}\\
+
+\indent Sơ đồ thực hiện (hình \ref{hinh16}):
+\begin{figure}[!ht]
+\centering
+\input{Figures/dowhile.tex}
+\caption{Sơ đồ thực hiện cấu trúc do…while}\label{hinh16} 
+\end{figure}
+
+\indent Ý nghĩa: Cấu trúc {\ttfamily do…while} sẽ thực hiện {\ttfamily khối\_lệnh} cho đến khi nào {\ttfamily điều\_kiện\_lặp} là sai.\\
+\indent Ví dụ:\\
+
+\begin{lstlisting}[escapechar=!,language=java]	
+int i = 0;
+do {
+	System.out.println(i);
+	i++;
+} while (i < 5);
+\end{lstlisting}
+
+\indent Kết quả:
+\begin{verbatim}
+0
+1
+2
+3
+4
+\end{verbatim}
+\subsection{Cấu trúc lệnh nhảy}
+\indent Lệnh break: trong cấu trúc switch chúng ta dùng câu lệnh break để thoát thỏi cấu trúc switch trong cùng chứa nó. Tương tự như vậy, trong cấu trúc lặp, câu lệnh break dùng để thoát khỏi cấu trúc lặp trong cùng chứa nó. \\
+\indent Lệnh continue: dùng để ngắt vòng lặp hiện tại và tiếp tục vòng lặp tiếp theo.
+\section{Các lớp bao kiểu dữ liệu cơ bản}
+\indent Đôi khi, ta muốn đối xử với một giá trị kiểu cơ bản như là một đối tượng. Trong trường hợp như vậy, ta có các lớp bọc ngoài mỗi kiểu cơ bản (wrapper class). Các lớp bọc ngoài này có tên gần trùng với tên kiểu cơ bản tương ứng: {\ttfamily Boolean, Character, Byte, Short, Integer, Long, Float, Double}. Mỗi đối tượng thuộc các lớp trên bao bọc một giá trị kiểu cơ bản tương ứng, kèm theo các phương thức để thao tác với giá trị đó. Ví dụ:
+\begin{lstlisting}[escapechar=',language=java]	
+'//Tạo một đối tượng bọc ngoài 1 giá trị'
+int i = 10;
+Integer iWrap = new Integer(i);
+'//Lấy giá trị bên trong đối tượng'
+int iUnwrap = iWrap.intValue();
+'//Biến chuỗi số thành số'
+Int i = Integer.parseInt("10");
+'//Biến số thành chuỗi số'
+String iString = iWrap.toString();
+\end{lstlisting}
+
+\indent Các lớp bọc ngoài khác cũng có cách sử dụng và phương thức tương tự như {\ttfamily Integer}. Lúc này việc sử dụng kiểu dữ liệu cơ bản và đối tượng của lớp bọc kiểu cơ bản sẽ có một vài trường hợp sử dụng như sau:
+\begin{itemize}
+\item Đối số của phương thức: dù một phương thức khai báo tham số kiểu cơ bản hay kiểu lớp bọc ngoài thì nó vẫn chấp nhận đối số ở cả dạng cơ bản cũng như kiểu lớp bọc ngoài.
+\item Giá trị trả về: dù một phương thức khai báo kiểu trả về kiểu cơ bản hay bọc ngoài thì lệnh return trong phương thức dùng giá trị ở cả dạng cơ bản cũng như bọc ngoài đều được.
+\item Biểu thức boolean: ở những vị trí yêu cầu một biểu thức boolean, ta có thể dùng biểu thức cho giá trị boolean (chẳng hạn 2 < a), hoặc một biến boolean, hoặc một tham chiếu kiểu Boolean đều được. Phép toán số học: ta có thể dùng tham chiếu kiểu bọc ngoài làm toán hạng của các phép toán số học, kể cả phép ++. 
+\item Phép gán: ta có thể dùng một tham chiếu kiểu bọc ngoài để gán trị cho một biến kiểu cơ bản và ngược lại. Ví dụ: {\ttfamily Double d = 10.0;}
+\end{itemize}
+\section{Mảng}
+\subsection{Khái niệm}
+\indent Mảng là tập hợp nhiều phần tử có cùng tên, cùng kiểu dữ liệu và mỗi phần tử trong mảng được truy xuất thông qua chỉ số của nó trong mảng.
+\subsection {Khai báo mảng}
+\indent Java cũng như các ngôn ngữ khác có 2 loại mảng: Mảng 1 chiều và mảng nhiều chiều.\\
+\indent Cú pháp khai báo mảng 1 chiều:\\
+{\ttfamily <kiểu dữ liệu> <tên mảng>[];} hoặc\\
+ {\ttfamily  <kiểu dữ liệu>[] <tên mảng>;}\\
+\indent Ví dụ:\\
+{\ttfamily int arrInt[];} hoặc\\
+ {\ttfamily int[] arrInt;}\\
+\indent Cú pháp khai báo mảng nhiều chiều:\\
+{\ttfamily<Kiểu dữ liệu>[][]...[] <Tên mảng>;} hoặc\\
+{\ttfamily <Kiểu dữ liệu> <Tên mảng> [][]...[];}\\
+
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=',language=java]	
+int a[][];
+int[][] a;
+\end{lstlisting}
+
+\subsection{Cấp phát bộ nhớ cho mảng}
+\indent Không giống như trong C/C++ kích thước của mảng được xác định khi khai báo. Chẳng hạn như: {\ttfamily int arrInt[100];}. Để cấp phát bộ nhớ cho mảng trong Java ta cần dùng từ khóa {\ttfamily new}. Chẳng hạn để cấp phát vùng nhớ cho mảng trong Java ta làm như sau: 
+\begin{lstlisting}[escapechar=',language=java]	
+int arrInt = new int[100];
+int arrInt2Dim[][]= new int[2][3];
+\end{lstlisting}
+
+\subsection{Khởi tạo mảng}
+\indent Chúng ta có thể khởi tạo giá trị ban đầu cho các phần tử của mảng khi nó được khai báo.\\
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=!,language=java]	
+int arrInt[] = {1, 2, 3};
+char arrChar[] = {'a', 'b','c'};
+String arrString[] = {"ABC", "EFG", "GHI"};
+int a2Dim[][]={{3,4},{2,8}};
+\end{lstlisting}
+
+\subsection{Truy cập mảng}
+\indent Chỉ số mảng trong Java bắt đầu tư 0. Vì vậy phần tử đầu tiên có chỉ số là 0, và phần tử thứ n có chỉ số là n-1. Các phần tử của mảng được truy xuất thông qua chỉ số của nó đặt giữa cặp dấu ngoặc vuông ([]).\\
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=',language=java]	
+int arrInt[] = {1, 2, 3};
+int x = arrInt[0]; '// x sẽ có giá trị là 1.'
+int y = arrInt[1]; '// y sẽ có giá trị là 2.'
+int z = arrInt[2]; '// z sẽ có giá trị là 3.'
+\end{lstlisting}
+
+\subsection{Duyệt mảng}
+\indent Để duyệt mảng, ngoài việc sử dụng các cấu trúc lặp cổ điển như {\ttfamily for, while hay do…while} thì trong Java còn hỗ trợ cấu trúc {\ttfamily for-each} cho phép duyệt mảng rất tiện lợi.\\
+\indent Cú pháp: \\
+{\ttfamily
+for (<kiểu\_dữ\_liệu> <tên\_biến>: <tên\_mảng>) {\\
+\indent <khối\_lệnh>;
+}}\\
+\indent Ví dụ:
+\begin{lstlisting}[escapechar=!,language=java]	
+int arr[] = { 10, 20, 30, 40 };
+for (int i : arr) {
+	System.out.println(i);
+}
+\end{lstlisting}
+
+\indent Kết quả:
+\begin{verbatim}
+10
+20
+30
+40
+\end{verbatim}
+
+\section{Xử lý ngoại lệ}
+\indent Một ngoại lệ (Exception) trong Java là một vấn đề phát sinh trong quá trình thực thi chương trình. Khi xảy ra ngoại lệ, luồng xử lý (flow) bị gián đoạn, chương trình/ứng dụng dừng bất thường. Nó là một đối tượng được ném ra tại Runtime. Ngoại lệ trong Java có thể xảy ra vì nhiều lý do khác nhau: 
+\begin{itemize}
+\item Nhập dữ liệu không hợp lệ.
+\item Không tìm thấy file cần mở.
+\item Kết nối mạng bị ngắt trong quá trình thực hiện giao tác.
+\item JVM hết bộ nhớ.
+\item Truy cập vượt ngoài chỉ số của mảng, …
+\end{itemize}
+\indent Ngoại lệ xảy ra có thể do người dùng, lập trình viên hoặc số khác do tài nguyên bị lỗi. Java Exeption được triển khai bằng cách sử dụng các lớp như {\ttfamily Throwable, Exception, RuntimeException} và các từ khóa như {\ttfamily throw, throws, try, catch và finally}.\\
+\indent Dựa vào tính chất các ngoại lệ, người ta chia ngoại lệ thành ba loại như hình \ref{hinh17}:
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.76]{Figures//Hinh17.png}
+\caption{Cấu trúc của các ngoại lệ}\label{hinh17} 
+\end{figure}
+\begin{itemize}
+\item Ngoại lệ được kiểm tra (Checked Exceptions): Là một ngoại lệ được kiểm tra và thông báo bởi trình biên dịch tại thời điểm biên dịch, chúng cũng có thể được gọi là ngoại lệ thời gian biên dịch (Compile-time Exceptions).
+\item Ngoại lệ không được kiểm tra (Unchecked Exceptions): Là một ngoại lệ không được kiểm tra trong quá trình biên dịch. Chúng cũng được gọi là ngoại lệ thời gian chạy (Runtime Exceptions)
+\item Lỗi (Error): Error là những vấn đề nghiêm trọng liên quan đến môi trường thực thi của ứng dụng hoặc hệ thống mà lập trình viên không thể kiểm soát. Nó thường làm chết chương trình. Ví dụ: OutOfMemoryError, VirtualMachineError, and StackOverflowError, …
+\end{itemize}
+ 
+\indent Xử lý ngoại lệ trong Java là một cơ chế mạnh mẽ để xử lý các lỗi runtime (Runtime exeption) để có thể duy trì luồng bình thường của ứng dụng. Khối lệnh try trong java được sử dụng để chứa một đoạn code có thế xảy ra một ngoại lệ. Nó phải được khai báo trong phương thức. Sau một khối lệnh try bạn phải khai báo khối lệnh catch hoặc finally hoặc cả hai.
+\subsection{Khối lệnh try-catch trong Java}
+\indent Cú pháp:
+\begin{verbatim}
+try {  
+     // code có thể ném ra ngoại lệ
+} catch (Exception_class_Name ref) {
+     // code xử lý ngoại lệ
+} 
+\end{verbatim}
+ 
+\indent Khối catch trong Java được sử dụng để xử lý các Exception. Nó phải được sử dụng sau khối try. Chúng ta có thể sử dụng nhiều khối catch với một khối try duy nhất.
+\subsection{Khối lệnh try-finally trong Java}
+\indent Cú pháp:
+\begin{verbatim}
+try {  
+     // code có thể ném ra ngoại lệ
+} finally {
+     // code trong khối này luôn được thực thi
+}
+\end{verbatim}
+
+\indent Khối lệnh finally trong Java luôn được thực thi cho dù có ngoại lệ xảy ra hay không hoặc gặp lệnh return trong khối try. Khối lệnh finally trong Java được khai báo sau khối lệnh try hoặc sau khối lệnh catch. 
+\section{Hướng dẫn Cài đặt JDK và Eclipse}
+\subsection{Hướng dẫn Cài đặt JDK}
+\begin{itemize}
+\item Bước 1. Tải JDK\\
+Truy cập vào địa chỉ: https://www.oracle.com/java/technologies/javase-downloads.html và chọn phiên bản JDK mà bạn muốn và nhấn chọn nút JDK Download (Giả sử chúng ta chọn Java SE 11 (LTS))
+\item Bước 2. Cài đặt JDK\\
+Sau khi tải JDK về, chúng ta tiến hành cài đặt bằng cách double-click vào chương trình mà chúng ta đã tải về và làm theo hướng dẫn trên màn hình cài đặt
+\item Bước 3. Thiết lập biến môi trường\\
+Giả sử JDK chúng ta cài đặt tại thư mục: C:/Java/JDK11, thì lúc này ta có thể thiết lập biến môi trường như sau:
+\begin{itemize}
+\item Vào Control panel và chọn mục System
+\item Nhấn Advanced System settings và chọn Environment Variables
+\item Thêm thư mục bin trong thư mục JDK mà chúng ta đã cài đặt (C:/Java/JDK11/bin) vào biến PATH trong System Variables
+\end{itemize}
+\indent Lưu ý các đường dẫn thư mục trong PATH phải cách nhau bởi dấu ; và không phân biệt HOA thường.
+\item Bước 4. Kiểm tra cài đặt\\
+Để chắc chắn việc cài đặt ở trên là đúng đắn, chúng ta mở cửa sở Terminal của Window và gõ: {\ttfamily java – version}. Nếu kết quả trả về là phiên bản của JDK mà chúng ta đã cài thì việc cài đặt JDK đã hoàn tất.
+\end{itemize}
+\subsection{Hướng dẫn Cài đặt Eclipse}
+\begin{itemize}
+\item Bước 0. Để lập trình bằng ngôn ngữ Java thì chúng ta phải chắc chắn là đã cài JDK ở bước trước.
+\item Bước 1. Truy cập vào địa chỉ: https://www.eclipse.org/downloads/ và chọn nút “Download Packages” thay vì chọn nút “Download x86\_64” 
+\item Bước 2. Ở trang tiếp theo, chúng ta chọn "Windows x86\_64” ở mục Eclipse IDE for Java Developers" và tiến hành Download
+\item Bước 3. Để chạy Eclipse, đơn giản là chúng ta tiến hành giải nén tập tin vừa mới download về và đặt ở thư mục phù hợp, chẳng hạn: C:\\Eclipse. Vì chương trình Eclipse mà chúng ta vừa tải chỉ là thư mục nén và không hề chạy chương trình để cài đặt lên máy tính, do đó chúng ta có thể đổi tên, di chuyển sang thư mục khác mà không ảnh hưởng gì.
+\end{itemize}
+\subsection{Tạo chương trình đầu tiên, chương trình "Hello world"}
+\begin{itemize}
+\item Khởi động Eclipse bằng cách nhấn vào file Eclipse.exe trong thư mục mà chúng ta vừa giải nén
+\item Chọn thư mục làm Workspace, nơi lưu trữ các chương trình của chúng ta
+\item Nếu xuất hiện màn hình Welcome thì chúng ta có thể đóng nó bằng cách nhấn nút Close ở thanh tiêu đề
+\item Để tạo dự án, chúng ta chọn menu "File" $\Rightarrow$ "New" $\Rightarrow$ "Java project" (Hoặc "File" $\Rightarrow$ "New" $\Rightarrow$ "Project" $\Rightarrow$ "Java project").
+\item Cửa sổ “New Java Project” xuất hiện:
+\begin{itemize}
+\item Trong “Project name”, chúng ta gõ HelloWorld
+\item Tích vào tùy chọn: Use default location
+\item Trong JRE, chúng ta chọn "Use default JRE (currently 'JDK11.0.x')"
+\item Trong “Project Layout” chúng ta nhấn vào tùy chọn "Use project folder as root for sources and class files"
+\item Nhấn nút Finish để hoàn thành tạo mới dự án
+\item Trong cửa sổ “Create module-info.java”, chúng ta chọn "Don’t"
+\end{itemize}
+\item Trong khung “Package Explorer” nằm bên trái, nhấn chuột phải lên HelloWorld (hoặc trong menu File) chọn $\Rightarrow$ New $\Rightarrow$ Class. Cửa sổ "New Java Class" xuất hiện:\\
+- Trong "Source folder", vẫn để "HelloWorld".\\
+- Trong mục “Package” thì chúng ta tạm thời để rỗng\\
+- Trong mục “Name”, chúng ta gõ Hello\\
+- Tích chọn “public static void main(String[] args)” để hệ thống sinh ra hàm main trong lớp Hello\\
+- Nhấn nút Finish để hoàn thành tạo lớp\\
+- File “Hello.java” trong khung soạn thảo sẽ trông như sau:
+
+\begin{verbatim}
+public class Hello {
+   public static void main(String[] args) {
+       System.out.println("Hello, world!");
+   }
+}
+\end{verbatim}
+
+\item Biên dịch và thực thi chương trình:\\
+- Để chạy chương trình, chúng ta nhấn chuột phải vào file Hello.java (Hoặc chọn menu Run) $\Rightarrow$ Runas $\Rightarrow$ Java Application \\
+- Trong khung Console sẽ xuất hiện Hello, World!\\
+- Như vậy việc cài đặt JDK và IDE Eclipse đã thành công.
+\end{itemize}
+\section{Bài tập}
+
+\begin{exlist}
+\item Viết chương trình tìm ước số chung lớn nhất, bội số chung nhỏ nhất của hai số tự nhiên a và b.
+
+\item Viết chương trình chuyển đổi một số tự nhiên ở hệ cơ số 10 thành số ở hệ cơ số b bất kì ($1 < b \leq 36$).
+
+\item Hãy viết chương trình tính tổng các chữ số của một số nguyên bất kỳ. Ví dụ: Số 8545604 có tổng các chữ số là: $8+5+4+5+6+0+4= 32$.
+
+\item Viết chương trình phân tích một số nguyên thành các thừa số nguyên tố. Ví dụ: Số 28 được phân tích thành 2 x 2 x 7
+
+\item Viết chương trình phân tích một số nguyên thành các thừa số nguyên tố. Ví dụ: Số 28 được phân tích thành 2 x 2 x 7
+
+\item Viết chương trình liệt kê tất cả các số nguyên tố nhỏ hơn n cho trước.
+
+\item Viết chương trình liệt kê n số nguyên tố đầu tiên.
+
+\item Dãy số Fibonacci được định nghĩa như sau: $F_0 =1, F_1 = 1; F_n = F_{n-1} + F_{n-2}$ với $n\geq2$. Hãy viết chương trình tìm số Fibonacci thứ n.
+
+\item Một số được gọi là số thuận nghịch độc nếu ta đọc từ trái sang phải hay từ phải sang trái số đó ta vẫn nhận được một số giống nhau. Hãy liệt kê tất cả các số thuận nghịch độc có sáu chữ số (Ví dụ số: 558855).
+
+\item Viết chương trình liệt kê tất cả các xâu nhị phân độ dài n.
+
+\item Viết chương trình liệt kê tất cả các tập con k phần tử của $1, 2, ..., n (k \leq n)$.
+\end{exlist}
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,226 @@
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+  \draw[line width = 4pt] ($(current page.north west) + (3.1cm,-2.3cm)$) rectangle ($(current page.south east) + (-2.1cm, 2.4cm)$);
+\end{tikzpicture}
+
+\begin{center}
+\vspace{-1.0cm}
+\textsc{\textbf{ĐẠI HỌC HUẾ}}\\[0.0cm]
+{\textbf{TRƯỜNG ĐẠI HỌC KHOA HỌC}}\\[4.0cm]
+
+\textsc{\textbf{ }}\\[3.0cm]
+
+% Title
+%\HRule \\[0.4cm]
+{\fontsize{15}{15} \bfseries HỌC KHÁI NIỆM CHO CÁC HỆ THỐNG THÔNG TIN DỰA TRÊN LOGIC MÔ TẢ}\\[-0.1cm]
+%\HRule \\[4.5cm]
+~\\[4.5cm]
+
+\textsc{\large \textbf{LUẬN ÁN TIẾN SĨ MÁY TÍNH}}\\[0.5cm]
+
+\vfill
+% Bottom of the page
+THỪA THIÊN HUẾ, 03/2015
+\vspace{-0.7cm}
+
+\end{center}
+\end{titlepage}
+
+\cleardoublepage
+%-----------------------------------------------------------------------------
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+\draw[line width = 4pt] ($(current page.north west) + (3.1cm,-2.3cm)$) rectangle ($(current page.south east) + (-2.1cm, 2.4cm)$);
+\end{tikzpicture}
+
+\begin{center}
+%\includegraphics[width=0.15\textwidth]{./logo}\\[1cm]
+\vspace{-1.0cm}
+\textsc{\textbf{ĐẠI HỌC HUẾ}}\\[0.0cm]
+{\textbf{TRƯỜNG ĐẠI HỌC KHOA HỌC}}\\[4.0cm]
+
+\textsc{\textbf{ }}\\[2.5cm]
+
+%\HRule \\[0.4cm]
+{\fontsize{15}{15} \bfseries HỌC KHÁI NIỆM CHO CÁC HỆ THỐNG THÔNG TIN DỰA TRÊN LOGIC MÔ TẢ}\\[-0.1cm]
+%\HRule \\[1.5cm]
+~\\[1.5cm]
+
+\textbf{CHUYÊN NGÀNH: KHOA HỌC MÁY TÍNH}\\
+\textbf{MÃ SỐ: 62.48.01.01}\\[1.5cm]
+
+\textsc{\large \textbf{LUẬN ÁN TIẾN SĨ MÁY TÍNH}}\\[2.0cm]
+
+% Author and supervisor
+\begin{minipage}{0.45\textwidth}
+\begin{flushleft}
+
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.50\textwidth}
+\begin{flushleft}
+{\bf ~} \\
+{~ }\\
+{~ }
+\end{flushleft}
+\end{minipage}
+
+\vfill
+% Bottom of the page
+THỪA THIÊN HUẾ, 03/2015
+\vspace{-0.7cm}
+\end{center}
+\end{titlepage}
+\cleardoublepage
+%-----------------------------------------------------------------------------
+\pagenumbering{roman}
+\chapter*{LỜI CAM ĐOAN}
+\addcontentsline{toc}{chapter}{Lời cam đoan}
+\thispagestyle{fancy}
+
+Tôi xin cam đoan đây là công trình nghiên cứu do tôi thực hiện dưới sự hướng dẫn của tập thể giáo viên hướng dẫn. Những nội dung trong các công trình đã công bố chung với các tác giả khác đã được sự đồng ý của đồng tác giả khi đưa vào luận án. Các số liệu và kết quả nghiên cứu trình bày trong luận án là trung thực, khách quan và chưa được công bố bởi tác giả nào trong bất cứ công trình nào khác.\\
+
+\begin{tabular}{p{9cm} c}
+	& Nghiên cứu sinh\\
+	& \\
+	& \\
+	& \\
+	& \;\\
+\end{tabular}
+\cleardoublepage
+%-----------------------------------------------------------------------------
+%\chapter*{LỜI CẢM ƠN}
+%\addcontentsline{toc}{chapter}{Lời cảm ơn}
+%\thispagestyle{fancy}
+%
+%Luận án này được thực hiện và hoàn thành tại Khoa Công nghệ Thông tin, Trường~Đại học Khoa học, Đại~học~Huế. Trong suốt quá trình học tập, tôi đã nhận được sự quan tâm, giúp đỡ của thầy giáo, cô giáo hướng dẫn, thầy cô giáo trong Ban chủ nhiệm Khoa Công nghệ Thông tin, Phòng Đào tạo Sau đại học và Ban giám hiệu Trường Đại học Khoa học.
+%
+%Tôi xin bày tỏ lòng biết ơn sâu sắc đến PGS.~TSKH.~Nguyễn Anh Linh và TS.~Hoàng Thị Lan Giao, là những người Thầy đã tận tình hướng dẫn, động viên và truyền đạt những kinh nghiệm quý báu trong nghiên cứu khoa học để tôi có thể hoàn thành luận án này.
+%
+%Tôi xin chân thành cảm ơn Quý thầy cô giáo trong Ban chủ nhiệm Khoa Công~nghệ Thông tin đã tạo điều kiện thuận lợi trong công tác để tôi có đủ thời gian cho công việc nghiên cứu của mình. Tôi xin cảm ơn Quý thầy cô và cán bộ của Phòng Đào tạo Sau Đại học, Ban giám hiệu Trường Đại học Khoa học đã giúp đỡ tôi trong việc hoàn thành kế hoạch học tập.
+%
+%Tôi xin trân trọng cảm ơn GS. TSKH. Andrzej Sza{\l}as, PGS. TS. Hà Quang Thụy, PGS. TSKH. Nguyễn~Hùng~Sơn đã đóng góp nhiều ý kiến quý báu trong quá trình nghiên cứu và công bố các công trình khoa học.
+%Tôi xin trân trọng cảm ơn PGS. TS. Lê Mạnh Thạnh đã đọc và đưa ra những góp ý cho luận án.
+%
+%Tôi xin cảm ơn Quý thầy cô giáo và các anh chị đồng nghiệp trong Khoa Công~nghệ Thông tin đã giúp đỡ, chia sẻ trong quá trình công tác, học tập, nghiên cứu và thực hiện luận án của~mình.
+%
+%Tôi xin cảm ơn bạn bè đã động viên và đặc biệt là những người thân trong gia đình luôn luôn quan tâm, ủng hộ và tạo mọi điều kiện thuận lợi nhất cho tôi hoàn thành luận án này.
+%
+%\begin{tabular}{p{9cm} c}
+%	& Nghiên cứu sinh\\
+%	& \\
+%	& \\
+%	& \\
+%	& Trần Thanh Lương\\
+%\end{tabular}
+%\cleardoublepage
+%-----------------------------------------------------------------------------
+\newpage
+\setcounter{tocdepth}{2}
+\addcontentsline{toc}{chapter}{Mục lục}
+\renewcommand\contentsname{\!\!\!\!\!\!\!\!\!\!\chapterFont\hfill MỤC LỤC\hfill}
+\thispagestyle{fancy}
+
+\setlength\cftparskip{-2pt}
+\setlength\cftbeforechapskip{1pt}
+\tableofcontents{\thispagestyle{fancy}}
+\cleardoublepage
+%-----------------------------------------------------------------------------
+\newpage
+\chapter*{DANH MỤC TỪ VIẾT TẮT}
+\addcontentsline{toc}{chapter}{Danh mục từ viết tắt}
+\thispagestyle{fancy}
+
+\begin{tabular}{| p{2.5cm} | p{10.0cm} |}
+	\hline
+	\multicolumn{1}{|c|}{\bf Từ viết tắt} & \multicolumn{1}{c|}{\bf Diễn giải}\\
+	\hline
+	ABox & Assertion Box\\
+	& Bộ khẳng định cá thể\\[1.0ex]
+	BBCL & Bisimulation-Based Concept Learning\\
+	& Học khái niệm dựa trên mô phỏng hai chiều\\[1.0ex]
+	CWA  & Close World Assumption\\
+	& Giả thiết thế giới đóng\\[1.0ex]
+	LCS  & Least Common Subsumers\\
+	& Bao hàm chung nhỏ nhất\\[1.0ex]
+	OWA  & Open World Assumption\\
+	& Giả thiết thế giới mở\\[1.0ex]
+	OWL  & Web Ontology Language\\
+	& Ngôn ngữ Web Ontology\\[1.0ex]
+	PAC  & Probably Approximately Correct\\
+	& Khả năng học chính xác\\[1.0ex]
+	RBox & Role Box\\
+	& Bộ tiên đề vai trò\\[1.0ex]
+	TBox & Terminology Box\\
+	& Bộ tiên đề thuật ngữ\\[1.0ex]
+	W3C  & World Wide Web Consortium\\
+	& Tổ chức tiêu chuẩn quốc tế về World Wide Web\\
+	\hline
+\end{tabular}
+\cleardoublepage
+%-----------------------------------------------------------------------------
+\newpage
+\chapter*{DANH MỤC CÁC KÝ HIỆU}
+\addcontentsline{toc}{chapter}{Danh mục các ký hiệu}
+\thispagestyle{fancy}
+
+\begin{tabular}{| p{2.5cm} | p{10.0cm} |}
+	\hline
+	\multicolumn{1}{|c|}{\bf Ký hiệu} & \multicolumn{1}{c|}{\bf Diễn giải ý nghĩa}\\
+	\hline
+	$A$, $B$ & Các thuộc tính/tên khái niệm \\
+	$C$, $D$ & Các khái niệm \\
+	$r$, $s$ & Các tên vai trò đối tượng \\
+	$R$, $S$ & Các vai trò đối tượng \\
+	$a$, $b$ & Các cá thể \\
+	$c$, $d$ & Các phần tử thuộc miền giá trị \\
+	$\sigma$, $\varrho$ & Các vai trò dữ liệu \\
+	$\Range(A)$ & Miền giá trị của thuộc tính $A$ \\
+	$\Range(\sigma)$ & Miền giá trị của vai trò dữ liệu $\sigma$ \\
+	$\Sigma$, $\SigmaDag$ & Các tập ký tự logic mô tả \\
+	$\SigmaI$, $\SigmaDagI$ & Các tập cá thể \\
+	$\SigmaC$, $\SigmaDagC$ & Các tập tên khái niệm \\
+	$\SigmaA$, $\SigmaDagA$ & Các tập thuộc tính \\	
+	$\SigmaDA$, $\SigmaDagDA$ & Các tập thuộc tính rời rạc \\
+	$\SigmaNA$, $\SigmaDagNA$ & Các tập thuộc tính số\\
+	$\SigmaOR$, $\SigmaDagOR$ & Các tập tên vai trò đối tượng\\
+	$\SigmaDR$, $\SigmaDagDR$ & Các tập vai trò dữ liệu\\
+	$\Phi$, $\PhiDag$ & Các tập đặc trưng của logic mô tả\\
+	%	$\mI$ & Tạo tử vai trò nghịch đảo/mô hình \\
+	%	$\mO$ & Tạo tử định danh\\
+	%	$\mQ$ & Tạo tử hạn chế số lương định tính\\
+	%	$\mN$ & Tạo tử hạn chế số lượng không định tính \\
+	%	$\mF$ & Tạo tử về tính chất hàm\\
+	%	$\mU$ & Tạo tử vai trò phổ quát\\
+	%	$\Self$ & Tạo tử về tính phản xạ cục bộ của vai trò\\
+	%	$\mR$ & Bộ tiên đề vai trò\\
+	%	$\mT$ & Bộ tiên đề thuật ngữ\\
+	%	$\mA$ & Bộ khẳng định cá thể \\
+	%	$\KB$ & Cơ sở tri thức \\
+	$\simSdPdI$ & Quan hệ $\mLSPD$-tự mô phỏng hai chiều lớn nhất\\
+	$\equiv_\SdPdI$ & Quan hệ $\mLSPD$-tương đương\\
+	$\Ref$ & Khẳng định vai trò phản xạ\\
+	$\Irr$ & Khẳng định vai trò không phản xạ\\
+	$\Sym$ & Khẳng định vai trò đối xứng \\
+	$\Tra$ & Khẳng định vai trò bắc cầu \\
+	$\Dis$ & Khẳng định vai trò không giao nhau\\
+	$\mR$ & Bộ tiên đề vai trò\\
+	$\mT$ & Bộ tiên đề thuật ngữ \\
+	$\mA$ & Bộ khẳng định cá thể\\
+	$\KB$ & Cơ sở tri thức trong logic mô tả\\	
+	\hline
+\end{tabular}
+
+\cleardoublepage
+%-----------------------------------------------------------------------------
+\newpage
+\renewcommand\listtablename{\!\!\!\!\!\!\!\!\!\chapterFont\hfill DANH MỤC BẢNG, BIỂU\hfill}
+\addcontentsline{toc}{chapter}{Danh mục bảng, biểu}
+\listoftables{\thispagestyle{fancy}}
+\cleardoublepage
+%-----------------------------------------------------------------------------
+\newpage
+\renewcommand\listfigurename{\!\!\!\!\!\!\!\!\!\chapterFont\hfill DANH MỤC HÌNH VẼ\hfill}
+\addcontentsline{toc}{chapter}{Danh mục hình vẽ}
+\listoffigures{\thispagestyle{fancy}}
+\cleardoublepage

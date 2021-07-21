@@ -1,0 +1,833 @@
+
+\setcounter{chapter}{5}
+\setcounter{section}{0}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+
+\chapter* {\begin{flushleft}
+CHƯƠNG 5\\
+\end{flushleft} BIẾN ĐỔI TÀI LIỆU XML VỚI XSLT, CSS VÀ XSL} 
+\addcontentsline{toc}{chapter}{Chương 5. Biến đổi tài liệu XML với XSLT, CSS, và XSL}
+\thispagestyle{fancy}
+\section{Mở đầu}
+Xét về mục đích, XML là ngôn ngữ được sử dụng trong vấn đề lưu trữ và truyền tải dữ liệu giữa các hệ thống trên nền tảng Internet. Tuy nhiên, nhu cầu sử dụng XML không chỉ dừng lại ở chỗ lưu trữ dữ liệu mà còn người ta còn muốn biến đổi tài liệu XML này sang dạng tài liệu XML khác mà trình duyệt hỗ trợ trong vấn đề hiển thị. Để làm việc này chúng ta có thể sử dụng ngôn ngữ CSS, một ngôn ngữ chuyên dùng để hiển thị tài liệu HTML trong các trình duyệt, hoặc một ngôn ngữ khác đa năng hơn, tiện dụng hơn và được khuyến cáo sử dụng bởi W3C là XSL.
+
+\section{Biến đổi tài liệu XML với CSS}
+\subsection{Định nghĩa CSS}
+
+CSS có tên đầy đủ là Cascading Style Sheets, các tập tin định kiểu theo tầng, được dùng để miêu tả cách trình bày các tài liệu viết bằng ngôn ngữ HTML, XHTML. Ngoài ra, CSS cũng có thể dùng cho XML, SVG và XUL.
+
+Các đặc điểm kỹ thuật của CSS được quy định và duy trì bởi tổ chức World Wide Web Consortium (W3C). Phiên bản đầu tiên CSS1 được công bố vào tháng 12 năm 1996. Phiên bản này miêu ta ngôn ngữ CSS cũng như mô hình định dạng đơn giản đầu tiên cho tất cả các thẻ trong tài liệu HTML. Vào tháng 5 năm 1998, phiên bản CSS2 và CSS2.1 dựa trên CSS1 được ra đời với việc bổ sung một vài sự hỗ trợ việc hiển thị dữ liệu trên các thiết bị khác như máy in... và đến tháng 6 năm 1999 phiên bản đang được sử dụng rộng rãi là CSS3 được công bố. Tại phiên bản này, mã CSS được phân chia thành các module nhỏ và từng module chịu trách nhiệm cho một tính năng cụ thể nào đó. Hình sau mô tả việc cập nhật cũng như bổ sung các tính năng trong CSS qua các phiên bản:
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{Figures//Hinh521.jpg}
+\caption{ Các phiên bản của CSS }\label{hinh521} 
+\end{figure}
+
+Với việc sử dụng CSS, thay vì chúng ta đặt các thẻ quy định kiểu dáng cho văn bản trong (X)HTML, XML, ngay trong nội dung của văn bản thì ta có thể sử dụng CSS như là một giải pháp thay thế hoàn hảo. Việc thay thế này nhằm giúp chúng ta:
+\begin{itemize}
+\item	Hạn chế tối thiếu việc làm rối mã của tài liệu bằng các thẻ quy định kiểu dáng như: chữ đậm, in nghiêng, màu chữ,… khiến mã nguồn của tài liệu được gọn gàng hơn, tách phần nội dung và phần hiển thị của tài liệu thành những thành phần riêng biệt, từ đó giúp chúng ta dễ dàng cập nhật phần nội dung cũng như hình thức.
+\item	Tạo ra kiểu dáng có thể áp dụng trên nhiều tài liệu khác nhau.
+\end{itemize}
+\subsection{Sử dụng CSS}
+Để sử dụng CSS, chúng ta có 3 cách:
+\begin{itemize}
+\item	CSS trực tiếp (Inline CSS): Áp dụng trực tiếp trên một đối tượng nhất định bằng thuộc tính style. Chẳng hạn:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<span style="font-weight:bold; text-decoration: underline; color:#FF0000;">
+	`Nội dung`
+</span>
+\end{lstlisting}
+\item	CSS nội (Internal CSS): Đặt CSS ở đầu trang web để áp dụng kiểu dáng cho toàn bộ trang. Khi đó, chúng ta cần đặt đoạn CSS vào trong thẻ {\ttfamily style} trong phần {\ttfamily head}.
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<head>
+	<style type="text/css">
+		body {font-family:verdana; color:#0000FF;} 
+	</style>
+</head>
+\end{lstlisting}
+\item	CSS ngoại (External CSS): Đặt mã CSS vào trong một file riêng có đuôi là css. Khi đó chúng ta có thể tham chiếu CSS này trên nhiều trang khác nhau.
+
+Ví dụ:
+\begin{itemize}
+
+
+\item 	Chúng ta tạo một file chứa mã CSS tên là style.css có nội dung như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+body {font-family:verdana; color:#0000FF;}
+\end{lstlisting}
+\item 	Tham chiếu tới file style.css trong tài liệu bằng đoạn mã bên dưới.
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<link rel="stylesheet" type="text/css" href="style.css" />
+\end{lstlisting}
+\end{itemize}
+\end{itemize}
+
+Trong một tài liệu, chúng ta có thể áp dụng cả 3 cách cùng một lúc. Khi đó thứ tự ưu tiên sẽ như sau: External CSS < Internal CSS < Inline CSS. Mã CSS nào có mức độ ưu tiên cao hơn sẽ quyết định kiểu dáng của nội dung hiển thị. Có thể xem mức độ ưu tiên của mã CSS như bảng  sau:
+\begin{center}
+
+ \begin{longtable}{|m{2cm}|m{2cm}| m{7cm}|}
+ \caption[Thứ tự ưu tiên của mã CSS]{Thứ tự ưu tiên của mã CSS}
+ %\label{variability_impl_mech}
+  \endfirsthead
+  \endhead
+ 
+ \hline
+ 
+ \multicolumn{1}{|c|}{ \textbf{ Mức độ ưu tiên}}	
+ & \multicolumn{1}{c|}{ \textbf{Kiểu nguồn}}  &	\multicolumn{1}{c|}{
+ \textbf{Miêu tả }}
+ \\ 
+\hline
+
+1 &	Đánh dấu important	& Mã có đánh dấu \!important sẽ được ưu tiên cao nhất \\ \hline
+2	& Trực tiếp (inline)& 	Mã CSS được viết trong phần giá trị của thuộc tính style \\ \hline
+3 &	Thứ tự 	& Mã CSS ở cuối tài liệu có độ ưu tiên cao hơn ở đầu tài liệu \\ \hline
+4 &	Kế thừa (parent inheritance)&	Kế thừa các mã CSS của thẻ cha \\ \hline
+5 &	Nội (internal)&	Mã CSS được đặt trong thẻ {\ttfamily style} trong phần {\ttfamily head} của tài liệu \\ \hline
+6	& Ngoại (external) &	Mã CSS được đặt ở trong file có đuôi css có mức ưu tiên thấp hơn CSS nội \\ \hline
+7 & 	Mặc định của trình duyệt &	Nếu một thành phần không có bất kỳ mã CSS nào quy định kiểu dáng thì sẽ áp dụng kiểu dáng mặc định của trình duyệt  \\ \hline
+
+\end{longtable}
+
+\end{center}
+\vspace{-1cm}
+\subsection {Cú pháp CSS}
+Cú pháp tạo CSS bao gồm một {\ttfamily selector} và một khối mô tả như sau:
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.76]{Figures//Hinh51.jpg}
+\caption{ Cú pháp CSS }\label{hinh51} 
+\end{figure}
+Trong đó:
+\begin{itemize}
+
+\item	Phần chọn {\ttfamily selector}: là phần cần định dạng, có thể là:
+
+
+\begin{itemize} 
+\item	Thẻ: {\ttfamily selector} có tên là tên của thẻ trong {\ttfamily body} của HTML
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+h1 {
+   color: #36CFFF; 
+}
+\end{lstlisting}
+
+Đoạn mã trên sẽ áp dụng kiểu dáng cho tất cả các thẻ {\ttfamily h1} có trong tài liệu, với việc quy định màu chữ {\ttfamily color} của các thẻ này có giá trị là {\ttfamily \#36CFFF}.
+
+\item	Giá trị của thuộc tính {\ttfamily class} của một hay nhiều thẻ thì {\ttfamily selector} sẽ có dạng:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	.<`giá trị thuộc tính class`>
+\end{lstlisting}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+.center {
+    text-align: center;
+    color: red;
+}
+\end{lstlisting}
+
+Đoạn mã trên sẽ áp dụng kiểu dáng cho tất cả các thẻ mà thuộc tính {\ttfamily class} có giá trị là {\ttfamily center}. Hay như đoạn mã sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+div.center {
+    text-align: center;
+    color: red;
+}
+\end{lstlisting}
+
+Đoạn mã trên sẽ chỉ áp dụng kiểu dáng cho các thẻ {\ttfamily div} mà thuộc tính {\ttfamily class} của các thẻ {\ttfamily div} này có giá trị là {\ttfamily center}. Các thẻ khác có {\ttfamily class} là {\ttfamily center} sẽ không được áp dụng kiểu dáng này.
+
+\item	Giá trị của thuộc tính {\ttfamily id} của một thẻ thì {\ttfamily selector} sẽ là có dạng:
+\end{itemize}
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	#<`giá trị của thuộc tính id`>
+\end{lstlisting}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+#red {
+   color: red; 
+}
+\end{lstlisting}
+Đoạn mã trên sẽ áp dụng cho thẻ mà thuộc tính {\ttfamily id} của nó có giá trị là {\ttfamily red}. Hay cụ thể hơn với ví dụ sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+h1#black {
+   color: #000000; 
+}
+\end{lstlisting}
+
+Đoạn mã trên sẽ áp dụng cho thẻ {\ttfamily h1} có thuộc tính {\ttfamily id} là {\ttfamily black}.
+
+\item	{\ttfamily property1, property2}: Danh sách các thuộc tính áp dụng lên {\ttfamily selector} được chọn.
+\item	{\ttfamily value1, value2}: Danh sách giá trị của các thuộc tính.
+
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+p {
+	text-align: center;
+	color: red;
+}
+\end{lstlisting}
+Đoạn mã trên áp dụng cho tất cả thẻ {\ttfamily  p} và có ý nghĩa là: chữ canh giữa và có màu đỏ.
+
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+.title, #logo{
+	background-color: lightblue;
+}
+\end{lstlisting}
+
+
+Đoạn mã này áp dụng cho tất cả các thẻ có thuộc tính {\ttfamily  class } có giá trị là {\ttfamily title} và thẻ có {\ttfamily id} là {\ttfamily logo}.
+\end{itemize} 
+\subsection {Chú thích}
+Cũng giống như các ngôn ngữ lập trình thì trong mã CSS, chúng ta có thể tạo các chú thích nhằm tiện chọ việc tham khảo, trao đổi, ghi nhớ hoặc tra cứu về sau. Cú pháp của chú thích trong CSS như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+/* 
+	`Chú thích`
+*/
+\end{lstlisting}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+body {
+  background: #ffffff;
+  /* `nền trắng` */
+  font-family: Verdana;
+  /* `font chữ Verdana` */
+  color: #ff0000;
+  /* `màu chữ là màu đỏ` */
+}
+\end{lstlisting}
+\subsection {Đơn vị đo}
+Khi trình bày tài liệu, việc xác định vị trí, kích thước của các thành phần trong tài liệu là rất quan trọng. Để làm điều này, CSS sử dụng một số đơn vị đo và được chia thành 2 loại: đơn vị đó tuyệt đối và đơn vị đo tương đối.
+
+\subsubsection{ Đơn vị đo tuyệt đối}
+\begin{center}
+
+ \begin{longtable}{|m{2cm}|m{3cm}| m{6cm}|} 
+ \caption[Đơn vị đo tuyệt đối thường dùng trong CSS] { Đơn vị đo tuyệt đối thường dùng trong CSS }
+ %\label{variability_impl_mech}
+  \endfirsthead
+  \endhead
+ 
+\hline 
+
+ \multicolumn{1}{|c|}{\textbf{ Đơn vị}}
+   &
+ \multicolumn{1}{c|}{\textbf{Mô tả}}
+   &
+ \multicolumn{1}{|c|}{ \textbf{Ví dụ}}
+
+\\ \hline
+cm &	Centimeters & 
+
+{\ttfamily
+	p \{	  font-size: 0.5cm;	  line-height: 1cm;	\}
+}
+ \\ \hline   
+mm &	Millimeters &	p \{
+  font-size: 5mm;
+  line-height: 10mm;
+\}  \\ \hline 
+in &	Inches (1in = 96px = 2.54cm) &	p \{
+  font-size: 0.2in;
+  line-height: 0.5in;
+\} \\ \hline
+px &	Pixels (1px = 1/96 in) &	p \{
+  font-size: 15px;
+  line-height: 20px;
+\} \\ \hline
+pt &	Points (1pt = 1/72 of 1in) &	p \{
+  font-size: 15pt;
+  line-height: 25pt;
+\} \\ \hline
+pc &
+Picas (1pc = 12 pt) &	p \{
+  font-size: 1.5pc;
+  line-height: 3pc;
+\} \\ \hline
+
+\end{longtable}
+
+
+\end{center}
+\vspace{-1cm}
+
+Lưu ý: Pixels là đơn vị đo mang tính tương đối trong các thiết bị khác nhau. Với các thiết bị có độ phân giải thấp thì 1px tương ứng với 1 điểm trên thiết bị, còn với các thiết bị có độ phân giải cao thì 1px tương ứng với nhiều điểm trên thiết bị.
+
+\subsubsection{Đơn vị đo tương đối}
+Đơn vị đo tương đối được thể hiện như bảng sau:
+\begin{center}
+
+ \begin{longtable}{|m{2cm}|m{5cm}| m{4cm}|}
+  \caption [Đơn vị đo tương đối thường dùng trong CSS]{ Đơn vị đo tương đối thường dùng trong CSS }
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+  
+ \hline
+\multicolumn{1}{|c|}{\textbf{Đơn vị}}
+ &
+ \multicolumn{1}{|c|}{
+\textbf{	Mô tả}}
+ &	
+\multicolumn{1}{|c|}{\textbf{Ví dụ}}
+ \\ \hline
+em &	Liên quan đến kích thước font chữ (2em tương ứng với kích thước hiện tại của font chữ nhân với 2) &	p \{
+  font-size: 16px;
+  line-height: 2em;
+\} \\ \hline
+
+rem &	Liên quan đến kích thước font chữ của thẻ gốc &	div \{
+  font-size: 3rem;
+  border: 1px solid black;
+\}\\ \hline
+
+\% &	Liên quan đến kích thước của thẻ cha &	div \{
+  font-size: 150%;
+  border: 1px solid black;
+\}\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\subsection {Mô hình hộp}
+CSS xem tất cả các thẻ trong tài liệu như là các hộp chứa (box). Thuật ngữ "box model" được sử dụng khi nhắc đến việc thiết kế và bố trí các thành phần trên trình duyệt. Mỗi hộp chứa bao gồm các thành phần:  margins, borders, padding và nội dung của thẻ. Hình \ref{hinh53} mô tả cấu trúc của mô hình hộp trong CSS.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.50]{Figures//Hinh53.jpg}
+\caption{ Mô hình hộp trong CSS }\label{hinh53} 
+\end{figure}
+
+Trong đó:
+\begin{itemize}
+\item 	Content: Nội dung của hộp có thể là văn bản, hình ảnh…
+\item 	Padding: Vùng xung quanh nội dung, vùng không được sử dụng. Phần này khi lên trình duyệt sẽ có màu trong suốt.
+\item 	Border: Khung bao quanh phần padding và content.
+\item 	Margin: Vùng nằm ngoài border. Cũng giống như padding, vùng này sẽ có màu trong suốt khi lên trình duyệt.
+\end{itemize}
+
+Do vậy, khi thiết lập chiều rộng và chiều cao của một thẻ nào đó trong CSS, chúng ta cần lưu ý đến công thức tính kích thước của hộp. 
+
+Ví dụ: 
+
+{\ttfamily
+div \{ \\
+ \indent \indent  width: 320px; \\
+ \indent \indent padding: 10px; \\
+  \indent \indent border: 5px solid gray; \\
+   \indent \indent margin: 0;  \\
+ \indent  \}
+}
+
+Với thiết lập như trên thì hộp chứa có kích thước theo chiều rộng tương ứng là:
+
+{\ttfamily
+320px (width) + 20px (left + right padding) + 10px (left + right border) + 0px (left + right margin) = 350px
+}
+
+Tóm lại công thức tính kích thước hộp chứa như sau:
+
+{\ttfamily
+Độ rộng của hộp = width + left padding + right padding + left border + right border + left margin + right margin
+
+Chiều cao của hộp = height + top padding + bottom padding + top border + bottom border + top margin + bottom margin
+}
+
+\subsection {Sử dụng CSS để biến đổi XML}
+Dữ liệu trong XML không có khả năng hiển thị, vì vậy CSS sẽ hỗ trợ quy định cách mà các thẻ XML sẽ hiển thị lên trình duyệt. Khai báo và sử dụng CSS trong XML tương tự như trong HTML.
+
+Ví dụ: trong file bookstore.xml chúng ta thêm một đoạn mã như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<?xml-stylesheet type="text/css" href="style.css"?>
+\end{lstlisting}
+
+Đoạn mã trên sẽ nhúng file style.css vào trong tài liệu XML để nhằm quy định cách mà dữ liệu trong tài liệu XML được hiển thị.
+
+Ở đây, chúng tôi minh họa bằng một đoạn css trong file style.css như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+bookstore{
+	padding: 50px;
+	}
+title{
+	display: block;
+	font-size: 15pt;
+	 	color:red;
+	 	padding: 5px;
+	background: lightblue;
+}
+author, year, price{
+	font-size: 10pt;
+	color:gray;
+	display: block;
+	margin-bottom: 5px;
+}
+price{
+	border-bottom: 1px solid gray;
+}
+\end{lstlisting}
+Cuối cùng chúng ta có kết quả như Hình \ref{hinh54}.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.60]{Figures//Hinh52.jpg}
+\caption{ Kết quả áp dụng file style.css }\label{hinh54} 
+\end{figure}
+
+\section{ Biến đổi tài liệu XML với XSL}
+\subsection {Định nghĩa XSL}
+XSL có tên đầy đủ là Extension Style Language, là một ngôn ngữ giúp chuyển đổi tài liệu XML thành một định dạng khác như (X)HTML. Ngôn ngữ XSL bao gồm bốn phần:
+\begin{itemize}
+
+
+\item	XSLT: ngôn ngữ biến đổi tài liệu XML.
+\item	XPath: ngôn ngữ định hướng tài liệu XML.
+\item	XQuery: ngôn ngữ truy vấn tài liệu XML.
+\item	XSL-FO: ngôn ngữ định dạng tài liệu XML (đã ngừng phát triển vì đã có CSS3 bổ sung).
+\end{itemize}
+
+Bản thân XSL cũng là một tài liệu XML Well-formed, trong đó nó chứa những lệnh của chính nó và dữ liệu HTML như là những template cho kết quả đầu ra, vì vậy khi xây dựng tài liệu XSL chúng ta vẫn phải tuân theo mọi quy tắc của một XML Well-formed.
+\subsection{Định nghĩa XSLT}
+XSLT là một phần quan trọng của XSL, nó được sử dụng để biến đối một tài liệu XML sang một định dạng XML khác được các trình duyệt nhận ra giống như HTML hay XHTML. Thông thường mỗi thẻ XML sẽ được XSLT biến đổi thành một thẻ trong (X)HTML.
+
+XSLT sử dụng XPath để tìm kiếm thông tin của một hay nhiều thẻ XML. Sau khi tìm ra, nó có thể thêm, xóa, sắp xếp và tổ chức lại các thẻ và các thuộc tính của XML trước khi biến đổi thành file (X)HTML. 
+
+\subsection {Cách thức biến đổi XML với XSLT}
+Để trình phân tích XML nhận diện được các lệnh XSL thì chúng ta cần phải khai báo một namespace trong phần tử gốc {\ttfamily xsl:stylesheet} trong file bookstore.xsl như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/ Transform" version="1.0">
+	<xsl:template match="/">
+		...
+	</xsl:template>
+</xsl:stylesheet>
+\end{lstlisting}
+
+Trong phần tử gốc {\ttfamily xsl:stylesheet} có thể chứa một hoặc nhiều {\ttfamily xsl:template}. Trong đó thuộc tính match dùng để chỉ ra nút xuất phát mà ở đó {\ttfamily xsl:template} được áp dụng.
+Để tham chiếu tài liệu XSL trong tài liệu XML, chúng ta thêm vào đầu tài liệu XML dòng sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<?xml-stylesheet type="text/xsl" href="bookstore.xsl"?>
+\end{lstlisting}
+
+\subsection{ Một số thẻ thường dùng}
+\subsubsection {Thẻ xsl:template}
+Một file XSL bao gồm một hoặc nhiều thẻ {\ttfamily template}. Mỗi thẻ {\ttfamily template} chứa nhiều quy tắc để áp dụng lên các nút được chỉ ra trong trong thuộc tính match. Giá trị của thuộc tính {\ttfamily match }là một biểu thức XPath. Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	match="/"
+\end{lstlisting}
+
+Biểu thức trên nhằm áp dụng template tính từ thẻ gốc XML, tức là áp dụng cho toàn bộ tài liệu XML.
+\subsubsection {Thẻ xsl:value-of}
+Thẻ {\ttfamily value-of} có thể được sử dụng để lấy giá trị của một thẻ hay một thuộc tính trong tài liệu XML. Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:value-of select="bookstore/book/title"/>
+\end{lstlisting}
+
+Trong đó, thuộc tính select có giá trị là một biểu thức XPath dùng để trích xuất ra một phần tử. Biểu thức trong ví dụ trên có nghĩa là lấy giá trị title của một cuốn sách.
+\subsubsection {Thẻ xsl:attribute}
+Thẻ này giúp chúng ta thêm một thuộc tính vào một phần tử nào đó trong tài liệu kết quả với một giá trị lấy từ tài liệu XML. Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:attribute name="attributeName" namespace="uri">
+	...
+	</xsl:attribute>
+\end{lstlisting}
+Trong đó: 
+\begin{itemize}
+
+\item {\ttfamily  name}: Tên của thuộc tính.
+\item {\ttfamily  namespace}: Tùy chọn, định nghĩa URI của thuộc tính.
+\end{itemize}
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<a>
+	<xsl:attribute name="id">
+		<xsl:value-of select="bookstore/book[@id]"/>
+	</xsl:attribute>
+	<xsl:value-of select="bookstore/book/title"/>
+</a>
+\end{lstlisting}
+
+Đoạn mã trên giúp chúng ta lấy giá trị thuộc tính {\ttfamily id} của cuốn sách và gán cho thuộc tính {\ttfamily id} của thẻ {\ttfamily a}.
+\subsubsection {Thẻ xsl:attribute-set}
+Thẻ này dùng để tạo ra một tập các thuộc tính của một thẻ trong (X)HTML. Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:attribute-set name="name" use-attribute-sets= "name-list">
+	`<!-- Nội dung là tập thuộc tính: xsl:attribute -->`
+</xsl:attribute-set>
+\end{lstlisting}
+Trong đó:
+\begin{itemize}
+
+\item {\ttfamily  name}: Tên của tập thuộc tính.
+
+\item {\ttfamily  use-attribute-sets}: Tùy chọn. Giá trị của nó sẽ là một tên của một tập thuộc tính khác để bổ sung cho tập thuộc tính này.
+\end{itemize}
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:attribute-set name="font">
+	<xsl:attribute name="fname">Arial</xsl:attribute>
+	<xsl:attribute name="size">14px</xsl:attribute>
+	<xsl:attribute name="color">red</xsl:attribute>
+</xsl:attribute-set>
+\end{lstlisting}
+
+Đoạn mã này thiết lập một tập thuộc tính tên là {\ttfamily font} (Tên này chỉ có ý nghĩa tham chiếu) và quy định các thuộc tính {\ttfamily fname, size, color}. Khi muốn sử dụng tập thuộc tính này trong các thẻ của một template ta phải sử dụng thuộc tính {\ttfamily xsl:use-attribute-sets} có giá trị là tên của tập thuộc tính trên.
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<a xsl:use-attribute-sets="font">
+	<xsl:value-of select="bookstore/book/title"/>
+</a>
+\end{lstlisting}
+
+Lưu ý: Thẻ này phải là thẻ con của thẻ {\ttfamily xsl:stylesheet}.
+\subsubsection {Thẻ xsl:element}
+Thẻ này cho phép thêm một thẻ (X)HTML vào trong tài liệu kết quả. 
+
+Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:element name="name" namespace="URI" use-attribute-sets="namelist">
+		...
+</xsl:element>
+\end{lstlisting}
+
+Trong đó:
+\begin{itemize}
+
+\item {\ttfamily name}: Tên thẻ sẽ được tạo.
+\item {\ttfamily uri}: Tùy chọn. Giá trị là namespace của thẻ được tạo ra.
+
+\item {\ttfamily use-attribute-sets}: Tùy chọn. Giá trị là tập thuộc tính đã định nghĩa trước đó.
+\end{itemize}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:template match="/">
+	<xsl:for-each select="bookstore/book">
+		<xsl:element name="author">
+			<xsl:value-of select="author" />
+		</xsl:element>
+		<br />
+	</xsl:for-each>
+</xsl:template>
+\end{lstlisting}
+
+Đoạn mã này sẽ tạo ra một thẻ {\ttfamily author} trong tài liệu kết quả và chứa giá trị của thẻ {\ttfamily author} trong XML trong mỗi lần lặp.
+\subsubsection {Thẻ xsl:variable}
+Thẻ này dùng để khai báo một biến. Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:variable name="name" select="expression">
+	...
+	</xsl:variable>
+\end{lstlisting}
+Trong đó:
+\begin{itemize}
+
+\item {\ttfamily  name}: Tên biến.
+
+\item {\ttfamily  select}: Giá trị của biến.
+\end{itemize}
+Ví dụ:
+\begin{lstlisting}[escapechar=`]
+	<xsl:variable name="color" select="'red'" />
+\end{lstlisting}
+
+Khai báo biến {\ttfamily color} có giá trị là {\ttfamily red}, trong đó giá trị phải đặt trong cặp dấu {\ttfamily "red"} hoặc {\ttfamily 'red'}. Trường hợp biến {\ttfamily select} không chứa giá trị thì phần nội dung bên trong sẽ là giá trị của biến.
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:variable name="header">
+  <tr bgcolor="#9acd32">
+    <th>Title</th>
+    <th>Artist</th>
+  </tr>
+</xsl:variable>
+\end{lstlisting}
+\subsubsection {Thẻ xsl:copy-of}
+Tạo ra một bản sao của biểu thức được chỉ ra trong thuộc tính {\ttfamily select}. Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:copy-of select="expression"/>
+\end{lstlisting}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:variable name="header">
+	<tr>
+		<th>Element</th>
+		<th>Description</th>
+	</tr>
+</xsl:variable>
+<xsl:template match="/">
+	<html>
+	<body>
+		<table>
+			<xsl:copy-of select="$header" />
+			...
+		</table>
+	</body>
+</html>
+</xsl:template>
+\end{lstlisting}
+
+Đoạn mã trên sẽ tiến hành sao chép giá trị của biến {\ttfamily \$header} và ghi vào tài liệu kết quả.
+
+\subsubsection {Thẻ xsl:param và thẻ xsl:with-param}
+Thẻ {\ttfamily xsl:param} cũng tương tự như thẻ {\ttfamily xsl:variable} để khai báo biến. Tuy nhiên với thẻ {\ttfamily xsl:param} chúng ta có thể thay đổi giá trị của nó thông qua thẻ {\ttfamily xsl:with-param}. Cú pháp thẻ {\ttfamily xsl:param}:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:param name="name" select="expression">
+  `<!-- Nội dung như là template -->`
+</xsl:param>
+\end{lstlisting}
+Trong đó:
+\begin{itemize}
+
+\item {\ttfamily name}: Tên biến.
+
+\item {\ttfamily select}: Giá trị của biến. Trường hợp bỏ qua thuộc tính {\ttfamily select} thì phần thân của thẻ sẽ là giá trị của biến.
+\end{itemize} 
+Cú pháp thẻ {\ttfamily xsl:with-param}:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:with-param name="name" select="expression">
+  ...
+</xsl:with-param>
+\end{lstlisting}
+Trong đó:
+\begin{itemize}
+\item {\ttfamily name}: Tên biến sẽ được thay đổi giá trị.
+
+\item {\ttfamily select}: Giá trị mới của biến. Trường hợp bỏ qua thuộc tính {\ttfamily select} thì phần thân của thẻ sẽ là giá trị mới của biến.
+\end{itemize}  
+\subsubsection {Thẻ xsl:for-each}
+Thẻ {\ttfamily for-each} có thể được sử dụng để chọn mọi thẻ XML theo điều kiện được chỉ ra trong giá trị của thuộc tính {\ttfamily select}.
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:for-each select="bookstore/book">
+\end{lstlisting}
+
+Biểu thức trên sẽ chọn ra tất cả các cuốn sách có trong tài liệu. Ngoài ra, trong biểu thức XPath, chúng ta có thể sử dụng thêm các điều kiện để lọc ra thẻ XML mà ta mong muốn. 
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:for-each select="bookstore/book[author='J K. Rowling']">
+\end{lstlisting}
+
+Biểu thức này nằm lọc ra các cuốn sách có tác giả là {\ttfamily J K. Rowling}. Lưu ý rằng thẻ {\ttfamily for-each} sẽ lọc ra danh sách các thẻ theo điều kiện. Vì vậy, sau khi xử lý xong mỗi phần tử trong danh sách này chúng ta cần phải dùng thẻ đóng để kết thúc như sau:
+
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	</xsl:for-each>
+\end{lstlisting}
+
+Sau đây là đoạn mã hoàn chỉnh trong việc sử dụng thẻ này:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:for-each select="bookstore/book[author='J K. Rowling']">
+<tr>
+	<td><xsl:value-of select="title"/></td>
+	<td><xsl:value-of select="author"/></td>
+</tr>
+</xsl:for-each>
+\end{lstlisting}
+\subsubsection {Thẻ xsl:sort}
+Thẻ {\ttfamily sort} nhằm sắp xếp các thẻ XML sau khi lọc. Thẻ này được đặt trong thẻ {\ttfamily xsl:for-each}.
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:for-each select="bookstore/book">
+<xsl:sort select="title"/>
+<tr>
+	<td><xsl:value-of select="title"/></td>
+	<td><xsl:value-of select="artist"/></td>
+</tr>
+</xsl:for-each>
+\end{lstlisting}
+
+Đoạn mã trên có ý nghĩa sắp xếp các cuốn sách theo tiêu đề của cuốn sách.
+\subsubsection {Thẻ xsl:if}
+Thẻ {\ttfamily if} nhằm xác định một đoạn mã có được thực hiện hay không dựa vào kết quả của biểu thức điều kiện. Thẻ này có cú pháp sử dụng như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:if test="expression">
+ ` //Phần mã được thực hiện nếu expression = true`
+</xsl:if>
+\end{lstlisting}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:for-each select="bookstore/book">
+<xsl:if test="price &gt; 10">
+<tr>
+	<td><xsl:value-of select="title"/></td>
+	<td><xsl:value-of select="author"/></td>
+	<td><xsl:value-of select="price"/></td>
+</tr>
+</xsl:if>
+</xsl:for-each>
+\end{lstlisting}
+
+Lưu ý rằng, thẻ này sử dụng thuộc tính {\ttfamily test} để chỉ rõ điều kiện chứ không phải là thuộc tính {\ttfamily select} như những thẻ khác.
+\subsubsection {Thẻ xsl:choose}
+Thẻ này được sử dụng kết hợp với thẻ {\ttfamily xsl:when} và thẻ {\ttfamily xsl: otherwise} để lựa chọn đoạn mã được thực hiện dựa vào biểu thức điều kiện. Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:choose>
+	<xsl:when test="expression">
+		`//Phần mã được thực hiện nếu expression = true`
+	</xsl:when>
+	<xsl:otherwise>
+		`//Phần mã được thực hiện nếu expression = false`  
+	</xsl:otherwise>
+</xsl:choose>
+\end{lstlisting}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:for-each select="bookstore/book">
+<tr>
+	<td><xsl:value-of select="title"/></td>
+	<xsl:choose>
+		<xsl:when test="price &gt; 10">
+			<td bgcolor="#ff00ff">
+				<xsl:value-of select="author"/>
+			</td>
+		</xsl:when>
+	<xsl:otherwise>
+		<td><xsl:value-of select="author"/></td>
+	</xsl:otherwise>
+	</xsl:choose>
+</tr>
+</xsl:for-each>
+\end{lstlisting}
+
+\subsubsection {Thẻ xsl:apply-templates}
+Thẻ này nhằm áp dụng một template đến thẻ XML hiện tại hoặc các thẻ con của thẻ XML hiện tại. Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:template match="/">
+	<html>
+	<body>
+		<h2>My Book Collection</h2>
+		<xsl:apply-templates/>
+	</body>
+	</html>
+	</xsl:template>
+\end{lstlisting}
+
+Template trên có sử dụng thẻ {\ttfamily xsl:apply-templates} nhưng không có thuộc tính {\ttfamily select}. Do đó, nó sẽ áp dụng toàn bộ các template được định nghĩa sau đó cho toàn bộ các thẻ con của nó trong tài liệu XML.
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:template match="book">
+	<p>
+	<xsl:apply-templates select="title"/>
+	<xsl:apply-templates select="author"/>
+	</p>
+	</xsl:template>
+\end{lstlisting}
+
+Template này sẽ áp dụng cho các thẻ {\ttfamily book}, nhưng các thẻ con là {\ttfamily title} và {\ttfamily author} sẽ được áp thêm template riêng lần lượt như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:template match="title">
+	Title: <span style="color:#ff0000">
+	<xsl:value-of select="."/></span>
+	<br />
+</xsl:template>
+<xsl:template match="author">
+	Author: <span style="color:#00ff00">
+	<xsl:value-of select="."/></span>
+	<br />
+</xsl:template>
+\end{lstlisting}
+\subsubsection {Thẻ xsl:call-template}
+Thẻ này dùng để triệu gọi một {\ttfamily xsl:template} bởi tên của template được chỉ ra trong thuộc tính {\ttfamily select}. Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:call-template name="templatename">
+	...
+</xsl:call-template>
+\end{lstlisting}
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<xsl:template match="book">
+  <xsl:call-template name="title"/>
+</xsl:template>
+\end{lstlisting}
+\subsubsection {Thẻ xsl:include và thẻ xsl:import}
+
+
+Hai thẻ này nhằm mục đích nạp nội dung của một file xsl khác vào trong tài liệu hiện tại. Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<xsl:include href="URI"/>
+	<xsl:import href="URI"/>
+\end{lstlisting}
+
+Trong đó:
+
+{\ttfamily href}: là thuộc tính chỉ ra địa chỉ URI của file cần nạp.
+
+Cả hai thẻ trên đều phải là thẻ con của thẻ {\ttfamily xsl:stylesheet}. Điểm khác nhau giữa hai thẻ trên đó là thẻ được chỉ ra trong thuộc tính {\ttfamily match} của template trong file xsl cần nạp phải có cấp thấp hơn.
+
+\section{Tiểu kết chương 5}
+Trong chương này, chúng tôi đã chỉ ra phương pháp để chuyển đổi tài liệu XML sang một định dạng XML khác được trình duyệt hỗ trợ như là (X)HTML bằng CSS và XSL mà cụ thể là XSLT. Dữ liệu được đặt trong file XML, còn phần chuyển đổi được đặt trong file riêng có thể là css hoặc xsl tùy theo phương pháp sử dụng. Tuy XSL và CSS đều có thể được sử dụng để kết xuất cho tài liệu cho XML, nhưng XSL được khuyến cáo sử dụng bởi W3C và có thể được sử dụng với tính năng linh hoạt hơn.
+
+\begin{center}
+\textbf{Câu hỏi và bài tập}
+\end{center}
+
+Câu 1. Hãy phân biệt XSLT và XSL?
+
+Câu 2. Nêu cú pháp cách khai báo CSS nội và CSS ngoại. 
+
+Câu 3. XSL là gì? Nêu một số quy tắc chung khi sử dụng XSL? 
+
+Câu 4. Cho biết một số phần tử thường dùng của XSL, cho ví dụ? 
+
+Câu 5. Tự thực hành dùng CSS và XSL để biến đổi một tài liệu XML trong các bài toán: Quản lý sinh viên, Quản lý kho, Quản lý dự án…
+
+
+
+

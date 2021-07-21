@@ -1,0 +1,879 @@
+\setcounter{chapter}{2}
+\setcounter{section}{0}
+\chapter* {\begin{flushleft}
+CHƯƠNG 2\\
+\end{flushleft}ĐẶC TẢ NỘI DUNG VÀ CẤU TRÚC TÀI LIỆU XML VỚI DTD} 
+\addcontentsline{toc}{chapter}{Chương 2. Đặc tả nội dung và cấu trúc tài liệu XML với DTD}
+%\thispagestyle{fancy}
+\section{ Mở đầu }
+\label{muc2.1 }
+
+XML chứa các dữ liệu bằng cách dùng những cặp thẻ, nhưng bản thân XML không đòi hỏi dữ liệu nào cần phải hiện diện hay chúng phải liên hệ nhau như thế nào. Chẳng hạn, các ứng dụng khi đọc một tài liệu XML làm sao biết được thẻ nào là con của thẻ nào? Các thẻ được tổ chức như thế nào? ... Có một cách để thực hiện việc ấy là ghi vào phần đầu của một trang XML những qui luật ấn định các dữ liệu phải như thế nào để trang XML đuợc xem là có ý nghĩa. Tập hợp các qui luật ấy được gọi là Document Type Definition (DTD). 
+
+
+Dưới đây là một khai báo DTD của một tài liệu XML có tên note.xml:
+\lstset{language=XML}
+\begin{lstlisting}
+<!DOCTYPE note
+[
+	<!ELEMENT note (to,from,heading,body)>
+	<!ELEMENT to (#PCDATA)>
+	<!ELEMENT from (#PCDATA)>
+	<!ELEMENT heading (#PCDATA)>
+	<!ELEMENT body (#PCDATA)>
+]>
+\end{lstlisting}
+
+<!-\,-Kết thúc phần khai báo DTD -\,-> 
+	
+<!-\,-Bắt đầu nội dung của note.xml -\,-> \\
+
+
+\lstset{language=XML}
+\begin{lstlisting}
+ <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE note SYSTEM "Note.dtd">
+<note>
+  	<to>Tove</to>
+  	<from>Jani</from>
+  	<heading>Reminder</heading>
+  	<body>Don't forget me this weekend!</body>
+</note> 
+\end{lstlisting}
+
+
+ DTD ở trên được diễn tả như sau:
+ \begin{itemize}
+\item  
+{\ttfamily !DOCTYPE note}: nói rằng thẻ gốc của tài liệu XML là note.
+\item {\ttfamily  <!ELEMENT note (to,from,heading,body)>}: thẻ note có 4 thẻ con là:  {\ttfamily "to, from, heading, body"}.    
+\item  {\ttfamily <!ELEMENT to (\#PCDATA)>}: thẻ to có kiểu xâu ký tự.
+\item  {\ttfamily  <!ELEMENT from}: thẻ from có kiểu xâu ký tự.
+\item  {\ttfamily  <!ELEMENT heading}: thẻ heading có kiểu xâu ký tự.
+\item  {\ttfamily  <!ELEMENT body}: thẻ from có kiểu xâu ký tự.
+\end{itemize}
+
+{\ttfamily  \#PCDATA} là viết tắt của cụm từ "Parsed Character Data". Nghĩa là các dữ liệu thuộc kiểu này là dạng xâu ký tự.
+
+Như vậy, DTD là kiểu tài liệu dùng để định nghĩa kiểu dữ liệu cho các thẻ trong tài liệu XML. Việc định nghĩa các thẻ trong tài liệu XML là tùy ý, miễn sao cho nó hợp quy tắc của XML. Tuy nhiên, để tường minh hơn thì ta nên định nghĩa kiểu dữ liệu cho từng thẻ trong tài liệu XML sao cho khi đọc một tài liệu XML nào đó thì chỉ cần đọc phần phần khai báo DTD chúng ta sẽ biết được cấu trúc của tài liệu XML.
+
+Vấn đề đặt ra là tại sao phải sử dụng DTD để khai báo cấu trúc và khai báo cấu trúc để làm gì? Thực tế do nhu cầu trao đổi dữ liệu của các nhóm lập trình độc lập trên các ứng dụng khác nhau, các ứng dụng này chỉ  có thể sử dụng chung một dữ liệu XML khi bản thân nó được tuân theo một chuẩn hóa nào đó. Do đó, khai báo cấu trúc DTD sẽ làm sao cho nhiều người hay nhiều chương trình khác nhau có thể đọc file lẫn nhau.
+
+Việc viết một tài liệu DTD không khó, chỉ cần chúng ta tuân thủ đúng một số quy tắc của W3C là được. Đầu tiên chúng ta hãy tìm hiểu về các thẻ (element), thuộc tính (attribute), thực thể (entity) của DTD.
+\section{ Phần tử <!DOCTYPE>}
+\label{muc2.2 }
+Phần tử này có chức năng dùng để khai báo bắt đầu định nghĩa kiểu dữ liệu DTD.
+
+Có nhiều cách khác nhau cho phép khai báo cấu trúc của tài liệu XML. Khai báo cấu trúc tài liệu XML với DTD được lưu trữ ngay bên trong chính tài liệu XML đó và khai báo với DTD được lưu trữ ở bên ngoài tài liệu XML. Chúng ta sẽ gọi các khai báo này là khai báo DTD với tham chiếu nội và khai báo DTD với tham chiếu ngoại. 
+\subsection{ Định nghĩa DTD tham chiếu nội}
+
+Khai báo cấu trúc tài liệu XML được lưu trữ ngay bên trong chính tài liệu XML đó.
+
+ Để bắt đầu định nghĩa kiểu dữ liệu DTD tham chiếu nội chúng ta dùng cú pháp sau:
+\begin{lstlisting}[escapechar=`]
+ <!DOCTYPE root-element [
+	`Đặc tả cấu trúc nội dung các thẻ`
+	`Đặc tả thuộc tính các thẻ`
+ ]> 
+\end{lstlisting}
+ 
+Trong đó,  {\ttfamily root-element} là tên thẻ gốc của tài liệu XML.
+
+Ví dụ về một DTD tham chiếu nội:
+\lstset{language=XML}
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE note [
+    <!ELEMENT note (to,from,heading,body)> 
+    <!ELEMENT to (#PCDATA)> 
+    <!ELEMENT from (#PCDATA)> 
+    <!ELEMENT heading (#PCDATA)> 
+    <!ELEMENT body (#PCDATA)]
+    <note>
+    	<to>Tove</to>
+		<from>Jani</from>
+		<heading>Reminder</heading>
+		<body>Don't forget me this weekend</body> 
+    </note> 
+\end{lstlisting}
+\subsection{ Định nghĩa DTD tham chiếu ngoại}
+ 
+Trường hợp DTD được khai báo ở một file bên ngoài tài liệu XML ta có DTD tham chiếu ngoại. Sử dụng định nghĩa DTD tham chiếu ngoại sẽ làm cho các ứng dụng XML của chúng ta trở nên dễ dàng chia sẻ và dùng chung với các ứng dụng khác.
+ 
+ Để định nghĩa một DTD tham chiếu ngoại chúng ta dùng cú pháp:
+\begin{center}
+{ \ttfamily <!DOCTYPE root-element  SYSTEM "filename">} 
+\end{center}
+
+Chú ý: dòng này phải đặt sau dòng khai báo XML của tài liệu XML. Trong đó, root-element là tên thẻ gốc của tài liệu XML, filename là tên file DTD định nghĩa kiểu dữ liệu XML.
+ 
+Ví dụ về một DTD tham chiếu ngoại. Trong đó, file note.dtd ở bên ngoài file note.xml:
+\lstset{language=XML}
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE note SYSTEM "note.dtd">
+<note>
+	<to>Tove</to>
+	<from>Jani</from>
+	<heading>Reminder</heading>
+</note>
+\end{lstlisting}
+
+Khi đó file note.dtd chứa khai báo DTD của tài liệu XML note.xml, có nội dung như sau:
+\lstset{language=XML}
+\begin{lstlisting}
+<!ELEMENT note (to,from,heading,body)>
+<!ELEMENT to (#PCDATA)>
+<!ELEMENT from (#PCDATA)>
+<!ELEMENT heading (#PCDATA)>
+<!ELEMENT body (#PCDATA)>
+\end{lstlisting}
+
+Trong thực tế, địa chỉ file DTD có thể là một URL/URI nào đó.
+
+Ví dụ:
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE note SYSTEM "http://www.w3schools.com/dtd/note.dtd">
+<note>
+	<to>Tove</to>
+	<from>Jani</from>
+	<heading>Reminder</heading>
+	<body>Don't forget me this weekend!</body>
+</note>
+\end{lstlisting}
+  
+ Ở đây, tập tin khai báo cấu trúc note.dtd được lấy từ:
+ 
+  "\url{http://www.w3schools.com/dtd/note.dtd}".
+
+Định nghĩa DTD tham chiếu ngoại ở trên được sử dụng cho một nhóm người mang tính cá nhân, chúng không được dùng cho mục đích chung rộng lớn mang tính cộng đồng. Trong thực tế có những địa chỉ chứa file DTD có mặt tại các nguồn khác nhau trên internet được đại diện bởi những URL/URI. Nguồn dữ liệu này có thể sử dụng chung cho cộng đồng hoặc mang tính phân phối. Để sử dụng các dữ liệu loại này chúng ta không dùng từ khóa SYSTEM nữa mà sử dụng từ khóa PUBLIC với khai báo như sau:
+\begin{center}
+ {\ttfamily 	<!DOCTYPE root-element  PUBLIC "FPI" "URL">}
+\end{center}
+
+Trong đó, FPI (Formal Public Identifier) là định danh chung hình thức, chúng ta cần tuân theo một số quy tắc áp dụng cho FPI như sau:
+ \begin{itemize}
+\item 	Trường đầu tiên của một FPI là xác định kết nối của DTD đến chuẩn hình thức. Đối với các DTD chúng ta tự định nghĩa thì trường này là một dấu chấm. Đối với các chuẩn hình thức trường này sẽ tự tham chiếu đến chuẩn của nó.
+\item 	Trường thứ hai là tên nhóm hay tên người chịu trách nhiệm bảo trì và nâng cấp các định nghĩa DTD và tên này phải mang tính duy nhất.
+\item 	Trường thứ ba chỉ định kiểu của tài liệu được mô tả, thường thì trường này kèm theo một số định danh duy nhất nào đó (chẳng hạn như version 1.0).
+\item 	Trường thứ tư chỉ định ngôn ngữ định nghĩa DTD (ví dụ như ngôn ngữ Tiếng Anh - EN).
+\item 	Mỗi trường của FPI cách nhau bởi dấu //.
+ \end{itemize}
+ 
+Ví dụ:
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE note PUBLIC ".//w3schools//note XML version 1.0//EN"
+ "http://www.w3schools.com/dtd/note.dtd">
+<note>
+	<to>Tove</to>
+	<from>Jani</from>
+</note>
+\end{lstlisting}
+
+Ở đây:
+ "\url{.//w3schools//note XML version 1.0// EN}" là FPI
+ 
+ "\url{http://www.w3schools.com/dtd/note.dtd}"> là URL, địa chỉ trên internet của file note.dtd.
+\section{ Phần tử <!ELEMENT>}
+\label{muc2.3}
+
+Phần tử  {\ttfamily <!ELEMENT> }dùng để định nghĩa kiểu dữ liệu cho một thẻ (phần tử) của một tài liệu XML. Chúng ta sử dụng cú pháp sau:
+\begin{center}
+ {\ttfamily  <!ELEMENT element-name content\_model> } 
+\end{center}
+
+Trong đó,  {\ttfamily  element\_name} là tên của thẻ muốn định nghĩa. {\ttfamily content \_model } là kiểu của thẻ này, kiểu của thẻ có thể là  {\ttfamily EMPTY, ANY, \#PCDATA}, cũng có thể là bao gồm nhiều từ khóa khác mô tả cách bố trí, sắp xếp các thành phần con bên trong thẻ.
+
+ \begin{itemize}
+ \item
+{\ttfamily <!ELEMENT element\_name EMPTY>}: Định nghĩa một thẻ rỗng.
+
+Ví dụ:  {\ttfamily <!EMLEMENT note EMPTY>}: Định nghĩa note là thẻ rỗng.
+\item	 {\ttfamily <!ELEMENT element\_name ANY>}: Định nghĩa một thẻ có chứa nhiều kiểu dữ liệu.
+Ví dụ:  {\ttfamily <!ELEMENT note ANY>}: Định nghĩa note là thẻ có chứa nhiều kiểu dữ liệu.
+\item	  {\ttfamily <!ELEMENT element\_name (\#PCDATA)>}: Định nghĩa một thẻ có kiểu văn bản.\\ 
+  Ví dụ:  {\ttfamily <!ELEMENT note (\#PCDATA)>}: Định nghĩa note là thẻ có kiểu dữ liệu.
+\item	   {\ttfamily <!ELEMENT element\_name (child\_element)>}: Định nghĩa một thẻ có chứa một thẻ con.
+ \end{itemize}
+ 
+ Ví dụ:  {\ttfamily <!ELEMENT note (to)>}: Định nghĩa thẻ note có thẻ con là {\ttfamily to}
+  
+ Định nghĩa một thẻ có chứa nhiều hơn một thẻ con, cách thứ nhất là chúng ta có thể liệt kê tất cả các thẻ con đó và mỗi thẻ con cách nhau bởi dấu phẩy.
+ 
+  	Ví dụ để khai báo thẻ note có 4 thẻ con là {\ttfamily to, from, heading, body} chúng ta viết như sau:
+  	
+   {\ttfamily 	<!ELEMENT note (to, from, heading, body)>}
+   
+  	Tất nhiên với cách viết như thế này thì không tối ưu khi thẻ  có quá nhiều thẻ con, chúng ta có thể dùng cách viết thứ hai cho những thẻ có nhiều thẻ con bằng cách dùng ký tự đại diện.
+  	
+  	Dưới đây là một số nguyên tắc sử dụng ký tự đại diện:
+  	
+  	Giả sử với {\ttfamily A, B} là 2 thẻ con của thẻ {\ttfamily X}. Chúng ta có thể sử dụng có thể sử dụng các quy ước sau để khai báo về thẻ con của một thẻ:
+  	
+ {\ttfamily  A, B}: 	các thẻ {\ttfamily A, B} sắp xếp theo thứ tự từ {\ttfamily A} đến {\ttfamily B}.
+  
+  {\ttfamily A*}:	thẻ {\ttfamily A} có thể lặp lại ít nhất 0 lần.
+   
+  {\ttfamily B+}:	thẻ {\ttfamily B} có thể lặp lại ít nhất 1 lần.
+  
+  {\ttfamily A?}:	thẻ {\ttfamily A} có thể có hay không có.
+  
+  {\ttfamily A|B}:	Có thể chọn sử dụng thẻ {\ttfamily A} hay thẻ {\ttfamily B}.
+  
+   Ví dụ:
+ \begin{itemize}
+\item  {\ttfamily <!ELEMENT X(A*)>}: Thẻ {\ttfamily X} không có hoặc có nhiều thẻ con {\ttfamily A}.
+\item 	 {\ttfamily <!ELEMENT X(A+)>}: Thẻ {\ttfamily X} có một hoặc nhiều thẻ con {\ttfamily A}.
+\item 	 {\ttfamily <!ELEMENT X(A?)>}: Thẻ {\ttfamily X} có hoặc không có một thẻ con {\ttfamily A}.
+\item 	 {\ttfamily <!ELEMENT X(A,B)>}: Thẻ {\ttfamily X} có 2 thẻ con, đầu tiên là thẻ {\ttfamily A} tiếp đến là {\ttfamily B}.
+\item 	 {\ttfamily <!ELEMENT X(A|B)>}: Thẻ {\ttfamily X} có một thẻ con hoặc là {\ttfamily A} hoặc là {\ttfamily B}.
+\item 	 {\ttfamily <!ELEMENT X(A1|\#PCDATA)>} Thẻ {\ttfamily X} có chứa thẻ con {\ttfamily A1} hoặc chứa dữ liệu văn bản.
+Chú ý: Theo nguyên tắc trên chúng ta cũng có thể kết hợp với biểu thức tuần tự để quy định tiêu chuẩn các thẻ con của một thẻ. Ví dụ:
+\item  {\ttfamily <!ELEMENT X(A,B?,C)>}: Thành phần đầu tiên của thẻ {\ttfamily X} là thẻ {\ttfamily A}, kế đến có hay không có thẻ {\ttfamily B} và thành phần cuối cùng phải là {\ttfamily C}.
+\item 	 {\ttfamily <!ELEMENT X (A,B*,C)>}: Thẻ {\ttfamily X} có thành phần đầu tiên là thẻ {\ttfamily A}, kế đến có thể có nhiều hay 0 lần lặp của thẻ {\ttfamily B} và cuối cùng là thẻ {\ttfamily C}.
+\item 	 {\ttfamily <!ELEMENT X (A,B,C)?>}: Thẻ {\ttfamily X} có thể bao hàm bên trong các thẻ {\ttfamily A, B, C} (theo thứ tự trên) hay cũng có thẻ không chứa bất kỳ thẻ nào.
+\item 	 {\ttfamily <!ELEMENT X (A,B,C)*>}: Có thể mô tả lặp đồng thời nhiều thẻ con; Các thẻ {\ttfamily A,B,C} theo thứ tự trên có thẻ lặp lại ít nhất 0 lần trong thẻ {\ttfamily X}.
+\item 	 {\ttfamily <!ELEMENT X (A,B*,C?,D)>} Có thể kết hợp với biểu thức tùy chọn. Thẻ {\ttfamily X} có thành phần đầu tiên là thẻ {\ttfamily A}, kế đến có thể có nhiều hay 0 lần lặp của thẻ {\ttfamily B}, kế đến có thẻ có hay không thẻ {\ttfamily C} và cuối cùng là thẻ {\ttfamily D}.
+\item 	 {\ttfamily <!ELEMENT X (A|B,C*,D)>}: Thẻ {\ttfamily X} có thành phần đầu tiên là thẻ {\ttfamily A} hay thẻ {\ttfamily B}, kế đến có thể có nhiều hay 0 lần lặp của thẻ {\ttfamily B} và cuối cùng là thẻ {\ttfamily D}.
+ \end{itemize}
+ 
+ \section{ Phần tử <!ATTLIST>}
+ \label{muc2.4}
+  Phần tử {\ttfamily  <!ATTLIST> } dùng để định nghĩa kiểu dữ liệu của các thuộc tính của một thẻ trong tài liệu XML theo cú pháp sau:
+  
+   {\ttfamily  <!ATTLIST element-name attribute-name   attribute-type def\\ault-value>}
+    
+   Trong đó:
+   \begin{itemize}
+   
+
+  \item  {\ttfamily element-name}: tên của thẻ cần định nghĩa thuộc tính.
+   
+  \item   {\ttfamily attribute-name}: tên thuộc tính cần định nghĩa.
+   
+  \item   {\ttfamily attribute-type}: kiểu thuộc tính.
+   
+   \item  {\ttfamily default-value}: Giá trị mặc định.
+\end{itemize}
+
+   Kiểu thuộc tính có thể nhận một trong các giá trị như bảng sau:
+\begin{center}
+ \begin{longtable}{|m{2.5cm}|m{9cm}|}
+\caption[Giá trị của attribute-type]{Giá trị của attribute-type}
+ %\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+ \hline
+ %\caption[Giá trị của attribute-type]{Giá trị của attribute-type}
+
+ \multicolumn{1}{|c|}{\textbf{Kiểu}} &	
+ \multicolumn{1}{c|}{ \textbf{Mô tả}}  \\
+ \hline	
+CDATA&	Cho biết thuộc tính này chỉ có thể chứa kiểu dữ liệu ký tự. \\
+ \hline	
+(en1|en2|...) &	Các giá trị mà thuộc tính có thể được gán.\\
+ \hline	
+ID&	Cho biết thuộc tính này là một ID, tức là các giá trị của thuộc tính này không được trùng nhau và phải bắt đầu bởi một chữ cái.\\
+ \hline	
+IDREF&	Cho biết giá trị của thuộc tính này phải là một trong các giá trị của thuộc tính ID của các phần tử khác.\\
+ \hline	
+IDREFS&	Cho biết giá trị của thuộc tính này phải là các giá trị của các thuộc tính có kiểu ID.\\
+ \hline	
+NMTOKEN&	Cho biết giá trị của thuộc tính là các giá trị hợp với quy tắc đặt tên của phần tử của tài liệu XML.\\ 
+NMTOKENS &	Cũng giống như NMTOKEN nhưng nó cho phép chứa nhiều NMTOKEN.\\
+ \hline	
+ENTITY	& Cho biết thuộc tính này nhận giá trị là một tên tham chiếu của thực thể.\\
+ \hline	
+ENTITIES & Thuộc tính này nhận giá trị là các tên tham chiếu của thực thể và cách nhau bởi khoảng trắng.\\
+ \hline	
+ %\caption[Giá trị của attribute-type]{Giá trị của attribute-type}
+\end{longtable}
+
+\end{center}
+\vspace{-1cm}
+
+{ \ttfamily default-value} thông tin về giá mặc định trị của thuộc tính này. Nó có thể nhận một trong các giá trị như trong bảng sau:
+ 
+   \begin{center}
+
+  \begin{longtable}{|m{3cm}|m{8cm}|}
+ \caption[ Giá trị của default-value]{ Giá trị của default-value}
+ %\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+  \hline
+\multicolumn{1}{|c|}{ \textbf{Giá trị} } & \multicolumn{1}{|c|}	{\textbf{Mô tả} }\\ \hline
+value  &	value là một giá trị mặc định nào đó \\ \hline
+\#REQUIRED &	Thuộc tính đang xét là thuộc tính bắt buộc phải có. Đây là cách sử dụng khá phổ biến. \\ \hline 
+\#IMPLIED&	Thuộc tính đang xét là tùy chọn và không bắt buộc phải có  \\ \hline
+\#FIXED value &	thuộc tính này chỉ mang duy nhất giá trị value này\\ \hline
+ % \caption[ Giá trị của default-value]{ Giá trị của default-value}
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+
+Chúng ta cũng có thể định nghĩa một thẻ có nhiều thuộc tính theo cú pháp sau:
+\begin{lstlisting} 
+<!ATTLIST element-name 
+	attribute-name_1 attribute-type_1 default-value_1 
+	attribute-name_2 attribute-type_2 default-value_2
+	...
+	attribute-name_n attribute-type_n default-value_n>
+\end{lstlisting}
+
+ 
+Một số ví dụ:
+
+Ví dụ 1: Giả sử chúng ta có file att.dtd với nội dung sau:
+\lstset{language=XML}
+\begin{lstlisting}
+<!ELEMENT attributes (#PCDATA)> 
+<!ATTLIST attributes aa CDATA #REQUIRED 
+                       bb CDATA #IMPLIED>
+\end{lstlisting}
+
+File XML viết như sau là đúng quy tắc:
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE attributes SYSTEM "att.dtd">
+<attributes aa="#d1" bb="*~*">Text</attributes>
+\end{lstlisting}
+
+Ví dụ 2: Giả sử có file att.dtd với nội dung sau:
+\begin{lstlisting}
+<!ELEMENT attributes (#PCDATA)>
+<!ATTLIST attributes aa CDATA #IMPLIED 
+						  	  bb NMTOKEN #REQUIRED 
+							  c  NMTOKENS #REQUIRED
+\end{lstlisting}
+
+File XML viết như sau là đúng quy tắc:
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE attributes SYSTEM "att.dtd">
+<attributes aa="#d1" bb="a1:12" cc=" 3.4 div -4"/>
+\end{lstlisting}
+
+Nếu chúng ta viết như sau sẽ không đúng quy tắc vì kiểu NMTOKEN và NMTOKEN không chấp nhận ký tự \# :   
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE attributes SYSTEM "att.dtd">
+<attributes aa="#d1" bb="#d1" cc="#d1"/>
+\end{lstlisting}
+
+Ví dụ 3: Giả sử có file att.dtd với nội dung sau:
+\begin{lstlisting}
+<!ELEMENT XX (AA+ , BB+ , CC+)>
+<!ELEMENT AA (#PCDATA)>
+<!ELEMENT BB (#PCDATA)>
+<!ELEMENT CC (#PCDATA)>
+<!ATTLIST AA  id ID #REQUIRED>
+<!ATTLIST BB code ID #IMPLIED 
+               list NMTOKEN #IMPLIED>
+<!ATTLIST CC X ID #REQUIRED
+               Y NMTOKEN #IMPLIED>
+\end{lstlisting}
+         
+File XML viết như sau là đúng quy tắc:
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE XX SYSTEM "att.dtd">
+<XX>
+	<AA id="L12"/>
+	<BB code="QW" list="L12"/>
+	<CC X="x-0" Y="QW" />
+	<CC X="x-1" Y="QW" />
+</XX>
+\end{lstlisting}
+
+Nếu chúng ta viết như sau sẽ không hợp quy tắc vì thẻ  {\ttfamily  CC} có thuộc tính {\ttfamily  X} có kiểu là {\ttfamily ID} nên phải là duy nhất.
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE XXX SYSTEM "att.dtd">
+<XX>
+	<AA id="L12"/>
+	<BB code="QW" list="L12"/>
+	<CC X="ZA" Y="QW" />
+	<CC X="ZA" Y="QW" />
+	</XX>
+\end{lstlisting}
+
+Nếu chúng ta viết như sau sẽ không hợp quy tắc vì thẻ {\ttfamily  AA} và {\ttfamily CC} có thuộc tính có kiểu là {\ttfamily ID} nên không được có giá trị giống nhau.
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE XX SYSTEM "att.dtd">
+<XX>
+	<AA id="L12"/>
+	<BB code="QW" list="L12"/>
+	<CC X="L12" Y="QW" />
+</XX>
+\end{lstlisting}
+
+Ví dụ 4: Giả sử chúng ta có file att.dtd với nội dung sau:
+\begin{lstlisting}
+<!ELEMENT XX (AA+ , BB+, CC+, DD+)>
+<!ELEMENT AA (#PCDATA)>
+<!ELEMENT BB (#PCDATA)>
+<!ELEMENT CC (#PCDATA)>
+<!ELEMENT DD (#PCDATA)>
+<!ATTLIST AA mark ID #REQUIRED>
+<!ATTLIST BB id ID #REQUIRED>      
+<!ATTLIST CC ref IDREF #REQUIRED>
+<!ATTLIST DD ref IDREFS #REQUIRED>
+\end{lstlisting}
+File XML viết như sau là hợp quy tắc:
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE XX SYSTEM "att.dtd">
+<XX>
+	<AA mark="a1"/>
+	<AA mark="a2"/>
+	<AA mark="a3"/>
+	<BB id="b001" />
+	<CC ref="a3" />
+	<DD ref="a1 b001 a2" />
+</XX>
+\end{lstlisting}
+
+Nếu chúng ta viết như sau sẽ không hợp quy tắc vì phần tử {\ttfamily  DD} có thuộc tính {\ttfamily  ref} có kiểu là {\ttfamily IDREFS}, trong khi đó chúng ta lại gán giá trị cho thuộc tính của phần tử này là {\ttfamily  ref="a1 b001 a2"} và {\ttfamily b001} không phải là giá trị của một {\ttfamily ID} nào cả.
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE XX SYSTEM "att.dtd">
+<XXX>
+	<AA mark="a1"/>
+	<AA mark="a2"/>   
+	<BB id="b01"/>
+	<CC ref="a3"/>
+	<DD ref="a1 b001 a2"/>
+</XXX>
+\end{lstlisting}
+
+Ví dụ 5: Giả sử chúng ta có file att.dtd với nội dung sau:
+\begin{lstlisting}
+<!ELEMENT XX(AA+, BB+)>
+<!ELEMENT AA(#PCDATA)>
+<!ELEMENT BB(#PCDATA)>
+<!ATTLIST AA true( yes|no)#REQUIRED>
+<!ATTLIST BB month (1|2|3|4|5|6|7|8|9|10|11|12)#IMPLIED>
+\end{lstlisting}
+
+File XML viết như sau là hợp quy tắc:
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE XX SYSTEM "att.dtd">
+<XX>
+	<AA true="yes"/>
+	<AA true="no"/>
+	<AA true="yes"/>
+	<BB month="8" />
+	<BB month="2" />
+	<BB month="12" />
+</XX>
+\end{lstlisting}
+
+Nếu chúng ta viết như sau sẽ không hợp quy tắc vì thẻ {\ttfamily AA} và thẻ {\ttfamily BB} có thuộc tính {\ttfamily true} và {\ttfamily month} có kiểu liệt kê, trong khi đó chúng ta gán giá trị cho hai thuộc tính này ngoài giá trị đã liệt kê.
+\begin{lstlisting}
+<?xml version="1.0"?>
+<!DOCTYPE XXX SYSTEM "att.dtd">
+<XX>
+	<AA true="yes"/>
+	<AA true="no"/>
+	<AA true="maybe"/>
+	<BB month="8" />
+	<BB month="2" />
+	<BB month="16" />
+</XX>
+\end{lstlisting}
+\section {Phần tử Entity}
+\label{muc2.5}
+Ở chương 1 chúng ta đã đề cập đến thực thể nhưng đó chỉ là những thực thể đã được định nghĩa sẵn. Bây giờ chúng ta cần tìm hiểu kỹ hơn về thực thể là gì và cách định nghĩa một thực thể.
+\subsection{Thực thể là gì?}
+Thực thể là một biến lưu trữ một khối dữ liệu, khi thực thể này được triệu gọi thì nó sẽ chèn nguyên khối dữ của nó vào vị trí nó được triệu gọi. Khối dữ liệu của thực thể thường là ở dạng văn bản, tuy nhiên nó cũng có thể là dữ liệu nhị phân, miễn là khối dữ liệu này không phá vỡ khuôn dạng của một tài liệu XML khi nó được triệu gọi. Có hai loại thực thể: thực thể tổng quát và thực thể tham số. Thực thể được khai báo trong phần định nghĩa DTD.
+   
+  Để tham chiếu đến thực thể tổng quát chúng ta viết theo cú pháp:
+  
+{\ttfamily   \& name\_entity;}
+  
+  Trong đó {\ttfamily name\_entity} là tên thực thể tổng quát cần tham chiếu. Lưu ý là bắt đầu bởi ký tự "\& " và kết thúc bởi dấu ";".
+  
+  Để tham chiếu đến thực thể tham số chúng ta viết theo cú pháp:
+   
+{\ttfamily   \%name\_entity;} 
+  
+ Trong đó {\ttfamily name\_entity} là tên thực thể tham số cần tham chiếu. Lưu ý là bắt đầu bởi ký tự "\%" và kết thúc bởi dấu ";".
+\subsection{Thực thể tổng quát }
+Có hai loại thực thể tổng quát đó là thực thể tổng quát nội và thực thể tổng quát ngoại.
+\subsubsection{Thực thể tổng quát nội }
+Thực thể tổng quát nội là thực thể được định nghĩa ngay trên DTD của tài liệu XML.
+
+Cú pháp:
+
+\begin{center}
+ {\ttfamily
+ \indent <!ENTITY entity-name "entity-value">
+ }
+\end{center}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<?xml version="1.0"?> 
+<!DOCTYPE attributes [ 
+	<!ELEMENT attributes (#PCDATA)> 
+	<!ATTLIST attribute aaa CDATA  #REQUIRED> 
+	<!ENTITY out-text "`Khoa Công nghệ Thông tin`"> 
+]> 
+<attributes aa="C" > & out-text;</attributes> 
+\end{lstlisting}
+
+Đối với thực thể này chúng ta cũng có thể định nghĩa các thực thể tham chiếu lồng nhau. 
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}
+<!ENTITY name "Open source software"> 
+<!ENTITY name-group  "& name; Group">
+\end{lstlisting}
+
+Tuy nhiên chúng ta không thể đảo ngược lại 
+\lstset{language=XML}
+\begin{lstlisting}
+<!ENTITY name-group  "& name; Group"> 
+<!ENTITY name "Open source software">
+\end{lstlisting}
+\subsubsection{Thực thể tổng quát ngoại }
+Thực thể tổng quát ngoại  là thực thể được định nghĩa và tham chiếu từ một nguồn bên ngoài. Chúng ta định nghĩa theo một trong hai cú pháp sau:
+\begin{center}
+ {\ttfamily
+
+ <!ENTITY entity-name SYSTEM "URI/URL">
+ 
+ <!ENTITY entity-name PUBLIC  FPI "URI/URL">
+  }
+\end{center}
+
+  Trong đó:
+\begin{itemize}
+\item FPI (Formal Public Identifier) là định danh chung hình thức.
+  
+\item  URI/URL là địa chỉ đến nguồn dữ liệu cần gán cho entity-name.
+\end{itemize}   
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}
+<?xml version="1.0"?> 
+<!DOCTYPE author [ 
+	<!ELEMENT author (#PCDATA)> 
+	<!ATTLIST author CR CDATA  #REQUIRED> 
+	<!ENTITY writer SYSTEM "http://www.w3schools.com/entities/entities.xml"> 
+	<!ENTITY copyright  SYSTEM "copyright.txt"> 
+]> 
+<author CR="C" >&writer; &copyright; </author>
+\end{lstlisting}
+
+Chú ý: Chúng ta không thể dùng tham chiếu thực thể tổng quát ngay trong bản thân các khai báo DTD. 
+\subsection{Thực thể tham số}
+Thực thể tham số khác với thực thể tổng quát ở chỗ là nó cho phép tham chiếu đến nó ngay trong bản thân các khai báo DTD và vùng hoạt động của nó chỉ nằm trong vùng khai báo các DTD.
+
+  Mục đích của việc sử dụng thực thể tham số là để tránh các khai báo lặp lại khi định nghĩa DTD và giúp cho chúng ta dễ dàng thay đổi.
+  
+  Tương tự như thực thể tổng quát, thực thể tham số cũng có hai loại, đó là thực thể tham số nội và thực thể tham số ngoại.
+\subsubsection{Thực thể tham số nội}
+Thực thể tham số nội là thực thể được định nghĩa ngay trên DTD của tài liệu XML. Để định nghĩa thực thể tham số chúng ta dùng cú pháp sau:
+ \begin{center}
+  {\ttfamily
+ \indent <!ENTITY \% entity-name "entity-value">
+ }
+ \end{center}
+ 
+ Trong đó:
+\begin{itemize}
+ 
+ \item {\ttfamily  \% }là tham số bắt buộc.
+  
+ \item   {\ttfamily  entity-name} là tên của thực thể tham số cần định nghĩa.
+   
+ \item   {\ttfamily entity-value} là giá trị cần gán cho entity-name.
+
+\end{itemize}   
+ Ví dụ:
+
+  \begin{center}
+   
+  \begin{longtable}{|m{5.5cm}|m{5.5cm}|}
+ \hline
+
+ \textbf{ Có sử dụng thực thể tham số nội} &
+ 
+\textbf{ Không sử dụng thực thể tham số nội}\\ \hline
+{\ttfamily 
+ <?xml version="1.0"?>}&  	{\ttfamily  <?xml version="1.0"?>}\\ \hline
+{\ttfamily   <!DOCTYPE author [ }&    {\ttfamily 	<!DOCTYPE author [} \\ \hline
+{\ttfamily  <!ENTITY name "Open source software">} & {\ttfamily 	<!ENTITY name1 "Open source software">}\\ \hline
+ 
+{\ttfamily  <!ENTITY name-group  "\& name; Group">} & 	{\ttfamily <!ENTITY name-group " \& name1; Group">}\\ \hline
+{\ttfamily   <!ENTITY \%EL "<!ELEMENT author(\#PCDATA)>"} & 	 {\ttfamily <!ELEMENT author (\#PCDATA)>} \\ \hline
+  {\ttfamily > }&  > \\\hline 
+ 
+ {\ttfamily  \%EL;} &
+ 
+{\ttfamily  ]> }  	\\ \hline
+ 
+ {\ttfamily ]> } &   {\ttfamily <author>\& name-group;} \\ \hline
+ {\ttfamily <author>\& name-group; </author>  } &	 {\ttfamily </author> }\\ \hline
+  
+ \end{longtable} 	
+ 
+ \end{center}
+
+  \vspace{-1cm}
+\subsubsection{Thực thể tham số ngoại}
+Thực thể tham số ngoại là thực thể được định nghĩa và tham chiếu từ một nguồn bên ngoài. Định nghĩa thực thể tham số ngoại chúng ta viết theo một trong hai cú pháp sau:
+
+{\ttfamily 
+\begin{center}
+  <!ENTITY \%entity-name SYSTEM "URI/URL"> 
+  
+  <!ENTITY \%entity-name PUBLI FPI "URI/URL">
+\end{center}
+  
+ }
+ 
+Trong đó:
+  \begin{itemize}
+  
+
+\item Từ khóa {\ttfamily SYSTEM} cho biết đây là thực thể tham số ngoại riêng.
+  
+\item Từ khóa {\ttfamily PUBLIC} cho biết đây là thực thể tham số ngoại chung.
+  
+\item {\ttfamily FPI} (Formal Public Identifier) là một định danh chung hình thức.
+  
+\item {\ttfamily URI/URL} là địa chỉ của khối dữ liệu cần gán cho {\ttfamily entity-name}
+   \end{itemize} 
+   
+Ví dụ giả sử chúng ta có file hocsinh.dtd như sau:
+\lstset{language=XML}
+\begin{lstlisting}
+<!ELEMENT HOCSINH (HOTEN, NGAYSINH, LOP)> 
+<!ELEMENT HOTEN (#PCDATA)> 
+<!ELEMENT NGAYSINH (#PCDATA)> 
+<!ELEMENT LOP (#PCDATA)> 
+\end{lstlisting}
+
+Bây giờ chúng ta viết file tài liệu XML có tên test.xml với thực thể tham số ngoại như sau:
+\lstset{language=XML}
+\begin{lstlisting}
+<?xml version="1.0"?> 
+<!DOCTYPE HOCSINH[ 
+	<!ENTITY %hs SYSTEM "hocsinh.dtd"> 
+	%hs; 
+	]> 
+	<HOSCINH> 
+	   <HOTEN>Le Van A</HOTEN> 
+	   <NGAYSINH>06-03-2014</NGAYSINH> 
+	   <LOP>6A3</LOP> 
+	</HOSCINH> 
+\end{lstlisting}
+
+Dòng 
+{\ttfamily <!ENTITY \%hs SYSTEM "hocsinh.dtd">} có nghĩa là file hocsinh.dtd nằm cùng thư mục với file test.xml.
+
+  Nếu file hocsinh.dtd đặt tại địa chỉ \url{http://hs.com.vn/hocsinh.dtd} thì chúng ta viết lại dòng đó như sau: <!ENTITY \%hs SYSTEM "\url{http://hs.com.vn/hocsinh.dtd}">
+  
+ Một số ví dụ: 
+ 
+ Ví dụ 1: Thông tin về các kênh truyền hình (TV Schedule) được khai báo với cấu trúc DTD. 
+\lstset{language=XML}
+\begin{lstlisting}
+<!DOCTYPE TVSCHEDULE [
+	<!ELEMENT TVSCHEDULE (CHANNEL+)>
+	<!ELEMENT CHANNEL (BANNER,DAY+)>
+	<!ELEMENT BANNER (#PCDATA)>
+	<!ELEMENT DAY (DATE,(HOLIDAY|PROGRAMSLOT+)+)>
+	<!ELEMENT HOLIDAY (#PCDATA)>
+	<!ELEMENT DATE (#PCDATA)>
+	<!ELEMENT PROGRAMSLOT (TIME,TITLE,DESCRIPTION?)>
+	<!ELEMENT TIME (#PCDATA)>
+	<!ELEMENT TITLE (#PCDATA)> 
+	<!ELEMENT DESCRIPTION (#PCDATA)>
+	<!ATTLIST TVSCHEDULE NAME CDATA #REQUIRED>
+	<!ATTLIST CHANNEL CHAN CDATA #REQUIRED>
+	<!ATTLIST PROGRAMSLOT VTR CDATA #IMPLIED>
+	<!ATTLIST TITLE RATING CDATA #IMPLIED>
+	<!ATTLIST TITLE LANGUAGE CDATA #IMPLIED>
+]> 
+\end{lstlisting}
+
+Ví dụ 2: Thông tin về các mặt hàng của 1 công ty (Newspaper Article) trong một tạp chí được khai báo với cấu trúc DTD.
+\lstset{language=XML}
+\begin{lstlisting} 
+<!DOCTYPE NEWSPAPER [
+	<!ELEMENT NEWSPAPER (ARTICLE+)>
+	<!ELEMENT ARTICLE (HEADLINE,BYLINE,LEAD,BODY,NOTES)>
+	<!ELEMENT HEADLINE (#PCDATA)>
+	<!ELEMENT BYLINE (#PCDATA)>
+	<!ELEMENT LEAD (#PCDATA)>
+	<!ELEMENT BODY (#PCDATA)>
+	<!ELEMENT NOTES (#PCDATA)>
+	<!ATTLIST ARTICLE AUTHOR CDATA #REQUIRED>
+	<!ATTLIST ARTICLE EDITOR CDATA #IMPLIED>
+	<!ATTLIST ARTICLE DATE CDATA #IMPLIED>
+	<!ATTLIST ARTICLE EDITION CDATA #IMPLIED>
+	<!ENTITY NEWSPAPER "Vervet Logic Times">
+	<!ENTITY PUBLISHER "Vervet Logic Press">
+	<!ENTITY COPYRIGHT "Copyright 1998 Vervet Logic Press">
+]>
+\end{lstlisting}
+
+Ví dụ 3: Thông tin về các bài viết (Newspaper Article) trong một tạp chí được khai báo với cấu trúc DTD. 
+\lstset{language=XML}
+\begin{lstlisting}
+<!DOCTYPE CATALOG [
+	<!ENTITY AUTHOR "John Doe">
+	<!ENTITY COMPANY "JD Power Tools, Inc.">
+	<!ENTITY EMAIL "jd@jd-tools.com">
+	<!ELEMENT CATALOG (PRODUCT+)>
+	<!ELEMENT PRODUCT
+	(SPECIFICATIONS+,OPTIONS?,PRICE+,NOTES?)>
+	<!ATTLIST PRODUCT
+	NAME CDATA #IMPLIED
+	CATEGORY (HandTool|Table|Shop-Professional) "HandTool"
+	PARTNUM CDATA #IMPLIED
+	PLANT (Pittsburgh|Milwaukee|Chicago) "Chicago"
+	INVENTORY (InStock|Backordered|Discontinued) "InStock">
+	<!ELEMENT SPECIFICATIONS (#PCDATA)>
+	<!ATTLIST SPECIFICATIONS
+	WEIGHT CDATA #IMPLIED
+	POWER CDATA #IMPLIED>
+	<!ELEMENT OPTIONS (#PCDATA)>
+	<!ATTLIST OPTIONS
+	FINISH (Metal|Polished|Matte) "Matte"
+	ADAPTER (Included|Optional|NotApplicable) "Included"
+	CASE (HardShell|Soft|NotApplicable) "HardShell">
+	<!ELEMENT PRICE (#PCDATA)>
+	<!ATTLIST PRICE
+	MSRP CDATA #IMPLIED
+	WHOLESALE CDATA #IMPLIED
+	STREET CDATA #IMPLIED
+	SHIPPING CDATA #IMPLIED>
+	<!ELEMENT NOTES (#PCDATA)>
+]> 
+\end{lstlisting}
+
+
+Ví dụ 4: Hãy xây dựng một DTD cho file XML lưu trữ thông tin tất cả sách trong 1 thư viện với các yêu cầu sau:
+\begin{itemize}
+
+
+\item  Thẻ gốc là {\ttfamily ThuVien}
+  
+\item  Trong thẻ gốc có ít nhất 1 thẻ {\ttfamily sach}
+  
+\item  Trong thẻ {\ttfamily sach} là các thẻ con theo thứ tự sau: {\ttfamily Id, Ten, TacGia, NXB, Gia}. Trong đó, {\ttfamily Id, Ten, TacGia} là những thẻ bắt buộc phải có, {\ttfamily NXB, Gia} xuất hiện tối đa 1 lần.
+  
+\item  Trong thẻ {\ttfamily sach} có 2 thuộc tính là {\ttfamily TheLoai} và {\ttfamily  NgonNgu}, trong đó giá trị của thuộc tính {\ttfamily TheLoai} là một trong các giá trị sau:
+{\ttfamily  Khoahọc, Giảitrí, Tinhọc}, thuộc tính  {\ttfamily NgonNgu} có thể có hoặc không.
+ 
+ \item  Khai báo 2 Entity xuất hiện thường xuyên trong XML cho giá trị {\ttfamily "Nhà Xuất Bản Trẻ} và {\ttfamily "Nhà Xuất Bản Giáo dục"}.
+  \end{itemize}
+  
+  Chúng ta sẽ xây dựng DTD tham chiếu nội:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<?xml version="1.0" encoding=UTF(8)?>
+<!DOCTYPE ThuVien[
+	<!ELEMENT ThuVien(Sach+)>
+	<!ELEMENT Sach(Id, Ten, TacGia, NXB,Gia?>
+	<!ELEMENT Id (#PCDATA)>
+	<!ELEMENT Ten(#PCDATA)>
+	<!ELEMENT TacGia(#PCDATA)>
+	<!ELEMENT NXB(#PCDATA)>
+	<!ELEMENT Gia(#PCDATA)>
+	<!ATTLIST Sach TheLoai (`Khoahọc, Giảitrí, Tinhọc`) `Tin học`>
+	<!ATTLIST Sach NgonNgu CDATA #Implied>
+	<!ENTITY nxbtre "`Nhà xuất bản Trẻ`">
+	<!ENTITY nxbgd "`Nhà xuất bản Giáo Dục`">
+]>
+\end{lstlisting} 
+
+Bắt đầu file xml:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<ThuVien>
+	<Sach TheLoai="`Khoa học`">
+		<Id>A3501</Id>
+		<Ten>`XML và ứng dụng`</Ten >
+		<TacGia>`Nguyễn Mậu Hân`</TacGia> 
+		<NXB>&nxbgd;</NXB>
+		<Gia>100000</Gia>
+	</Sach>
+	...
+	<Sach TheLoai="`Tin học`">
+		...
+	</Sach>
+</ThuVien>
+\end{lstlisting}
+\section {Tiểu kết chương 2}
+\label{muc2.6}
+
+XML hướng tới việc tổ chức dữ liệu theo dạng cấu trúc để chia sẻ, khai thác và trao đổi lẫn nhau giữa các ứng dụng, giữa người sử dụng và tổ chức. Tuy nhiên, chính việc định nghĩa các thẻ một cách tùy ý theo người dùng dẫn đến việc người sử dụng XML có thể hiểu sai ngữ nghĩa trong việc truyền dữ liệu trong giao tiếp và truy xuất giữa các ứng dụng. Ngoài ra, trong quá trình tổ chức dữ liệu chúng ta cũng mong muốn kiểm tra xem dữ liệu  có đúng như kiểu mong muốn để giao tiếp giữa người gửi và người nhận hay không. Cũng giống như ngôn ngữ lập trình, chúng ta mong muốn một số giá trị trong tài liệu XML nên được khởi tạo sẵn giá trị để khi chúng ta quên gán trị thì giá trị được thiết lập mặc định, tránh trường hợp giá trị truy xuất không có và được ứng dụng gán cho giá trị null và gây nên lỗi không đáng có trong quá trình xử lý. Ngoài những yếu tố nêu trên, chúng ta cũng cần đảm bảo cấu trúc dữ liệu tổ chức phải đúng cấu trúc và định dạng format khi thực hiện trao đổi và giao tiếp giữa các ứng dụng, đảm bảo tính ổn định trong quá trình xử lý. Giống như khái niệm mối quan hệ giữa các tập thực thể trong CSDL quan hệ và ràng buộc giữa các thành phần dữ liệu, thì tài liệu XML cũng cần đảm bảo các ràng buộc và mối quan hệ giữa các thành phần dữ liệu được tổ chức trong tài liệu để hạn chế sai sót khi chia sẻ dữ liệu. Khai báo cấu trúc của một tài liệu XML bằng DTD đã giải quyết những tồn tại đã nói ở trên. Trong chương 3 chúng ta sẽ tiếp cận một khai báo cấu trúc khác cho một tài liệu XML mang tính chuyên nghiệp hơn. Đó là khai báo cấu trúc một tài liệu XML với XML Schema.\\
+
+\begin{center}
+\textbf{Câu hỏi và bài tập cuối chương}
+\end{center}
+
+\begin{enumerate}
+\item 	Mục đích, ý nghĩa của DTD.
+\item	DTD đóng vai trò gì trong việc đặc tả cấu trúc của tài liệu XML? Cho ví dụ và giải thích.
+\item	Phiếu điểm của một sinh viên gồm: Họ và tên, lớp, địa chỉ, giới tính, ngày sinh và một bảng điểm, mỗi bản ghi của bảng gồm: STT, Tên môn, điểm học kỳ 1, điểm học kỳ 2, điểm TB cả năm. Hãy đặc tả nội dung và cấu trúc theo DTD của tài liệu XML tương ứng với phiếu điểm này.
+\item Dựa vào cấu trúc tài liệu xml bên dưới, hãy tạo tập tin DTD.
+\lstset{language=XML}
+\begin{lstlisting}
+<?xml version="1.0"?>
+ <!DOCTYPE DOCUMENT SYSTEM "mydtd.dtd">
+ <DOCUMENT>
+      <CUSTOMER TYPE="Good">
+        <NAME>
+	          <LAST_NAME> aaa </LAST_NAME>
+	          <FIRST_NAME> bbb </FIRST_NAME>
+        </NAME>
+       <DATE> 1/1/19 </DATE>
+       <ORDERS class="SanPham">
+	         <ITEM>
+		          <PRODUCT> 
+		          	<PRODUCT_ID>12</PRODUCT_ID>
+		          </PRODUCT>
+		          <NUMBER>25</NUMBER>
+		          <PRICE>20</PRICE>
+	          </ITEM>
+	         <ITEM>
+		          <PRODUCT>Tomatoes</PRODUCT>
+		          <NUMBER>25</NUMBER>
+		          <PRICE>3</PRICE>
+	         </ITEM>
+        </ORDERS>
+     </CUSTOMER>
+ </DOCUMENT>
+\end{lstlisting}
+\item	Tạo file DTD (Orders.dtd) để Valid tài liệu XML với cấu trúc được mô tả như sau:
+\subitem Tài liệu cần lưu trữ một danh sách các đơn đặt hàng  (Orders). Mỗi đơn đặt hàng (Order) có các thông tin (OrderNo, OrderDate, CustomerName, Detail). Trong đó, OrderNo là thuộc tính số, là ssos hóa đơn của đơn hàng đó (Order), Detail là thông tin chi tiết về các mặt hàng bao gồm các thuộc tính ItemNo, ItemName, Quantity, Price.
+\subitem  Yêu cầu: Các thông tin của đơn đặt hàng bắt buộc phải nhập, OrderNo phải là duy nhất, trong danh sách đơn đặt hàng có thể có 0 hoặc nhiều đơn đặt hàng, trong một đơn đặt hàng (OrderNo, OrderDate,CustomerName) chỉ xuất hiện 1 lần nhưng có thể có một hoặc nhiều chi tiết đặt hàng, Các thuộc tính Quantity mặc định là 1, Price mặc định là 0.
+\subitem Tạo file XML (Orders.xml) và link Orders.dtd để valid dữ liệu của nó. Nhập 5 đơn đặt hàng demo.
+\item Hãy tạo file XML phone.xml và file mô tả cấu trúc DTD tương ứng (phone.dtd) chứa thông tin về số điện thoại của các nhân viên trong công ty với các yêu cầu sau: 
+\begin{itemize}
+
+\item 	Thông tin về danh bạ của một nhân viên được mô tả qua thẻ contact, thẻ này chứa các thẻ con: họ tên (name), số điện thoại (phoneNo), địa chỉ (address), địa chỉ email (email). Thẻ contact có một thuộc tính id, và thuộc tính này phải duy nhất.
+\item 	Thẻ name chứa 3 thẻ con, xuất hiện theo thứ tự <firstName>, <middleName>, <lastName>. Trong đó, thẻ middleName là tùy chọn.
+\item 	Mỗi người có tối đa là 3 số điện thoại (phoneNo). Còn địa chỉ (address) là tùy chọn và có không quá một lần xuất hiện.
+\item 	Nếu là điện thoại cố định phải có dạng sau: 0234-2225555 (trong đó, bốn số đầu là phần mã vùng). Nếu là điện thoại di động thì có dạng 0902225555 (10 số với chữ số đầu là 0).
+
+File "phone.xml" phải có ít nhất 3 thẻ <contact>.
+\end{itemize}
+\item 	Cho cấu trúc XML mô tả chương trình quản lý thông tin sinh viên và điểm các môn học mà sinh viên đăng ký. Đối với mỗi sinh viên cần lưu  các thông tin sau: MSSV, họ và tên, lớp, email. Đối với mỗi môn học lưu các thông tin sau: MaMH, TenMH, SoTinChi; Với mỗi môn học mà sinh viên đăng ký học thì sẽ có kết quả thi cuối kỳ chính là điểm mà sinh viên đạt được của môn học đó. Hãy đặc tả cấu trúc trên bằng DTD.
+
+
+\end{enumerate}

@@ -1,0 +1,1131 @@
+
+\setcounter{chapter}{6}
+\setcounter{section}{0}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\chapter* {\begin{flushleft}
+CHƯƠNG 6\\
+\end{flushleft} TRUY XUẤT TÀI LIỆU XML VỚI DOM} 
+\addcontentsline{toc}{chapter}{Chương 6. Truy xuất tài liệu XML với DOM}
+\thispagestyle{fancy}
+\section{Giới thiệu về mô hình DOM}
+DOM viết tắt của từ Document Object Model (Mô hình đối tượng tài liệu) là một mô hình đối tượng và giao diện lập trình ứng dụng dựa trên các tài liệu HTML và XML. Mô hình DOM độc lập với hệ điều hành, ngôn ngữ lập trình và là một chuẩn của W3C. Với mô hình này, tài liệu XML có thể được xem là một cây bao gồm các nút (node). Các nút có thể là tên một:
+\begin{itemize}
+
+\item	phần tử XML (element): gọi là nút thẻ.
+\item	thuộc tính XML(property): gọi là nút thuộc tính (có thể gọi là nút lá).
+\item	giá trị nội dung của một phần tử: gọi là nút giá trị hay nút văn bản (cũng có thể gọi là nút lá).
+\end{itemize}
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<book id="001">
+	<title>`Xử lý song song`</title>
+	<authors>
+		<author>
+			<name>`Nguyễn Mậu Hân`</name>
+			<level>PGS.TS</level>
+		</author>
+		...
+	</authors>
+</book>
+\end{lstlisting}
+Với tài liệu trên ta có mô hình cây như sau:
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.9]{Figures//Hinh61.jpg}
+\caption{ Cấu trúc tài liệu XML theo mô hình DOM }\label{hinh61} 
+\end{figure}
+
+Theo cây này, ta có thể hiểu cấu trúc của DOM như sau:
+\begin{itemize}
+\item	Nút trên cùng gọi là nút gốc.
+\item	Mọi nút trừ nút gốc đều có chính xác một nút cha (node parent).
+\item	Một nút có thể có nhiều nút con (node children).
+\item	Nút lá là nút không có nút con nào.
+\item	Nút anh em (node sibling) là những nút có cùng nút cha.
+\end{itemize}
+\section{Ngôn ngữ lập trình Javascript}
+\subsection{Giới thiệu}
+Javascript là một ngôn ngữ lập trình thông dịch được sử dụng rộng rãi trong các trang web. Ngôn ngữ này có thể chạy trên các trình duyệt (phía người dùng), dùng để xử lý và tương tác với các thành phần của HTML, cũng như phía máy chủ (chẳng hạn như Nodejs). Giống với ngôn ngữ lập trình Java, Javascript có cú pháp tương tự ngôn ngữ C, với phần mở rộng là .js. Tuy nhiên Java và Javascript là hai ngôn ngữ hoàn toàn khác nhau trong cả ý niệm cũng như thiết kế. 
+
+Cách thức hoạt động của ngôn ngữ Javascipt thực thi bên phía trình duyệt có thể được hiểu như sau:
+\begin{itemize}
+\item 	Bước 1: Trình duyệt tải trang web về.
+\item 	Bước 2: Trình duyệt kiểm tra xem có mã Javascript nào trong web hay không.
+\item 	Bước 3: Nếu có, trình duyệt sẽ chuyển mã Javascript cho bộ thông dịch.
+\item 	Bước 4: Bộ thông dịch xử lý và thực thi các mã lệnh.
+\item 	Bước 5: Các mã lệnh có thể tác động đến các thành phần của trang web.
+\item 	Bước 6: Trình duyệt hiển thị toàn bộ nội dung web.
+\end{itemize}
+
+Theo mô hình trên, ngôn ngữ Javascript sẽ tác động đến trang web thông qua mô hình DOM. Thông qua mô hình DOM, chúng có thể tác động đến từng nút, từng thuộc tính trên mô hình với hầu hết các tác vụ như thêm, điều chỉnh, thậm chí có thể xóa được các đối tượng này.
+\subsection{Sử dụng Javascript}
+Để sử dụng Javascript trong các trình duyệt, chúng ta có 2 cách:
+\begin{itemize}
+
+
+\item 	Cách 1: Sử dụng Javascript nội. Nghĩa là mã Javascipt được đặt trong thẻ head hoặc body của tài liệu HTML.
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<head>
+	<script>
+	...
+	</script>
+</head>
+<body>
+	<script>
+	...
+	</script>
+</body>
+\end{lstlisting}
+\item 	Cách 2: Sử dụng Javascript ngoại. Nghĩa là mã lệnh được đặt trong một file riêng và sau đó liên kết file này trong tài liệu HTML.
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<head>
+	<script src="yourFile.js"></script>
+</head>
+\end{lstlisting}
+\end{itemize}
+\subsection{Các thành phần cơ bản}
+\subsubsection{Biến}
+Biến là một vùng nhớ dùng để lưu trữ giá trị. Tất cả các biến đều phải được định danh với tên duy nhất. Tên này phải đặt theo quy tắc như sau:
+\begin{itemize}
+
+\item 	Tên chỉ có thể chứa ký tự chữ cái, số, dấu \_ và dấu \$.
+\item 	Tên phải bắt đầu bởi ký tự chữ cái, dấu \_ hoặc \$.
+\item 	Tên có phân biệt hoa thường.
+\item 	Không trùng với các từ khóa của ngôn ngữ.
+\end{itemize}
+
+Cú pháp:  { \ttfamily
+	var  tên\_biến [=<giá\_trị>]; 
+	}
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var x = 5;
+	var y = 6;
+	var z = x + y;
+\end{lstlisting}
+\subsubsection{ Kiểu dữ liệu}
+Ngôn ngữ Javascript không quy định kiểu dữ liệu của biến khi báo. Kiểu dữ liệu của biến sẽ được tự động xác định khi gán dữ liệu cho biến. Các kiểu dữ liệu của Javascript như sau:
+\begin{itemize}
+
+\item	Kiểu số: Số nguyên, số thực.
+\item	Kiểu chuỗi.
+\item	Kiểu luận lý: true/false.
+\item	Kiểu đối tượng.
+
+\end{itemize}
+\subsubsection{Chú thích}
+Chú thích trong các ngôn ngữ lập trình nhằm giúp cho các lập trình viên ghi chú ý nghĩa của một hay nhiều dòng lệnh ngay trong mã nguồn của chương trình. Chú thích chỉ có ý nghĩa đối với các lập trình viên. Trong quá trình biên dịch hay thông dịch, những dòng chú thích này không có ý nghĩa và có thể sẽ được bỏ đi trong quá trình tiền xử lý. 
+
+Cú pháp:
+{\ttfamily 
+// Đây là chú thích trên một dòng.\\
+/*\\
+ \indent  Đây là chú thích trên nhiều dòng.\\
+   \indent Đây là chú thích 1\\
+  \indent  Đây là chú thích 2\\
+*/}
+\subsubsection{Các toán tử}
+Một toán tử xác định phép toán sẽ được thực hiện trên các giá trị của biến và các biểu thức. Javascript cung cấp nhiều loại toán tử khác nhau để thực hiện việc tính toán từ đơn giản đến phức tạp.
+\begin{itemize}
+\item	Các toán tử số học trong Javascript được thể hiện ở bảng sau:
+
+ %\begin{tabular}{|m{3cm}|m{4cm}| m{3cm}|}
+ \begin{center}
+\begin{longtable}{|l|l|l|}
+\caption[Toán tử số học trong Javascript]{Toán tử số học trong Javascript}
+%\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+
+\hline
+\multicolumn{1}{|c|}{\textbf{Toán tử}}
+& 
+\multicolumn{1}{c|}{	\textbf{Mô tả}}
+ &
+\multicolumn{1}{c|}{ \textbf{Ví dụ}}
+\\ \hline
++ &	Cộng &	x = x + y  \\ \hline
+-   &	Trừ &	x = x – y\\ \hline
+*  &	Nhân &	x = x * y\\ \hline
+/ &	Chia (lấy nguyên) &	x = x / y\\ \hline
+% &	Chia (lấy dư) &	x = x % y\\ \hline
+++ &	Tăng (1 đơn vị) &	x++\\ \hline
+-- &	Giảm (1 đơn vị) & 	y++\\ \hline
+
+\end{longtable}
+\end{center}
+
+\item	Các toán tử gán trong Javascript được thể hiện ở bảng sau:
+
+
+\begin{center}
+ \begin{longtable}{|m{2cm}|m{3cm}| m{3cm}|}
+ \caption[Toán tử gán trong Javascript]{Toán tử gán trong Javascript}
+ %\label{variability_impl_mech}
+  \endfirsthead
+  \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Toán tử}}
+   & \multicolumn{1}{ c|}{\textbf{Ví dụ}} & \multicolumn{1}{c|}{\textbf{Ý nghĩa}}\\ \hline
+= &	x  = y &	\\ \hline
++= &	x += y &	x = x + y\\ \hline
+-= &	x -= y &	x = x - y\\ \hline
+*= &	x *= y &	x = x * y\\ \hline
+/= &	x /= y &	x = x / y\\ \hline
+\%= &	x \%= y &	x = x \% y\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\item	Các toán tử so sánh trong Javascript được thể hiện ở bảng sau:
+
+
+
+\begin{center}
+ \begin{longtable}{|m{3cm}|m{4cm}| m{3cm}|}
+ \caption[Toán tử so sánh trong Javascript]{Toán tử so sánh trong Javascript}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Toán tử}} & \multicolumn{1}{c|}{\textbf{	Mô tả}} & \multicolumn{1}{c|}{\textbf{Ví dụ}}\\ \hline
+== &	Bằng &	x == 5\\ \hline
+=== &	Bằng (so giá trị và kiểu của biến) &	x === 5\\ \hline
+!= &	Không bằng &	x != 5\\ \hline
+> &	Lớn hơn &	x > 5\\ \hline
+< &	Bé hơn &	x < 5\\ \hline
+>= &	Lớn hơn hoặc bằng &	x >= 5\\ \hline
+<= &	Bé hơn hoặc bằng &	x <= 5\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\item	Các toán tử logic trong Javascript được thể hiện ở bảng sau:
+
+\begin{center}
+ \begin{longtable}{|m{3cm}|m{4cm}|}
+ \caption[Toán tử logic trong Javascript]{Toán tử logic trong Javascript}
+   %\label{variability_impl_mech}
+    \endfirsthead
+    \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Toán tử}} &\multicolumn{1}{c|}{	\textbf{Mô tả}}\\ \hline
+\&\& &	Và\\ \hline
+|| &	Hoặc\\ \hline
+! &	Phủ định\\ \hline 
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\item	Toán tử điều kiện:
+Cú pháp:
+
+{\ttfamily
+ (Biểu thức điều kiện) ? value1: value2} 
+
+\textit{Ý nghĩa:} Nếu biểu thức điều kiện là true thì kết quả của phép toán là value1, ngược lại là value2.
+\end{itemize}
+
+\subsection{Các cấu trúc điều khiển}
+\subsubsection{Cấu trúc rẽ nhánh}
+\begin{itemize}
+
+
+\item	Câu lệnh  {\ttfamily if ... else}:
+
+Cú pháp:
+\lstset{language=C++}
+\begin{lstlisting}[escapechar=`]
+	if (`biểu\_thức`){
+	   `Khối lệnh 1`
+	}
+	else{
+	    `Khối lệnh 2`
+	}
+\end{lstlisting}
+\textit{Ý nghĩa:} Nếu {\ttfamily  biểu\_thức} đúng thì thực hiện {\ttfamily  khối lệnh 1}, ngược lại thực hiện {\ttfamily  khối lệnh 2}.
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	if (a > b)
+		max = a;
+	else
+		max = b; 
+\end{lstlisting}
+
+Các câu lệnh {\ttfamily if ... else} có thể lồng vào nhau theo cú pháp:
+\lstset{language=C++}
+\begin{lstlisting}[escapechar=`]
+	if(`biểu\_thức`){
+	    `Khối lệnh 1`
+	}else if(`biểu\_thức`){
+	    `Khối lệnh 2`
+	}else{
+	    `Khối lệnh 3`
+	}
+\end{lstlisting}
+
+
+\item	Câu lệnh {\ttfamily  switch ... case}
+
+Cú pháp {\ttfamily switch ... case} cũng là cú pháp điều kiện như {\ttfamily if ... else}. Tuy nhiên, cú pháp này thường được dùng trong trường hợp có nhiều biểu thức điều kiện cần được kiểm tra, toán tử so sánh là toán tử bằng.
+
+Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+switch (`biểu\_thức`)
+{
+    case `giá\_trị\_1`: {
+        `Khối lệnh 1`
+        break;
+    }
+    case `giá\_trị\_2` : {
+        `Khối lệnh 2`
+        break;
+    }
+    ...
+    case `giá\_trị\_n` : {
+            `Khối lệnh n`
+            break;
+        }
+    [default : {
+         `Khối lệnh n+1`
+    }]
+}
+\end{lstlisting}
+Ý nghĩa: Nếu giá trị của {\ttfamily biểu\_thức}  bằng {\ttfamily giá\_trị\_i $ (i=1..n) $ } thì {\ttfamily Khối lệnh i} tương ứng sẽ thực hiện, ngược lại nếu có {\ttfamily default} thì {\ttfamily Khối lệnh n+1} sẽ thực hiện.
+
+Chú ý: Sau mỗi khối lệnh trong một mục kiểm tra kết quả (trừ mục {\ttfamily default}), chúng ta cần phải thêm vào {\ttfamily break}.
+\end{itemize}
+\subsubsection{Câu lệnh while}
+Vòng lặp {\ttfamily while} dùng để lặp đi lặp một công việc nào đó, thường không biết chính xác cần lặp bao nhiều lần.
+Cú pháp: 
+\lstset{language=C++}
+\begin{lstlisting}[escapechar=`]
+	while (`điều\_kiện`) { 
+	 `khối lệnh lặp` ; 
+	}
+\end{lstlisting}
+\textit{Ý nghĩa:} Khi gặp lệnh {\ttfamily while} chương trình thực hiện như sau: 
+
+Bước 1: Chương trình sẽ kiểm tra {\ttfamily điều\_kiện}.
+
+Bước 2: Nếu điều kiện đúng thì thực hiện khối lệnh lặp, sau đó quay lại Bước 1. Nếu điều kiện sai thì dừng vòng lặp.
+
+Tóm lại có thể mô tả một cách ngắn gọn về câu lệnh {\ttfamily while} như sau: lặp lại các lệnh trong khi điều kiện vẫn còn đúng.
+\subsubsection{Lệnh lặp do ... while }
+Vòng lặp {\ttfamily  do ... while} cũng dùng để lặp đi lặp một công việc nào đó khi không biết chính xác cần lặp bao nhiều lần. Vòng lặp {\ttfamily  do ... while} khác với vòng lặp {\ttfamily while} ở điểm kiểm tra điều kiện trước khi lặp
+Cú pháp: 
+\lstset{language=C++}
+\begin{lstlisting}[escapechar=`]
+	do {
+	  `khối lệnh lặp`
+	} while (`điều\_kiện`) ; 
+\end{lstlisting}
+
+\textit{Ý nghĩa}:  
+
+Bước 1: Chương trình sẽ thực hiện khối lệnh lặp.
+
+Bước 2. Nếu {\ttfamily điều\_kiện}  đúng thì quay lại Bước 1. Nếu {\ttfamily điều\_kiện}  sai thì dừng vòng lặp.
+\subsubsection{Câu lệnh for}
+Cú pháp 
+\lstset{language=C++}
+\begin{lstlisting}[escapechar=`]
+	for (`dãy biểu thức 1` ; `điều kiện lặp` ; `dãy biểu thức 2`) { 
+		`khối lệnh lặp`; 
+	}
+\end{lstlisting}
+Trong đó,
+\begin{itemize}
+
+\item  Các biểu thức trong các dãy biểu thức 1, 2 cách nhau bởi dấu phảy (,). Có thể
+có nhiều biểu thức trong các dãy này hoặc dãy biểu thức cũng có thể trống. 
+\item Điều kiện lặp: là biểu thức lôgic trả về đúng hoặc  sai. 
+\item   Các dãy biểu thức và/hoặc điều kiện có thể không có nhưng dấu 
+chấm phảy (;) phải có để ngăn cách các thành phần với nhau. 
+
+\end{itemize}
+
+\textit{Ý nghĩa:} Khi gặp lệnh {\ttfamily  for} chương trình sẽ thực hiện các bước sau: 
+
+Bước 1: Thực hiện dãy biểu thức 1 (thông thường là các lệnh khởi tạo cho một số
+biến).
+
+Bước 2:  Kiểm tra {\ttfamily điều kiện lặp}, nếu đúng thì thực hiện {\ttfamily khối lệnh lặp} thực, sau đó thực hiện {\ttfamily dãy biểu thức 2} và quay lại Bước 2. Nếu {\ttfamily điều kiện lặp} sai thì dừng vòng lặp.
+
+Tóm lại, {\ttfamily biểu thức 1} sẽ được thực hiện 1 lần duy nhất ngay từ đầu quá trình lặp 
+sau đó thực hiện {\ttfamily khối lệnh lặp} và {\ttfamily dãy biểu thức 2} cho đến khi nào không còn thoả điều kiện lặp nữa thì dừng. 
+
+\subsection{Hàm}
+Hàm là một khối lệnh với một danh sách một hoặc nhiều tham số (có thể không có tham số nào) nhằm thực hiện trọn vẹn một chức năng nào đó. Hàm trong Javascript thường có tên (được đặt theo nguyên tắc đặt tên) hoặc không cần tên. Cú pháp như sau:
+
+Cú pháp:
+
+\begin{enumerate}
+\item	Hàm có tên:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	function `tên\_hàm`(`đối\_số\_1`, `đối\_số\_2`) {
+  	  `khối lệnh`
+	}
+\end{lstlisting}
+
+hoặc:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var `tên\_hàm` = (`đối\_số\_1`, `đối\_số\_2`)=>{
+   	 `khối lệnh`
+	}
+\end{lstlisting}
+\item	Hàm vô danh, được sử dụng như là tham số của hàm khác:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	function() { `thân hàm`; }
+\end{lstlisting}
+
+Ví dụ:
+\begin{itemize}
+
+
+\item	Hàm có trả về kết quả:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+function concatenate(first, last)
+{
+	var full;
+	full = first + last;
+	return full;
+}
+\end{lstlisting}
+\item	Hàm không trả về kết quả và trong thân có gọi hàm khác:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`] 
+	function secondFunction()
+	{
+		var result;
+		result = concatenate('Zara', 'Ali');
+		document.write (result );
+	}
+\end{lstlisting}
+\end{itemize}
+\item	Gọi hàm trong HTML:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<form>
+	<input type="button" onclick="secondFunction()" value="Hello">
+</form>
+\end{lstlisting}
+
+\end{enumerate}
+\subsection{Mảng}
+\begin{enumerate}
+\item	Định nghĩa: Mảng là một cấu trúc dữ liệu cho phép lưu trữ nhiều giá trị trong một biến đơn.
+
+Cú pháp:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var array_name = [item1, item2, ...];
+\end{lstlisting}
+
+hoặc:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var array_name = new Array([item1, item2, ...]);
+\end{lstlisting}
+Tuy nhiên, cách thứ 2 chúng ta không nên sử dụng.
+
+Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var cars = ["Saab", "Volvo", "BMW"];
+\end{lstlisting}
+
+hoặc:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var cars = new Array("Saab", "Volvo", "BMW");
+\end{lstlisting}
+\item	Truy xuất mảng: Để truy xuất một phần tử trong mảng, chúng ta có thể sử dụng chỉ số của mảng. Trong đó, phần tử đầu tiên có chỉ số là 0. 
+
+Ví dụ:
+
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	document.getElementById("demo").innerHTML = cars[0];
+\end{lstlisting}
+\item	Một số phương thức và thuộc tính trên mảng được thể hiện ở bảng sau:
+
+\begin{center}
+ \begin{longtable}{|m{3cm}|m{7cm}|}
+ \caption[Một số phương thức và thuộc tính trên mảng]{Một số phương thức và thuộc tính trên mảng}
+ %\label{variability_impl_mech}
+  \endfirsthead
+  \endhead
+ 
+\hline
+\textbf{Thuộc tính / Phương thức} & \multicolumn{1}{c|}{\textbf{Ý nghĩa}}\\ \hline
+length &	Thuộc tính chỉ rõ độ dài thực sự của mảng \\ \hline
+toString()&	Chuyển mảng thành chuỗi. Các phần tử sẽ cách nhau bởi dấu “,”\\ \hline
+join(strString) &	Giống với toString, tuy nhiên dấu phân cách sẽ được chỉ ra trong tham số strString\\ \hline
+pop()&	Xóa phần tử cuối cùng ra khỏi mảng\\ \hline
+push(obj) &	Thêm một phần tử obj vào cuối mảng\\ \hline
+shift()&	Xóa phần tử đầu tiên của mảng\\ \hline
+unshift(obj)&	Thêm phần tử obj vào đầu mảng\\ \hline
+splice(pos, count) &	Xóa các phần tử từ vị trí pos, xóa count phần tử\\ \hline
+concat(array) &	Trộn hai mảng với nhau\\ \hline
+
+\end{longtable}
+
+\end{center}
+\vspace{-1cm}
+\end{enumerate}
+\section{Các thao tác cơ bản trên DOM với Javascript}
+\subsection{Nạp tài liệu XML cần xử lý}
+Chúng ta sẽ sử dụng tài liệu XML có tên là: bookstore.xml có nội dung như sau để minh họa các thao tác trên ngôn ngữ lập trình Javascript:
+file bookstore.xml
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<?xml version='1.0' ?>
+<bookstore> 
+	<book category="cooking"> 
+		<title lang="en">Everyday Italian</title> 
+		<author>Giada De Laurentiis</author> 
+		<year>2005</year> 
+		<price>30.00</price>
+	</book> 
+	<book category="children"> 
+		<title lang="en">Harry Potter</title> 
+		<author>J K. Rowling</author> 
+		<year>2005</year> 
+		<price>29.99</price> 
+	</book> 
+	<book category="web"> 
+		<title lang="en">XQuery Kick Start</title> 
+		<author>James McGovern</author> 
+		<author>Per Bothner</author> 
+		<author>Kurt Cagle</author> 
+		<author>James Linn</author> 
+		<author>Vaidyanathan Nagarajan</author> 
+		<year>2003</year> 
+		<price>49.99</price> 
+	</book> 
+	<book category="web" cover="paperback"> 
+		<title lang="en">Learning XML</title> 
+		<author>Erik T. Ray</author> 
+		<year>2003</year> 
+		<price>39.95</price> 
+	</book> 
+</bookstore>
+\end{lstlisting}
+
+Để tiến hành truy vấn tài liệu trên, trước tiên chúng ta cần tạo tài liệu index.html theo phiên bản HTML5. Trong đó, nhúng mã nguồn của ngôn ngữ Javascript để nạp, xử lý tài liệu XML và hiển thị kết quả sau khi xử lý:
+index.html
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>`Truy vấn tài liệu XML`</title>
+<script> 
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState==4&&this.status==200) {
+		var xmlDoc = xhttp.responseXML;
+		`//Xử lý tài liệu XML tại đây `
+		}
+	};
+	xhttp.open("GET", "bookstore.xml", true);
+	xhttp.send();
+</script>
+</head>
+<body>
+<div id= "demo"></div>
+</body>
+</html>
+\end{lstlisting}
+
+Trong tài liệu HTML ở trên, chúng ta đã nhúng đoạn mã Javascript được đánh số từ 7 đến 15 trong thẻ {\ttfamily <script>}. Trong đó:
+\begin{itemize}
+
+\item	Dòng số 7: Tạo một đối tượng từ lớp XMLHttpRequest. Đối tượng này được sử dụng để gửi và nhận dữ liệu từ Webserver. Các phương thức và thuộc tính của XMLHttpRequest được thể chi tiết ở 2 bảng sau:
+
+\begin{center}
+\begin{longtable}{|m{3cm}|m{9cm}|}
+\caption [Các phương thức của đối tượng XMLHttpReques]{Các phương thức của đối tượng XMLHttpRequest}
+ %\label{variability_impl_mech}
+  \endfirsthead
+  \endhead
+\hline
+\textbf{Phương thức} & \multicolumn{1}{c|}{\textbf{Mô tả}} \\ \hline
+new XMLHttpRequest() &	Hàm khởi tạo đối tượng\\ \hline
+open(method, url, async, user, psw) &	Xác định yêu cầu dữ liệu, trong đó:
+method: Kiếu request là POST hoặc GET
+url: URL của tài liệu cần lấy
+async: bất đồng bộ(true)/đồng bộ(false)
+user: Tên đăng nhập (tùy chọn)
+psw: Mật khẩu (tùy chọn) \\ \hline
+send()&	Request đến Webserver nếu giá trị method ở trên là GET\\ \hline
+send(str) &	Request đến Webserver nếu giá trị method ở trên là POST. Trong đó tham số str dùng để gửi các tham số dữ liệu cần thiết cho việc xử lý bên Webserver. \\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\begin{center}
+ \begin{longtable}{ |m{3.5cm}|m{8.5cm}| }  
+ \caption[Các thuộc tính của đối tượng XMLHttpRequest]{Các thuộc tính của đối tượng XMLHttpRequest}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\textbf{Thuộc tính} &	\multicolumn{1}{c|}{\textbf{Mô tả}}\\ \hline
+onreadystatechange &	Định nghĩa một hàm sẽ được gọi khi thuộc tính readyState thay đổi giá trị\\ \hline
+readyState &	Trạng thái của đối tượng XHLHttpRequest:
+0: Request chưa được khởi tạo
+1:  Đã thiết lập kết nối đến server
+2: Server đã nhận request
+3: Server đang xử lý request
+4: Request đã hoàn thành và sẵn sàng nhận dữ liệu\\ \hline
+responseText &	Dữ liệu trả về dạng văn bản\\ \hline
+responseXML &	Dữ liệu trả về theo định dạng XML\\ \hline
+status &	Kết quả trả về của request
+200: OK $ \to $ Đáp ứng đúng yêu cầu
+403: Forbidden $ \to $ Request bị cấm
+404: Not Found $ \to $ Không tìm thấy Server\\ \hline
+statusText &	Kết quả trả về của request dạng văn bản \\ \hline
+
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\item	Dòng số 8: Thuộc tính onreadystatechange chỉ định một hàm sẽ được thực thi mỗi khi trạng thái của đối tượng XMLHttpRequest thay đổi.
+\item	Dòng số 9: Khi thuộc tính readyState là 4 và status là 200 của đối tượng XMLHttpRequest thì sẽ tiến hành xử lý tài liệu XML. Giá trị của các thuộc tính này có thể tham khảo ở bảng thuộc tính bên dưới.
+\item	Dòng số 10: Tại đây chúng ta sẽ tiến hành truy vấn tài liệu XML được lấy về từ Webserver thông qua biến xmlDoc. Chúng ta nên xây dựng thành các hàm xử lý riêng biệt và gọi các hàm đó tại đây. 
+\item	Dòng số 14: Tạo yêu cầu dữ liệu. Ở đây, chúng ta cần lấy dữ liệu ở trên Webserver được lưu trữ trong file tên là: bookstore.xml.
+\item	Dòng số 15: Gửi yêu cầu lên Webserver.
+
+\end{itemize}
+
+
+
+
+
+\subsection{Truy xuất các nút dữ liệu }
+Để truy xuất các nút dữ liệu trong XML, chúng ta có thể sử dụng phương thức {\ttfamily  getElementsByTagName()} như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var x = xmlDoc.getElementsByTagName("title");
+\end{lstlisting}
+
+Đoạn mã trên lấy toàn bộ các nút có tên thẻ là {\ttfamily title} và trả về một danh sách gồm các nút {\ttfamily title}. Sau khi đã có danh sách các nút, chúng ta có thể truy xuất đến từng nút trong danh sách thông qua chỉ số của mảng, chẳng hạn:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var value = x[2].childNodes[0].nodeValue;
+\end{lstlisting}
+
+Đoạn mã trên sẽ truy xuất đến nút thứ 3 trong danh sách các nút title. Thuộc tính {\ttfamily childNodes} của nút vừa truy xuất sẽ chứa toàn bộ các nút con và {\ttfamily childNodes[0]} sẽ truy xuất đến nút con thứ nhất của nút này và lấy giá trị của nút này gán cho biến {\ttfamily value}. Vì vậy, biến value sẽ cho kết quả là: {\ttfamily "XQuery Kick Start"}. 
+
+Lưu ý: Cần phân biệt thuộc tính {\ttfamily childNodes} và thuộc tính {\ttfamily children}: Trong khi {\ttfamily children} dùng để chứa các thẻ con của một thẻ trong tài liệu XML, thì thuộc tính {\ttfamily childNodes} dùng để chứa các nút con của một nút trong DOM. Thuộc tính {\ttfamily childNodes} này có thể chứa cả các ký tự như xuống hàng (mã CR/LF)... Vì vậy, số lượng thành phần con của hai thuộc tính này có thể không giống nhau trên cùng một đối tượng.
+
+Như vậy để duyệt qua tất cả các nút có trong danh sách các nút {\ttfamily title} (danh sách {\ttfamily x} ở trên), chúng ta có thể sử dụng thuộc tính {\ttfamily length} để lấy độ lớn của danh sách:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var txt = "";
+	for (i = 0; i < x.length; i++) { 
+	        txt += x[i].childNodes[0].nodeValue + "<br>";
+}
+\end{lstlisting}
+\subsection{Truy xuất thông tin của nút}
+Trong tài liệu XML, mỗi nút là một đối tượng. Các đối tượng này có nhiều thuộc tính và phương thức để có thể truy xuất và tác động bới ngôn ngữ Javascipt. Mỗi nút bao gồm các thuộc tính quan trọng sau: 
+\begin{itemize}
+
+\item	{\ttfamily nodeName}: Tên của nút. Đây là thuộc tính chỉ đọc. Nếu là nút thẻ thì giá trị của thuộc tính này là tên thẻ; nếu là nút thuộc tính thì giá trị của thuộc tính này là tên thuộc tính; nếu là nút giá trị thì luôn luôn là \#text; nếu là nút tài liệu (toàn bộ tài liệu) thì luôn là \#document.
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var rs = xmlDoc.documentElement.nodeName;
+\end{lstlisting}
+Với đoạn mã trên thì biến rs sẽ cho kết quả là tên của nút gốc: bookstore.
+\item	{\ttfamily nodeValue}: Giá trị của nút. Nếu là nút thẻ thì có giá trị là undefined; nếu là nút thuộc tính thì có giá trị là giá trị của thuộc tính; nếu là nút giá trị thì giá trị của thuộc tính này là nội dung văn bản của nút đó.
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var x = xmlDoc.getElementsByTagName("title");
+	var book = x[0].childNodes[0];
+	var txt = book.nodeValue; 
+\end{lstlisting}
+Chúng ta thấy rằng với:
+\item	Dòng số 1 sẽ cho kết quả là danh sách các nút có tên thẻ là title. Như vậy x sẽ là danh sách các nút title, danh sách này có 3 nút. 
+\item	Dòng số 2 sẽ lấy nút thứ nhất trong danh sách và lấy nút con đầu tiên của nút này, tức là nút lá chứa nội dung văn bản của thẻ title. 
+\item	Do vậy, tại dòng số 3, biến {\ttfamily txt} có giá trị là {\ttfamily "Everyday Italian"}. Lưu ý rằng, thuộc tính này là thuộc tính có thể đọc và ghi, do đó câu lệnh sau là hoàn toàn đúng:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var x = xmlDoc.getElementsByTagName("title");
+	var book = x[0].childNodes[0];
+	book.nodeValue = "Easy Cooking";
+\end{lstlisting}
+\item	{\ttfamily nodeType}: Kiểu của nút. Đây là thuộc tính chỉ đọc. Bảng sau sẽ cho thấy giá trị của nó:
+\end{itemize}
+
+
+\begin{center}
+\begin{longtable}{|m{6cm}|m{2cm}|}
+  \caption[Kiểu nút trong DOM]{Kiểu nút trong DOM}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\multicolumn{1}{|c|}{ \textbf{Kiểu nút}}  &	\multicolumn{1}{c|}{ \textbf{Giá trị}}\\ \hline
+  Nút thẻ  &	1 \\ \hline
+  Nút thuộc tính  &	2\\ \hline
+  Nút giá trị  &	3\\ \hline
+  Nút ghi chú  &	8\\ \hline
+  Nút tài liệu  (toàn bộ tài liệu XML)  & 	9\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\subsection{Truy xuất giá trị của thuộc tính}
+Trong phần trên chúng ta đã lấy được nội dung dữ liệu của một nút đại diện cho thẻ trong XML. Tuy nhiên, các thẻ XML còn có thể chứa thông tin lưu trữ trong các thuộc tính. Thuộc tính {\ttfamily attributes} của một nút sẽ chứa tất cả các nút thuộc tính của nó. Chẳng hạn:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	var x = xmlDoc.getElementsByTagName('book')[0].attributes;
+\end{lstlisting}
+
+Đoạn mã này sẽ lấy về danh sách các nút thuộc tính của đối tượng book đầu tiên trong tài liệu. Thuộc tính {\ttfamily  length} lưu trữ số lượng các nút thuộc tính và hàm {\ttfamily  getNamedItem(string)} sẽ trả về một nút thuộc tính có tên thuộc tính được cung cấp trong tham số. Chẳng hạn:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	txt = x.getNamedItem("category").nodeValue + " " + x.length;
+\end{lstlisting}
+
+Đoạn mã này lấy giá trị của thuộc tính {\ttfamily  category} và số lượng thuộc tính của một cuốn sách.
+\section{Xử lý tài liệu XML trong các ngôn ngữ lập trình}
+XML là một ngôn ngữ đánh dấu dùng để lưu trữ và truyền tải dữ liệu độc lập với hệ điều hành và ngôn ngữ lập trình. Do đó, chúng ta có thể xử lý tài liệu XML trên nhiều ngôn ngữ lập trình khác nhau và có thể hoạt động trên nhiều nền tảng khác nhau. Trong các chương trước, chúng tôi đã minh họa việc xử lý tài liệu XML với ngôn ngữ lập trình Javascipt. Ở phần này, chúng tôi sẽ giới thiệu việc xử lý tài liệu XML trên các ngôn ngữ lập trình hiện đại như: C\#, PHP.
+
+Mặc dù tài liệu XML có thể được xử lý trên nhiều ngôn ngữ lập trình khác nhau, nhưng nhìn chung có hai phương pháp xử lý chính: Một là đọc toàn bộ tài liệu XML vào trong bộ nhớ, sau đó nhờ bộ phân tích cú pháp biến tài liệu XML thành một cây theo mô hình DOM. Hai là tại mỗi thời điểm bộ phân tích chỉ đọc một hoặc một vài nút theo như truy vấn. Phương pháp thứ nhất thì nó đặc biệt hữu ích đối với các tài liệu XML có dung lượng nhỏ; còn đối với các tài liệu XML có dung lượng lớn thì phương pháp này sẽ gây tốn bộ nhớ và hiệu năng thấp. Do đó, đối với tài liệu XML có dung lượng lớn thì chúng ta nên sử dụng theo phương pháp thứ hai.
+\subsection{Xử lý tài liệu XML với ngôn ngữ lập trình C\#}
+Ngôn ngữ lập trình C\# cung cấp cho chúng ta nhiều lớp đối tượng để có thể tương tác với tài liệu XML. Trong đó, lớp XmlDocument đại diện cho phương pháp thứ nhất còn lớp XmlReader đại diện cho phương pháp thứ hai.
+\subsubsection{Lớp XmlDocument}
+Để nạp tài liệu XML vào trong cấu trúc DOM, chúng ta tạo thể hiện của lớp XmlDocument và sử dụng phương thức {\ttfamily  Load} hoặc {\ttfamily LoadXml()} như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	XmlDocument doc = new XmlDocument();
+	doc.Load("bookstore.xml");
+\end{lstlisting}
+
+Hàm {\ttfamily  Load()} ở trên nhằm để tải tài liệu XML từ file hoặc chúng ta có thể sử dụng hàm {\ttfamily  LoadXml()} để nạp tài liệu từ chuỗi chứa dữ liệu XML:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	doc.LoadXml(myDataXML);
+\end{lstlisting}
+
+Một số thuộc tính trong lớp XmlDocument được thể hiện ở bảng sau:
+
+\begin{center}
+\begin{longtable}{|m{3cm}|m{5cm}|}
+\caption [Một số thuộc tính trong lớp XmlDocument]{Một số thuộc tính trong lớp XmlDocument}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Thuộc tính}} &	\multicolumn{1}{c|}{ \textbf{Mô tả}} \\ \hline
+Name &	Tên của nút\\ \hline
+InnerXml &	Nội dung của các thẻ con\\ \hline
+InnerText &	Giá trị của nút và nội dung của các thẻ con\\ \hline
+NodeType &	Kiểu của nút \\ \hline
+ParentNode &	Nút cha của nút hiện tại \\ \hline
+
+\end{longtable}
+\end{center} 
+
+Kiểu của nút trong XmlDocument được quy định trong enum XmlNodeType. Bảng sau trình bày các kiểu nút được sử dụng:
+
+\begin{center}
+\begin{longtable}{|m{3cm}|m{2cm}| m{6cm}|}
+\caption[Kiểu nút được sử dụng trong lớp XmlDocument]{Kiểu nút được sử dụng trong lớp XmlDocument}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Kiểu}} &	\multicolumn{1}{c|}{\textbf{Giá trị}} &	\multicolumn{1}{c|}{\textbf{Mô tả}}\\ \hline
+Element &	1 &	Nút thẻ (Thẻ mở) \\ \hline
+Attribute &	2 &	Nút thuộc tính\\ \hline
+Text &	3 &	Nút giá trị hay nút văn bản\\ \hline
+CDATA &	4 &	Phần CDATA\\ \hline
+Entity &	6 &	Thẻ khai báo một thực thể\\ \hline
+Comment &	8 &	Nút chú thích\\ \hline
+Document &	9 &	Toàn bộ tài liệu XML\\ \hline
+DocumentType &	10 &	Nút mô tả kiểu tài liệu\\ \hline
+Whitespace &	13 &	Thẻ chứa khoảng trắng\\ \hline
+EndElement &	15 &	Nút đóng (Thẻ đóng)	\\ \hline
+XmlDeclaration &	17 &	Nút mô tả tài liệu XML\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+
+Một số phương thức trong lớp XmlDocument được trình bày trong bảng sau:
+
+\begin{center}
+\begin{longtable}{|m{3cm}|m{6cm}|}
+\caption[Một số phương thức trong lớp XmlDocumen]{Một số phương thức trong lớp XmlDocumen}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Phương thức}} &	\multicolumn{1}{c|}{\textbf{Mô tả}}\\ \hline
+Load(str)&	Nạp XML từ file\\ \hline
+LoadXml(str)&	Nạp XML từ biến chứa nội dung XML\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+
+Sau khi đã nạp dữ liệu xong, chúng ta cần duyệt qua các nút dữ liệu để xử lý. Mỗi nút trong tài liệu có kiểu là XmlNode:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	XmlNodeList nodes = doc.DocumentElement.SelectNodes("/BookStore/Book");
+	string title = "", price="";
+	foreach (XmlNode node in nodes){
+	title = node.SelectSingleNode("title").InnerText;
+	price = node.SelectSingleNode("price").InnerText;
+}
+\end{lstlisting}
+
+Trong đó, thuộc tính DocumentElement của đối tượng doc, thuộc lớp XmlDocument, chứa nút gốc của tài liệu. Phương thức SelecteNodes(str) sẽ lấy danh sách các nút theo biểu thức XPath được quy định trong tham số của phương thức. Như vậy, biến nodes sẽ chứa danh sách các nút của thẻ book. Vòng lặp phía dưới giúp chúng ta duyệt qua các nút có trong danh sách nodes. 
+
+Một số thuộc tính của lớp XmlNode trình bày ở bảng sau:
+
+\begin{center}
+\begin{longtable}{|m{4cm}|m{7cm}|}
+\caption [Một số thuộc tính của lớp XmlNode]{Một số thuộc tính của lớp XmlNode}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Thuộc tính}} &	\multicolumn{1}{|c|}{\textbf{Mô tả}}\\ \hline
+Attributes &	Danh sách các thuộc tính của nút hiện tại\\ \hline
+ChildNodes &	Danh sách các nút con của nút hiện tại\\ \hline
+FirstChild &	Nút con đầu tiên của nút hiện tại\\ \hline
+InnerText &	Chuối chứa giá trị của nút và toàn bộ các nút con của nút hiện tại\\ \hline
+InnerXml &	Chuỗi chứa toàn bộ các nút con của nút hiện tại\\ \hline
+LastChild &	Nút con cuối cùng\\ \hline
+Name &	Tên nút\\ \hline
+NextSibling &	Nút anh em tiếp theo của nút hiện tại\\ \hline
+NodeType &	Kiểu nút. Được quy định như bảng kiểu nút ở trên\\ \hline
+Value &	Giá trị của nút. Tùy theo kiểu của nút mà giá trị của nó cũng sẽ khác nhau\\ \hline
+ParentNode &	Nút cha của nút hiện tại\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+
+Một số phương thức của lớp XmlNode trình bày ở bảng sau:
+
+\begin{center}
+\begin{longtable}{|m{5cm}|m{6cm}|}
+\caption [Một số phương thức của lớp XmlNode]{Một số phương thức của lớp XmlNode}
+  %\label{variability_impl_mech}
+   \endfirsthead
+   \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Phương thức}} &\multicolumn{1}{|c|}{	\textbf{Mô tả}}\\ \hline
+SelectNodes(xPath) &	Lấy danh sách các nút theo biểu thức XPath trong tham số\\ \hline
+SelectSingleNode(xPath) &	Lấy nút đầu tiên trong danh sách kết quả theo biểu thức XPath trong tham số\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\subsubsection{Lớp XmlReader}
+Để khởi tạo đối tượng XmlReader, chúng ta sử dụng hàm tĩnh Create() của lớp XmlReader để tạo một thể hiện như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	XmlReader xmlReader = XmlReader.Create("bookstore.xml");
+\end{lstlisting}
+
+Lúc này, đối tượng XmlReader được chỉ định sẽ xử lý tài liệu XML được khai báo trong tham số của hàm Create(). Lưu ý rằng tài liệu XML sẽ không được nạp hoàn toàn vào đối tượng lúc này, mà tùy thuộc vào truy vấn, đối tượng sẽ nạp lên kết quả tương ứng. Do đó, chúng ta có thể duyệt qua các nút bằng đoạn mã sau:
+\lstset{language=C++}
+\begin{lstlisting}[escapechar=`]
+while(xmlReader.Read()){
+	`Duyệt các nút tại đây`
+}
+\end{lstlisting}
+Hàm Read() ở trên sẽ tiến hành đọc một nút và trỏ đến nút tiếp theo trong danh sách.
+Một số thuộc tính và phương thức  của lớp XmlReader trình bày ở hai bảng sau:
+
+\begin{center}
+\begin{longtable}{|m{3cm}|m{8cm}|}
+\caption [Một số thuộc tính của lớp XmlReader]{Một số thuộc tính của lớp XmlReader}
+%\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+
+\hline
+\multicolumn{1}{|c|}{\textbf{Thuộc tính}} &	\multicolumn{1}{c|}{\textbf{Mô tả}}\\ \hline
+Name &	Tên của nút\\ \hline
+NodeType &	Kiểu của nút. Bảng mô tả kiểu của nút đã trình bày ở phần trên\\ \hline
+Value&	Giá trị của nút. Giá trị này phụ thuộc vào kiểu của nút\\ \hline
+ValueType &	Kiểu giá trị của nút. Mặc định là String\\ \hline
+HasAttributes &	Trả về true nếu nút hiện tại có thuộc tính\\ \hline
+HasValue &	Trả về true nếu nút hiện tại có chứa giá trị\\ \hline
+IsEmptyElement &	Trả về true nếu nút hiện tại là thẻ rỗng\\ \hline
+XmlLang	& Lấy giá trị của thuộc tính xml:lang của nút hiện tại\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+
+
+\begin{center}
+\begin{longtable}{|m{4cm}|m{6cm}|}
+\caption [Một số phương thức của lớp XmlReader]{Một số phương thức của lớp XmlReader}
+%\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+
+\hline
+
+\multicolumn{1}{|c|}{\textbf{Phương thức}} &	\multicolumn{1}{c|}{\textbf{Mô tả}}\\ \hline
+Create(fileLocation) &	Tạo thể hiện của lớp XmlReader\\ \hline
+Close()&	Giải phóng tài nguyên\\ \hline
+Read()&	Trả về true nếu đọc một nút tiếp theo thành công\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\subsection{Xử lý tài liệu XML với ngôn ngữ lập trình PHP}
+Tương tự trọng ngôn ngữ lập trình PHP chúng ta cũng có hai bộ phân tích XML tương ứng với hai phương pháp đã nêu ở trên: Bộ phân tích dựa vào cây (Tree-based parsers) và bộ phân tích dựa vào sự kiện (Event-based parsers).
+\subsubsection{Bộ phân tích dựa vào cây}
+Bộ phân tích dựa vào cây sẽ lưu trữ toàn bộ tài liệu XML vào trong bộ nhớ và chuyển nó thành cấu trúc cây theo mô hình DOM. Để làm việc với loại bộ phân tích này chúng ta có thể sử dụng lớp SimpleXML.
+
+Để nạp tài liệu XML với SimpleXML chúng ta sử dụng hàm {\ttfamily simplexml \_load\_string(str)}, hoặc {\ttfamily simplexml\_load\_file(str)} như ví dụ sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	$xml = simplexml_load_string($myXMLData) 
+	or die("`Lỗi: Không thể tạo đối tượng`");
+\end{lstlisting}
+Hoặc:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	$xml = simplexml_load_file($myXMLFileURI) 
+	or die("`Lỗi: Không thể tạo đối tượng`");
+\end{lstlisting}
+
+Trong đó:
+\begin{itemize}
+\item	{\ttfamily \$myXMLData}: biến chứa nội dung tài liệu XML.
+\item	{\ttfamily \$myXMLFileURI}: biến chứa địa chỉ của file XML.
+\item	Hàm này sẽ trả về là true nếu nạp tài liệu thành công.
+\end{itemize}
+Nếu có lỗi nạp tài liệu XML, chúng ta có thể sử dụng hàm {\ttfamily libxml\_get \_errors()} để lấy danh sách các lỗi nếu có. Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	foreach(libxml_get_errors() as $error) {
+		echo "<br>", $error->message;
+}
+\end{lstlisting}
+
+Sau khi nạp tài liệu thành công, thì mỗi nút trên cây sẽ là một đối tượng, có tên là tên thẻ và có các thuộc tính là các thẻ con của nó. Nếu các đối tượng cùng cấp thì sẽ tạo thành một mảng và được truy xuất thông qua chỉ số của mảng. Ví dụ:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<?php
+	$xml=simplexml_load_file("bookstore.xml") 
+	or die("`Lỗi: Không thể tạo đối tượng`");
+	echo $xml->book[0]->title . "<br>";
+	echo $xml->book[1]->title; ?>
+\end{lstlisting}
+
+Kết quả của đoạn mã trên sẽ lấy tiêu đề của các cuốn sách đầu tiên và thứ hai trong tài liệu XML như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	Everyday Italian
+	Harry Potter
+\end{lstlisting}
+
+Ngoài việc lấy giá trị của nút, chúng ta có thể lấy giá trị thuộc tính của một nút thông qua mảng hai chiều như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	<?php
+	$xml=simplexml_load_file("bookstore.xml") 
+	or die("`Lỗi: Không thể tạo đối tượng`");
+	echo $xml->book[0]['category'] . "<br>";
+	echo $xml->book[1]->title['lang']; ?>
+\end{lstlisting}
+
+Với đoạn mã trên, chúng ta có thể lấy giá trị thuộc tính category của cuốn sách đầu tiên, cũng như thuộc tính lang của nút title của cuốn sách thứ 2.
+Một số hàm thường dùng của lớp SimpleXML được trình bày ở bảng sau:
+
+
+\begin{center}
+\begin{longtable}{|m{4.5cm}|m{7cm}|}
+\caption [Một số hàm thường dùng của lớp SimpleXML]{Một số hàm thường dùng của lớp SimpleXML}
+%\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+\hline
+
+\multicolumn{1}{|c|}{ \textbf{Hàm}}&	\multicolumn{1}{|c|}{\textbf{Mô tả}}\\ \hline
+\_\_construct() &	Khởi tạo đối tượng SimpleXML\\ \hline
+addAttribute() &	Thêm một thuộc tính vào một nút\\ \hline
+addChild() &	Thêm một nút con vào trong một nút\\ \hline
+asXML() &	Trả về chuỗi dữ liệu XML từ đối tượng SimpleXML\\ \hline
+attributes() &	Trả về danh sách thuộc tính hoặc giá trị của một thẻ\\ \hline
+children() &	Trả về danh sách nút con của một nút\\ \hline
+count() &	Đếm số con của một nút\\ \hline
+getDocNamespaces() &	Trả về các không gian tên được KHAI BÁO trong tài liệu\\ \hline
+getName() &	Trả về tên của thẻ trong XML tương ứng với nút trên cây\\ \hline
+getNamespaces() &	Trả về các không gian tên được SỬ DỤNG trong tài liệu\\ \hline
+registerXPath Namespace() &	Tạo một không gian tên được sử dụng trong XPath\\ \hline
+saveXML() &	Giống với hàm asXML()\\ \hline
+simplexml\_import\_dom()&	Trả về một đối tượng SimpleXMLElement object từ một nút trong đối tượng DOM\\ \hline
+simplexml\_load\_file() &	Chuyển một file XML sang đối tượng SimpleXML\\ \hline
+simplexml\_load\_string()&	Chuyển một chuỗi XML sang đối tượng SimpleXML\\ \hline
+xpath() &	Thực hiện một truy vẫn XPath trên dữ liệu XML\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+\subsubsection{Bộ phân tích dựa vào sự kiện}
+Bộ phân tích dựa vào sự kiện sẽ không lưu trữ toàn bộ tài liệu XML vào bộ nhớ, thay vào đó, nó sẽ đọc một nút tại một thời điểm và cho phép chúng ta tương tác với nút này. Một khi chúng ta chuyển sang nút khác, nút cũ vì thế cũng sẽ không còn được lưu trữ trong bộ nhớ nữa. Đại diện đặc trưng của bộ phân tích này trong PHP là XMLReader.
+
+Để nạp tài liệu XML vào trong đối tượng XMLReader, chúng ta cần khởi tạo bộ phân tích và tải tài liệu như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	$reader = new XMLReader();
+	$reader->XML($myXMLData);
+\end{lstlisting}
+
+Đoạn mã trên sẽ khởi tạo bộ phân tích với tài liệu XML được lưu trữ như là một chuỗi văn bản. Ngoài ra, chúng ta có thể khởi tạo nó bằng cách chỉ định địa chỉ của file tài liệu XML như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	$reader = new XMLReader();
+	$reader->open($myXMLURL);
+\end{lstlisting}
+
+Sau khi nạp tài liệu XML, chúng ta sẽ tiến hành đọc tài liệu như cú pháp bên dưới:
+
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+while ($reader->read()) {
+  ` Xử lý tài liệu XML tại đây...`
+}
+\end{lstlisting}
+
+Lúc này, chúng ta tưởng tượng \$reader là một danh sách liên kết, mỗi phần tử trong danh sách là một nút trên cây. Hàm read() sẽ tiến hành đọc ra một nút trên cây, và sau đó trỏ sang nút tiếp theo.
+
+Một số thuộc tính thường dùng của lớp XMLReader cho ngôn ngữ PHP được trình bày ở bảng sau:
+
+
+\begin{center}
+\begin{longtable}{|m{3cm}|m{8cm}|}
+\caption[Các thuộc tính thường dùng của XMLReader cho ngôn ngữ PHP]{Các thuộc tính thường dùng của XMLReader cho ngôn ngữ PHP}
+%\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+\hline
+\multicolumn{1}{|c|}{ \textbf{Thuộc tính}} &	\multicolumn{1}{c|}{ \textbf{Mô tả}}\\ \hline
+attributeCount &	Số thuộc tính của một nút\\ \hline
+baseURI &	URI cơ sở của nút\\ \hline
+Depth &	Độ sâu của nút trên cây. Nút gốc có giá trị là 0\\ \hline
+hasAttributes &	Xác định một nút có chứa thuộc tính nào hay không\\ \hline
+hasValue &	Xác định một nút có chứa giá trị hay không\\ \hline
+isEmptyElement &	Xác định một nút có phải là thẻ rỗng hay không\\ \hline
+Name &	Tên của nút\\ \hline
+namespaceURI &	URI của không gian tên kết hợp với nút\\ \hline
+nodeType &	Kiểu nút (Xem bảng kiểu nút) \\ \hline
+Value &	Giá trị của nút\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+Kiểu của nút được sử dụng trong XMLReader của ngôn ngữ PHP được trình bày ở bảng sau: 
+
+\begin{center}
+\begin{longtable}{|m{4.5cm}|m{2cm}| m{4cm}|}
+\caption [Kiểu của nút được sử dụng trong XMLReader của ngôn ngữ PHP]{Kiểu của nút được sử dùng trong XMLReader của ngôn ngữ PHP}
+%\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+\hline
+
+\multicolumn{1}{|c|}{\textbf{Kiểu}} &	\multicolumn{1}{c|}{\textbf{Giá trị}} &	\multicolumn{1}{c|}{\textbf{Mô tả}}\\ \hline
+NONE &	0 &	Không phải nút\\ \hline
+ELEMENT &	1 &	Nút mở \\ \hline
+ATTRIBUTE &	2 &	Nút thuộc tính\\ \hline
+TEXT &	3 &	Nút giá trị, nút văn bản\\ \hline
+CDATA &	4 &	Nút CDATA\\ \hline
+ENTITY\_REF &	5 &	Nút tham chiếu\\ \hline
+ENTITY & 	6 &	Nút mô tả thực thể\\ \hline
+PI &	7 &	Nút chỉ thị xử lý\\ \hline
+COMMENT &	8 &	Nút ghi chú\\ \hline
+DOC &	9 &	Nút tài liệu (Toàn bộ tài liệu XML) \\ \hline
+WHITE\_SPACE & 	13 &	Nút chứa khoảng trắng\\ \hline
+END\_ELEMENT &	15 &	Nút đóng (Thẻ đóng như tài liệu XML) \\ \hline
+END\_ENTITY	& 16 &	Nút đóng mô tả thực thể\\ \hline
+XML\_DECLARATION &	17 &	Nút mô tả tài liệu XML\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+
+Một số hàm thường dùng của lớp XMLReader của ngôn ngữ PHP được trình bày ở bảng sau:
+
+\begin{center}
+\begin{longtable}{|m{4cm}|m{7cm}|}
+\caption [Một số hàm thường dùng của lớp XMLReader của ngôn ngữ PHP]{Một số hàm thường dùng của lớp XMLReader của ngôn ngữ PHP}
+%\label{variability_impl_mech}
+ \endfirsthead
+ \endhead
+\hline
+\multicolumn{1}{|c|}{\textbf{Hàm}} & \multicolumn{1}{c|}{	\textbf{Mô tả}}\\ \hline
+close() &	Đóng đối tượng XMLReader\\ \hline
+getAttribute(str) &	Lấy giá trị của một thuộc tính theo tên thuộc tính\\ \hline
+getAttributeNo(index) &	Lấy giá trị của một thuộc tính theo chỉ số\\ \hline
+XML(str) &	Khởi tạo dữ liệu cho bộ phân tích thông qua chuỗi XML\\ \hline
+open()&	Khởi tạo dữ liệu cho bộ phân tích thông qua file XML\\ \hline
+read()&	Đọc dữ liệu của một rồi di chuyển đến nút tiếp theo\\ \hline
+readString()&	Đọc nội dung của một nút rồi chuyển thành chuỗi\\ \hline
+next(str) &	Di chuyển đến một nút được chỉ ra trong tham số\\ \hline
+moveToAttribute(str) &	Di chuyển con trỏ đến thuộc tính có tên được chỉ ra trong tham số\\ \hline
+moveToAttributeNo( index) &	Di chuyển con trỏ đến thuộc tính có chỉ số được chỉ ra trong tham số\\ \hline
+
+\end{longtable}
+\end{center}
+\vspace{-1cm}
+
+Sau khi xử lý xong, chúng ta tiến hành đóng tài liệu XML để giải phóng tài nguyên như sau:
+\lstset{language=XML}
+\begin{lstlisting}[escapechar=`]
+	$reader->close();
+\end{lstlisting}
+
+\section{Tiểu kết chương 6}
+
+Trong chương này chúng tôi đã trình bày cách dùng ngôn ngữ Javascript để xử lý tài liệu XML theo mô hình DOM. Ngoài ra chúng tôi cũng đã trình bày cách dùng các ngôn ngữ hiện đại khác như C\#, PHP để xử lý tài liệu XML theo 2 mô hình khác nhau. Mặc dù DOM xử lý và truy xuất rất tốt dữ liệu trong XML, nhưng mô hình này khá phức tạp, tồn kém bộ nhớ và do đó chỉ thích hợp để xử lý với các tài liệu XML có kích thước nhỏ. Còn với các tài liệu XML có kích thước lớn thì chúng ta nên sử dụng phương pháp thứ hai, tức là phương pháp không tạo cây, chỉ tải các nút tại thời điểm truy vấn, do đó ít tốn kém bộ nhớ và hiệu suất cao hơn.
+ 
+\begin{center}
+\textbf{Câu hỏi cuối chương và bài tập}
+\end{center}
+
+Câu 1. Mô hình DOM là gì? 
+
+Câu 2. Hãy tạo dự án Quản lý sinh viên, trong đó:
+\begin{itemize}
+
+
+\item Tạo file XML có tên là: dulieusinhvien.xml
+\item	Sử dụng ngôn ngữ Javascript và mô hình DOM để thực hiện các chức năng: 
+\begin{itemize}
+\item	Xem danh sách theo lớp.
+\item	Thêm mới, chỉnh sửa, xóa thông tin sinh viên trong một lớp.
+\end{itemize}
+\end{itemize}
+
+
+

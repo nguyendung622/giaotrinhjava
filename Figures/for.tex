@@ -1,0 +1,19 @@
+\begin{tikzpicture}[node distance=2cm]
+
+\node (start) [startstop] {...};
+\node (pro1) [process, below of=start, yshift=-0.5cm] {Bieu\_thuc\_1};
+\node (pro2) [decision, below of=pro1, yshift=-1cm] {Bieu\_thuc\_2};
+\node (pro) [process, below of=pro2, yshift=-1cm] {Khoi\_lenh};
+\node (pro3) [process, below of=pro, yshift=-0.5cm] {Bieu\_thuc\_3};
+\node (protemp3) [circlee, left of=pro3, xshift=-1cm] {};
+\node (protemp2) [circlee, right of=pro2, xshift=1cm] {};
+\node (stop) [startstop, below of=pro3,yshift=-0.5cm] {...};
+\draw [arrow] (start) -- (pro1);
+\draw [arrow] (pro1) -- (pro2);
+\draw [arrow] (pro2) -- node[anchor=east] {true}(pro);
+\draw [arrow] (pro) -- (pro3);
+\draw [arrow] (pro3) -- (protemp3);
+\draw [arrow] (protemp3) |- (pro2);
+\draw [arrow] (pro2) -- node[anchor=south] {false}(protemp2);
+\draw [arrow] (protemp2) |- (stop);
+\end{tikzpicture}

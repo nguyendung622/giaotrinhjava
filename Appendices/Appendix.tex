@@ -1,0 +1,106 @@
+\chapter*{PHỤ LỤC}
+\addcontentsline{toc}{chapter}{Phụ lục}
+\label{Appendix}
+\thispagestyle{fancy}
+%\pagestyle{appendix}
+%\setcounter{table}{0}
+%\renewcommand{\thetable}{A\arabic{table}}
+\pagenumbering{arabic}% resets `page` counter to 1
+\renewcommand*{\thepage}{$\text{A}_{\arabic{page}}$}
+\appendix
+
+%------------------------------------------------------------------
+\noindent
+{\bf I. Chương trình minh họa thuật toán tìm kiếm theo chiều rộng}
+
+Một số quy ước sử dụng trong chương trình tìm kiếm theo chiều rộng:
+\begin{itemize}
+	\item {\bf open}: là một hàng đợi chứa các đỉnh chờ được xét ở bước tiếp theo ({\em hàng đợi là một dãy các phần tử mà khi thêm phần tử sẽ thêm vào cuối dãy, còn khi lấy phần tử ra sẽ lấy phần tử ở đứng đầu dãy}),
+	\item {\bf close}: là tập hợp các đỉnh đã xét, đã duyệt qua,
+	\item {\bf start}: là đỉnh xuất phát,
+	\item {\bf goal}: đỉnh đích cần tìm,
+	\item {\bf v}: đỉnh đang xét, đang duyệt.
+\end{itemize}
+
+\renewcommand{\baselinestretch}{1.15}
+\lstinputlisting[language=C++, caption=Tìm kiếm theo chiều rộng]{Codes/BFS.cpp}
+
+\renewcommand{\baselinestretch}{1.3}
+\noindent
+{\bf II. Chương trình minh họa thuật toán tìm kiếm theo chiều sâu}
+
+Một số quy ước sử dụng trong chương trình tìm kiếm theo chiều sâu:
+\begin{itemize}
+	\item {\bf open}: là một ngăn xếp chứa các đỉnh chờ được xét ở bước tiếp theo ({\em ngăn xếp là một dãy các phần tử mà khi thêm phần tử vào hoặc lấy phần tử ra đều thực hiện thêm vào và lấy ra ở đầu dãy}),
+	\item {\bf close}: là tập hợp các đỉnh đã xét, đã duyệt qua,
+	\item {\bf start}: là đỉnh xuất phát,
+	\item {\bf goal}: đỉnh đích cần tìm,
+	\item {\bf v}: đỉnh đang xét, đang duyệt.
+\end{itemize}
+
+\renewcommand{\baselinestretch}{1.15}
+\lstinputlisting[language=C++, caption=Tìm kiếm theo chiều sâu]{Codes/DFS.cpp}
+
+%------------------------------------------------------------------
+\renewcommand{\baselinestretch}{1.3}
+\noindent
+{\bf III. Chương trình minh họa thuật toán tìm kiếm tốt nhất đầu tiên}
+
+Một số quy ước sử dụng trong chương trình tìm kiếm tốt nhất đầu tiên:
+\begin{itemize}
+	\item {\bf open}: là một hàng đợi ưu tiên chứa các đỉnh chờ được xét ở bước tiếp theo ({\em hàng đợi ưu tiên là một dãy các phần tử mà khi thêm phần tử vào thì các phần tử sẽ được sắp xếp sao cho phần tử ưu tiên cao đứng trước phần tử ưu tiên thấp hơn, khi lấy phần tử ra thì lấy phần tử ở đầu dãy}),
+	\item {\bf close}: là tập hợp các đỉnh đã xét, đã duyệt qua,
+	\item {\bf start}: là đỉnh xuất phát,
+	\item {\bf goal}: đỉnh đích cần tìm,
+	\item {\bf v}: đỉnh đang xét, đang duyệt.
+\end{itemize}
+
+\renewcommand{\baselinestretch}{1.15}
+\lstinputlisting[language=C++, caption=Tìm kiếm tốt nhất đầu tiên]{Codes/BestFS.cpp}
+
+%------------------------------------------------------------------
+\renewcommand{\baselinestretch}{1.3}
+\noindent
+{\bf III. Chương trình minh họa thuật toán tìm kiếm leo đồi}
+
+Một số quy ước sử dụng trong chương trình tìm kiếm theo chiều sâu:
+\begin{itemize}
+	\item {\bf open}: là một ngăn xếp chứa các đỉnh chờ được xét ở bước tiếp theo ({\em ngăn xếp là một dãy các phần tử mà khi thêm phần tử vào hoặc lấy phần tử ra đều thực hiện thêm vào và lấy ra ở đầu dãy}),
+	\item {\bf list}: là một hàng đợi ưu tiên chứa các đỉnh mới sinh ra trong quá trình xem xét các đỉnh đưa vào ngăn xếp {\bf open},
+	\item {\bf close}: là tập hợp các đỉnh đã xét, đã duyệt qua,
+	\item {\bf start}: là đỉnh xuất phát,
+	\item {\bf goal}: đỉnh đích cần tìm,
+	\item {\bf v}: đỉnh đang xét, đang duyệt.
+\end{itemize}
+
+\renewcommand{\baselinestretch}{1.15}
+\lstinputlisting[language=C++, caption=Tìm kiếm leo đồi]{Codes/HillCS.cpp}
+%\noindent
+%{\bf II. Chương trình minh họa thuật toán A*}
+%
+%Để dễ theo dõi và hiểu rõ chương trình, chúng tôi nêu ra một số quy ước sử dụng trong chương trình A*:
+%\begin{itemize}
+%	\item {\bf open}: tập các trạng thái đã được sinh ra nhưng chưa được xét đến,
+%	\item {\bf close}: là tập hợp các đỉnh đã xét, đã duyệt qua,
+%	\item {\bf start}: là đỉnh xuất phát,
+%	\item {\bf goal}: đỉnh đích cần tìm,
+%	\item {\bf v}: đỉnh đang xét, đang duyệt,
+%	\item {\bf cost(p, q)}: là khoảng cách giữa p và q,
+%	\item {\bf g(p)}: khoảng cách từ trạng thái đầu đến trạng thái hiện tại p,
+%	\item {\bf h(p)}: giá trị được lượng giá từ trạng thái hiện tại đến trạng thái đích.	
+%\end{itemize}
+
+%\lstinputlisting[language=C++, caption=Tìm kiếm theo chiều sâu]{Codes/DFS.cpp}
+%
+%Gọi Open: tập các trạng thái đã được sinh ra nhưng chưa được xét đến.
+%
+%Close: tập các trạng thái đã được xét đến.
+%
+%Cost(p,q): là khoảng cách giữa p,q.
+%
+%g(p): khoảng cách từ trạng thái đầu đến trạng thái hiện tại p.
+%
+%h(p): giá trị được lượng giá từ trạng thái hiện tại đến trạng thái đích.
+%
+%f(p)=g(p)+h(p).
+%-------------------------------------------------------------------

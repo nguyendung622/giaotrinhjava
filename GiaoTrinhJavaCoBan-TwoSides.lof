@@ -1,0 +1,21 @@
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Các thành phần trong JDBC \relax }}{2}{figure.caption.3}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Các lớp và giao diện của JDBC \relax }}{3}{figure.caption.4}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Thêm thư viện điều khiển vào Project của Eclipse \relax }}{5}{figure.caption.5}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Lỗi chưa thêm thư viện vào Project \relax }}{8}{figure.caption.6}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Lỗi chưa mở cổng và bật giao thức TCP \relax }}{8}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Mở SQL Server Configuration Manager \relax }}{9}{figure.caption.8}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Bật giao thức TCP và mở cổng 1433 \relax }}{9}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Tắt và khởi động lại dịch vụ của SQL Server\relax }}{10}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Chưa cấu hình tài khoản để login vào SQL Server \relax }}{10}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Đăng nhập vào SQL Server \relax }}{11}{figure.caption.12}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Cấu hình để người dùng đăng nhập bằng tài khoản \relax }}{11}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Đặt mật khẩu và cho phép user: sa đăng nhập \relax }}{12}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Cấu trúc của bảng NhanVien \relax }}{24}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Dữ liệu của bảng NhanVien \relax }}{27}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Kết quả chương trình \relax }}{29}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Kết quả chương trình \relax }}{33}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Dữ liệu bảng Nhân viên và Đơn vị \relax }}{42}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Lược đồ quan hệ giữa các bảng \relax }}{43}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Các gói trong Project \relax }}{43}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Quan hệ giữa các gói \relax }}{44}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Phát sinh các hàm trên Eclipse \relax }}{47}{figure.caption.23}%

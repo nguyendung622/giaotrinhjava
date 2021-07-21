@@ -1,0 +1,376 @@
+\usepackage[utf8]{vietnam}
+%----------------------------------------------------------
+%\usepackage{vntex}
+%Thiết lập lề trang giấy
+%\usepackage{anysize}
+%\marginsize{3.3cm}{2.2cm}{1.3cm}{2.4cm}{geometry}
+%\usepackage{blindtext}
+%\usepackage[a4paper,bindingoffset=1cm,left=2.1cm,right=2.5cm,top=2.3cm,bottom=3.2cm,footskip=1.2cm]{geometry}
+%\usepackage[a4paper,bindingoffset=1.0cm,left=2.5cm,right=2.5cm,top=2.5cm,bottom=3.0cm,footskip=1.5cm]{geometry}
+\usepackage[paperwidth=16cm,paperheight=24cm,bindingoffset=1.0cm,left=1.0cm,right=1.3cm,top=1.75cm,bottom=2.0cm,headsep=0.4cm,footskip=0.6cm]{geometry}
+%----------------------------------------------------------
+\usepackage{longtable}
+
+
+%Sử dụng các goi
+\usepackage{latexsym,amssymb,amsmath,mathrsfs,amsfonts,amsthm}
+\usepackage{array}
+\usepackage{tocloft}
+\usepackage{etex}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage[all]{xy}
+\usepackage{xspace}
+\usepackage{stmaryrd}
+\usepackage{float}
+
+%Các gói dùng cho thuật toán
+\usepackage{algpseudocode}
+\usepackage[ruled,vlined,linesnumbered,resetcount,algochapter]{algorithm2e}
+\SetAlgoCaptionSeparator{.}
+\SetKwProg{Fn}{function}{}{}
+\SetKwProg{Pro}{procedure}{}{}
+
+%Định nghĩa các hàm
+\SetKwFunction{Depth}{Depth}
+\SetKwFunction{Append}{Append}	
+\SetKwFunction{Take}{Take}
+\SetKwFunction{PrintPath}{PrintPath}
+\SetKwFunction{BackwardReasoning}{BackwardReasoning}
+\SetKwFunction{Push}{Push}
+\SetKwFunction{Pop}{Pop}
+\SetKwFunction{Sort}{Sort}
+\SetKwFunction{DLS}{DLS}
+\SetKwFunction{Resolvable}{Resolvable}
+\SetKwFunction{Unresolvable}{Unresolvable}
+\SetKwFunction{Leaf}{Leaf}
+\SetKwFunction{Unify}{Unify}
+
+\SetAlgorithmName{Thuật toán}{}
+%----------------------------------------------------------
+
+%Các gói dùng cho hình ảnh
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+%\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage[labelsep=period,format=plain,font=small,textfont=it]{caption}
+%\captionsetup[table]{skip=3pt}
+\captionsetup[figure]{belowskip=-6pt,aboveskip=8pt}
+\captionsetup[table]{belowskip=-3pt,aboveskip=4pt}
+%\usepackage{apacite}
+%----------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tabto}
+\usepackage{siunitx}
+
+%----------------------------------------------------------
+%Các gói dùng cho code
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{Mã nguồn}
+
+\definecolor{backgroundcolor}{rgb}{0.98,0.98,0.98}
+
+%\definecolor{keywordcolor}{rgb}{1.00,0.40,0.00}
+\definecolor{keywordcolor}{rgb}{0.00,0.0,0.00}
+\definecolor{commentcolor}{rgb}{0.00,0.60,0.00}
+\definecolor{textcolor}{rgb}{0.0,0.00,0.0}
+%\definecolor{textcolor}{rgb}{0.58,0.00,0.82}
+\definecolor{numberlinecolor}{rgb}{0.2,0.2,0.2}
+
+%\definecolor{backgroundcolor}{rgb}{0.95,0.95,0.95}
+\definecolor{keywordcolor}{rgb}{0.00,0.0,0.00}
+%\definecolor{commentcolor}{rgb}{0.00,0.0,0.00}
+%\definecolor{textcolor}{rgb}{0.0,0.00,0.0}
+%\definecolor{numberlinecolor}{rgb}{0.0,0.0,0.0}
+
+
+%\usepackage{courier}
+%\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{black}{#1}}
+%\SetCommentSty{mycommfont}
+
+\lstset{frame=single,
+	language=XML,
+	aboveskip=-1mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	backgroundcolor=\color{backgroundcolor},
+	basicstyle={\small\ttfamily},
+	captionpos=t,
+	%numbers=none,
+	numbers=left,
+	numbersep=5pt,
+	numberstyle={\scriptsize\ttfamily\color{numberlinecolor}},
+	keywordstyle=\bfseries\ttfamily\color{keywordcolor},
+%	keywordstyle=\bfseries\color{keywordcolor},
+	commentstyle=\textit\color{commentcolor},
+	stringstyle=\color{textcolor},
+	rulecolor=\color{black},
+	breaklines=true,
+	breakatwhitespace=true,
+	%keepspaces=true,
+	tabsize=3,
+	%setlength{\parskip}{10pt}
+	title=\lstname 
+}
+
+\captionsetup[lstlisting]{justification=raggedleft,singlelinecheck=off}
+
+%----------------------------------------------------------
+%Dùng cho bảng biểu
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{slashbox}
+\usepackage{arydshln}
+%Lùi đầu dòng cho đoạn đầu tiên của một mục
+\usepackage{indentfirst}
+%Đánh số cho bài tập
+\usepackage{exercise,chngcntr}
+\counterwithin{Exercise}{chapter}
+\counterwithin{Answer}{chapter}
+\def\ExerciseListName{\!\!}
+\def\AnswerListName{Lời giải}
+
+%----------------------------------------------------------
+%Thiết lập khoảng cách giữa các dòng và các đoạn
+\raggedbottom
+\newcommand{\itemspace}{2pt}
+\setlength{\parindent}{20pt}
+\setlength{\parskip}{4pt}
+\renewcommand{\baselinestretch}{1.25}
+\setlist[itemize,1]{leftmargin=32pt}
+\setlist[itemize,2]{leftmargin=25pt}
+\setlist[itemize]{topsep=\itemspace, parsep=2pt}
+\setlist[enumerate,1]{leftmargin=35pt}
+\setlist[enumerate]{topsep=\itemspace, parsep=2pt}
+%giáo trình xml và ứng dụng
+%----------------------------------------------------------
+%Dung cho Header và footer
+
+\newcommand{\theverion}{\fontsize{12}{10} \textsc{}}
+%\renewcommand{\thepage}{\fontsize{10}{10} \thepage}
+
+\usepackage{fancyhdr}
+
+%\pagestyle{fancy}
+\pagestyle{plain}
+
+
+	\fancyhead[C]{}
+	\fancyhead[RE,LO]{\theverion}
+
+	\fancyhead[LE,RO]{}
+%	\fancyfoot[C]{}
+%	\fancyfoot[RE,LO]{}
+%	\fancyfoot[LE,RO]{}
+%	\renewcommand{\headrulewidth}{0.25mm}
+%	\renewcommand{\footrulewidth}{0pt}	
+	
+%	\fancypagestyle{appendix}
+%	{
+%		\fancyhead[C]{}
+%		\fancyhead[RE,LO]{}
+%		\fancyhead[LE,RO]{\theverion}
+%		\fancyfoot[C]{}
+%		\fancyfoot[RE,LO]{}
+%		\fancyfoot[LE,RO]{}
+%		\renewcommand{\headrulewidth}{1pt}
+%		\renewcommand{\footrulewidth}{0pt}	
+%	}
+
+%Định nghĩa các các ký hiệu
+%-------------------------------------------------------------
+\newcommand{\mC}			{\mathcal{C}}
+\newcommand{\True}			{\mathsf{True}}
+\newcommand{\False}			{\mathsf{False}}
+\newcommand{\TrueShort}		{\mathsf{T}}
+\newcommand{\FalseShort}	{\mathsf{F}}
+\newcommand{\AndOr}			{\mathsf{And/Or}}
+\newcommand{\AndOnly}		{\mathsf{And}}
+\newcommand{\OrOnly}		{\mathsf{Or}}
+\newcommand{\MIN}			{\mathsf{MIN}}
+\newcommand{\MAX}			{\mathsf{MAX}}
+
+\renewcommand{\sharp}		{\#}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.6mm}}
+\newcommand{\myend}			{\mbox{}\hfill\mbox{{\scriptsize$\!\blacksquare$}}}
+%\newcommand{\myend}			{\mbox{}\hfill\mbox{{\scriptsize$\!\square$}}}
+\renewcommand{\qedsymbol}	{\myend}
+%\newenvironment{sketch}{\noindent{\em Proof sketch.}}{\myend\smallskip}
+
+\newcommand{\semiItem}		{\mbox{- }}
+\newcommand{\semiBullet}[1] {\mbox{$\bullet$ {\bf {#1}}}}
+\newcommand{\tuple}[1]		{\left\langle#1\right\rangle\!}
+\newcommand{\ramka}[1]		{\fbox{\parbox{\textwidth}{#1}}}
+\newcommand{\V}				{\forall}
+\newcommand{\E}				{\exists}
+
+
+%-------------------------------------------------------------
+%Các ký hiệu cho ví dụ (cá thể)
+\newcommand{\iAN}			{\mathsf{AN}}
+\newcommand{\iBA}			{\mathsf{BA}}
+\newcommand{\iBINH}			{\mathsf{BINH}}
+\newcommand{\iTU}			{\mathsf{TU}}
+\newcommand{\iHOA}			{\mathsf{HOA}}
+\newcommand{\iLAN}			{\mathsf{LAN}}
+\newcommand{\iROSE}			{\mathsf{ROSE}}
+\newcommand{\iFOOTBALL}		{\mathsf{FOOTBALL}}
+\newcommand{\iGRAY}			{\mathsf{GRAY}}
+\newcommand{\iTENNIS}		{\mathsf{TENNIS}}
+\newcommand{\iMUSIC}		{\mathsf{MUSIC}}
+\newcommand{\iBIBI}			{\mathsf{BIBI}}
+\newcommand{\iROCKY}		{\mathsf{ROCKY}}
+%Vị từ
+\newcommand{\iFather}		{\mathsf{father}}
+\newcommand{\iBrother}		{\mathsf{brother}}
+\newcommand{\iMother}		{\mathsf{mother}}
+\newcommand{\iPerson}		{\mathsf{person}}
+\newcommand{\iParent}		{\mathsf{parent}}
+\newcommand{\iHusband}		{\mathsf{husband}}
+\newcommand{\iLove}			{\mathsf{love}}
+\newcommand{\iPlay}			{\mathsf{play}}
+\newcommand{\iLike}			{\mathsf{like}}
+\newcommand{\iMale}			{\mathsf{male}}
+\newcommand{\iFemale}		{\mathsf{female}}
+\newcommand{\iYounger}		{\mathsf{younger}}
+\newcommand{\iGood}			{\mathsf{good}}
+\newcommand{\iHear}			{\mathsf{hear}}
+\newcommand{\iStudy}		{\mathsf{study}}
+\newcommand{\iKnow}			{\mathsf{know}}
+\newcommand{\iPrime}		{\mathsf{prime}}
+\newcommand{\iOdd}			{\mathsf{odd}}
+\newcommand{\iFly}			{\mathsf{fly}}
+\newcommand{\iRain}			{\mathsf{rain}}
+\newcommand{\iDog}			{\mathsf{dog}}
+\newcommand{\iCat}			{\mathsf{cat}}
+\newcommand{\iRear}			{\mathsf{rear}}
+\newcommand{\iKill}			{\mathsf{kill}}
+\newcommand{\iAnimalLover}	{\mathsf{animalLover}}
+\newcommand{\iAnimal}		{\mathsf{animal}}
+
+
+\newcommand{\iGreater}		{\mathsf{greater}}
+\newcommand{\iLesser}		{\mathsf{lesser}}
+\newcommand{\iFriend}		{\mathsf{friend}}
+\newcommand{\iBadPerson}	{\mathsf{badPerson}}
+\newcommand{\iElephant}		{\mathsf{elephant}}
+\newcommand{\iColor}		{\mathsf{color}}
+\newcommand{\iStudent}		{\mathsf{student}}
+\newcommand{\iInside}		{\mathsf{inside}}
+
+%----------------------------------------------------------
+%Định dạng chương, định lý, mệnh đề, ...
+\newtheorem{Theorem}{Định lý}[chapter]
+\newtheorem{Proposition}{Mệnh đề}[chapter]
+\newtheorem{Lemma}{Bổ đề}[chapter]
+\newtheorem{Corollary}{Hệ quả}[chapter]
+\newtheorem{Remark}{Ghi chú}[chapter]
+\newtheorem{Result}{Kết quả}[chapter]
+
+\theoremstyle{definition}
+\newtheorem{Definition}{Định nghĩa}[chapter]
+\newtheorem{Example}{Ví dụ}[chapter]
+
+%Định nghĩa các màu dùng cho các tiêu đề CHƯƠNG, MỤC
+\definecolor{colorChapter}{rgb}{0.00, 0.00, 0.00}
+\definecolor{colorSection}{rgb}{0.00, 0.00, 0.00}
+%\definecolor{colorChapter}{rgb}{0.81, 0.09, 0.13}
+%\definecolor{colorSection}{rgb}{0.16, 0.32, 0.95}
+%-----------------------------------------------------------------
+%Thiết lập các font cho tiêu đề CHƯƠNG, MỤC, TIỂU MỤC
+\newcommand{\chapterFont}{\normalfont\fontsize{14}{15}\bfseries\color{colorChapter}}
+\newcommand{\sectionFont}{\normalfont\fontsize{12}{15}\bfseries\color{colorSection}}
+\newcommand{\subsectionFont}{\normalfont\fontsize{12}{15}\bfseries\itshape\color{black}}
+\newcommand{\subsubsectionFont}{\normalfont\fontsize{12}{15}\bfseries\color{black}}
+\renewcommand{\thesubsubsection}{\alph{subsubsection}}
+%-----------------------------------------------------------------
+%Thiết lập thông số các tiêu đề của CHƯƠNG, MỤC
+\setcounter{secnumdepth}{3}
+
+\titleformat{\chapter}[display]{\chapterFont}{\chaptertitlename\ \thechapter}{10pt}{\centering} % display -> block/hange
+
+%\titleformat{\chapter}[display]{\chapterFont}{\chaptertitlename\ \thechapter.}{10pt}{\centering} % display -> block/hange
+
+\titlespacing{\chapter}{0pt}{0pt}{25pt} % left, before, after
+
+\titleformat{\section}{\sectionFont}{\thesection.}{10pt}{}
+\titlespacing{\section}{0pt}{6pt}{2pt}
+
+\titleformat{\subsection}{\subsectionFont}{\thesubsection.}{10pt}{}
+\titlespacing{\subsection}{0pt}{5pt}{2pt}
+
+\titleformat{\subsubsection}{\subsubsectionFont}{\thesubsubsection.}{10pt}{}
+\titlespacing{\subsubsection}{0pt}{5pt}{2pt}
+
+%\renewcommand{\thesubsubsection}{\alph{subsubsection}}
+%-----------------------------------------------------------------
+%\usepackage{draftwatermark}
+%\SetWatermarkText{\;\;\;Version Seminar}
+%\SetWatermarkLightness{0.9}
+%\SetWatermarkScale{0.55}
+%-----------------------------------------------------------------
+%Thiết lập thông số mục lục cho CHƯƠNG
+\newlength\myLenChap
+\renewcommand\cftchappresnum{\chaptername~}
+\renewcommand\cftchapaftersnum{.}
+\settowidth\myLenChap{\cftchappresnum\cftchapaftersnum}
+\addtolength\cftchapnumwidth{\myLenChap}
+%-----------------------------------------------------------------
+%Thiết lập thông số mục lục cho MỤC
+\newlength\myLenSec
+\renewcommand\cftsecaftersnum{.}
+\settowidth\myLenSec{\cftsecpresnum\!}
+\addtolength\cftsecnumwidth{\myLenSec}
+%-----------------------------------------------------------------
+%Thiết lập thông số mục lục cho TIỂU MỤC
+\newlength\myLenSubsec
+\renewcommand\cftsubsecaftersnum{.}
+\settowidth\myLenSubsec{\cftsubsecpresnum\!\!}
+\addtolength\cftsubsecnumwidth{\myLenSubsec}
+%-----------------------------------------------------------------
+%Thiết lập thông số mục lục cho HÌNH ẢNH
+\setlength{\cftfigindent}{0pt}
+\newlength{\myLenFig}
+\renewcommand{\cftfigpresnum}{\figurename\;}
+\renewcommand{\cftfigaftersnum}{.}
+\settowidth{\myLenFig}{\cftfigpresnum\!\!}
+\addtolength{\cftfignumwidth}{\myLenFig}
+%-----------------------------------------------------------------
+%Thiết lập thông số mục lục cho BẢNG BIỂU
+\setlength{\cfttabindent}{0pt}
+\newlength{\myLenTab}
+\renewcommand{\cfttabpresnum}{\tablename\;}
+\renewcommand{\cfttabaftersnum}{.}
+\settowidth{\myLenTab}{\cfttabpresnum\!}
+\addtolength{\cfttabnumwidth}{\myLenTab}
+
+\makeatletter
+\def\cleardoublepage
+{
+	\clearpage\if@twoside \ifodd\c@page\else
+	\hbox{}
+%	\vspace*{\fill}
+%	\begin{center}
+%		{\em This page intentionally left blank}
+%	\end{center}
+	\vspace{\fill}
+	\begin{flushleft}
+		%\noindent\rule{6.0cm}{1pt}\\[-0.2cm]
+		%\theverion
+	\end{flushleft}
+	\thispagestyle{empty}
+	\newpage
+	\if@twocolumn\hbox{}\newpage\fi\fi\fi
+}
+\makeatother

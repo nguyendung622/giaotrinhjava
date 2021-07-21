@@ -1,0 +1,51 @@
+
+\setcounter{chapter}{6}
+\setcounter{section}{0}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\chapter* {\begin{flushleft}
+\end{flushleft}TỔNG KẾT VỀ XML} 
+\addcontentsline{toc}{chapter}{ Tổng kết về XML}
+\thispagestyle{fancy}
+
+XML là một ngôn ngữ đánh dấu dùng để lưu trữ và truyền tải dữ liệu độc lập với hệ điều hành và ngôn ngữ lập trình. Đặc biệt, XML cho phép chia sẻ và sử dụng thông tin phân tán trên các hệ thống khác nhau và hỗ trợ người dùng thông qua khả năng tạo nội dung động, phát triển ứng dụng và tích hợp trên nhiều qui mô khác nhau. 
+XML cho phép các nhà phát triển và quản trị các hệ thống thông tin mô tả thông tin có liên hệ tới các nguồn thông tin khác. Đây là phương pháp khai thác thông tin nghiệp vụ lý tưởng trong môi trường trao đổi thông tin từ server đến server, từ server đến ứng dụng hay từ ứng dụng đến ứng dụng. Cấu trúc mã chặt chẽ của XML cho phép các ứng dụng khác dễ dàng tìm kiếm và sử dụng nội dung đã tạo.
+Chúng ta đã tìm hiểu các khía cạnh cơ bản nhất về XML, để độc giả có thể hệ thống lại các kiến thức đã học, chúng tôi xin hệ thống lại những nét chính về vầ XML như sau.
+\section*{XML được dùng để tạo cấu trúc dữ liệu }
+Cấu trúc dữ liệu trong một hệ thống thông tin đóng một vai trò quan trọng cho sự phát triển hệ thống. XML được sử dụng để tạo ra cấu trúc dữ liệu của hệ thống, dữ liệu này có thể là các bảng công tác, sổ địa chỉ, các tham số cấu hình, giao dịch tài chính, vẽ kỹ thuật ... XML là một hệ thống các luật (có thể coi là những hướng dẫn hay quy ước) dùng cho việc thiết kế và định dạng văn bản giúp chúng ta có thể tạo cấu trúc cho dữ liệu. XML không phải là ngôn ngữ lập trình và chúng ta cũng không cần phải là một lập trình viên để có thể học và sử dụng nó thành thạo. XML hỗ trợ trong việc tạo dữ liệu, đọc dữ liệu và làm cho cấu trúc dữ liệu trở nên rõ ràng dễ hiểu. XML còn giúp chúng ta tránh được những bẫy thông thường trong thiết kế ngôn ngữ: nó có thể mở rộng, có nền tảng (platform) hoàn toàn độc lập và hỗ trợ tính quốc tế hoá và nội địa hoá. XML hỗ trợ hoàn toàn Unicode.
+\section*{XML có một số điểm giống với HTML}
+Tương tự HTML, XML cũng sử dụng các thẻ và thuộc tính để mô tả nội dung của tài liệu XML. Trong khi HTML đặc biệt chú ý tới từng thẻ và thuộc tính có ý nghĩa gì, và phần văn bản giữa các thẻ đó sẽ hiển thị như thế nào trong trình duyệt thì XML sử dụng các thẻ chỉ để phân định ranh giới giữa các mẩu dữ liệu, và coi việc đọc và xử lý dữ liệu đó hoàn toàn là nhiệm vụ của ứng dụng. Nói cách khác, nếu thấy "<p>" trong một file XML, đừng cho rằng đó là ký hiệu của một đoạn. Tuỳ thuộc vào ngữ cảnh, nó có thể là giá (price), một tham số (a parameter), một người (a person), hay một cái gì đó bắt đầu bằng chữ cái 'p' trong tiếng Anh.
+\section*{XML là một văn bản, nhưng không giống những loại văn bản thông thường mà ta có thể đọc được }
+Các chương trình dùng để tạo bảng công tác, sổ địa chỉ, và các dữ liệu được cấu trúc hóa thông thường lưu dữ liệu trên đĩa, sử dụng khuôn dạng văn bản hay nhị phân. Một thuận lợi của khuôn dạng văn bản là cho phép người ta, nếu cần thiết, có thể xem dữ liệu mà không cần phải có chương trình đã tạo ra dữ liệu đó; nói cách khác, chúng ta có thể đọc nó với bất kì bộ soạn thảo văn bản nào dó. Các khuôn dạng văn bản cũng cho phép người ta tìm lỗi dễ dàng hơn trong các ứng dụng. Giống như HTML, các file XML là những file văn bản được tạo ra không phải với mục đích để đọc, nhưng cũng không loại trừ trường hợp nếu cần thì vẫn có thể đọc được. Tuy nhiên, XML lại có điểm không bằng HTML, các luật dùng trong file XML rất hạn chế. Chỉ cần quên một thẻ, hay một thuộc tính không đi kèm với nội dung sẽ làm cho toàn bộ file XML đó ngừng hoạt động, trong khi ở HTML những lỗi này có thể được bỏ qua. Bản ghi XML chính thức không cho phép các ứng dụng tìm hiểu đến lần thứ 2 nguyên nhân gây lỗi file XML; nếu file bị lỗi ứng dụng đó ngừng hoạt động ngay lập tức và báo lỗi.
+\section*{XML được sử dụng miễn phí, có platform độc lập và được hỗ trợ rất tốt}
+Khi lựa chọn XML làm cơ sở để thực hiện một dự án, chúng ta có thể tiếp cận với rất nhiều các công cụ phát triển. Lựa chọn XML có đôi chút giống với lựa chọn SQL cho cơ sở dữ liệu: chúng ta vẫn phải xây dựng cơ sở dữ liệu cho mình và các chương trình riêng cũng như phải có những qui tắc để thao tác nó. Có rất nhiều công cụ có sẵn và chúng ta cũng có thể dễ dàng nhận được sự giúp đỡ của nhiều người. Và vì XML không cần phải mua bản quyền mới sử dụng được nên chúng ta có thể tạo cho mình một phần mềm riêng mà không phải trả một khoản chi phí nào hết. Mặc dù XML không phải lúc nào cũng là giải pháp tốt nhất, nhưng nó luôn xứng đáng để người ta phải xem xét.
+\section*{XML là cơ sở của RDF và Semantic Web}
+Khung mô tả tài nguyên của W3C (RDF) là một khuôn dạng văn bản XML hỗ trợ mô tả tài nguyên và các ứng dụng metadata, ví dụ như danh sách bản nhạc, bộ sưu tầm ảnh, sưu tầm thư mục. RDF cho phép nhận diện người trong album ảnh web sử dụng thông tin từ danh sách liên lạc cá nhân; sau đó chương trình nhận gửi thư sẽ tự động gửi thông báo (message) đến những người này thông báo cho họ biết ảnh của họ đang ở trên mạng. Cũng như các văn bản tích hợp HTML, hệ thống menu, và ứng dụng forms dùng để bắt đầu các web gốc, ứng dụng tích hợp RDF và các tác nhân trong Semantic Web. Cũng giống như người ta cần có sự thống nhất về ý nghĩa những từ họ sử dụng trong giao tiếp, các máy vi tính cần có cơ chế thống nhất về ý nghĩa các thuật ngữ để truyền đạt thông tin một cách hiệu quả. Định nghĩa chính thức các thuật ngữ trong một vài lĩnh vực (mua bán hay sản xuất) gọi là bản thể học rất cần thiết trong Web Semantic. RDF, bản thể học, và việc thể hiện ý nghĩa vì vậy các máy tính có thể giúp người ta tiến hành công việc của mình là toàn bộ nội dung hoạt động của Semantic Web.
+\section*{XHTML là sự kết hợp giữa XML và HTML}
+XML có một ứng dụng rất quan trọng đó là tạo khuôn dạng văn bản: XHTML của W3C, đây là thế hệ tiếp sau của HTML. XHTML có nhiều điểm chung với HTML. Tuy nhiên, trong cú pháp cũng có một số thay đổi để phù hợp với các luật trong XML. Một văn bản được tạo ra với XML sẽ mang cấu trúc của XML và bị hạn chế ở một số phương diện. (Ví dụ, XHTML cho phép "<p>", nhưng lại không cho "<r>"); nó cũng bổ sung thêm ý nghĩa cho cú pháp (XHTML qui định "<p>" là "đoạn văn (paragraph)", chứ không phải "giá (price)", "người (person)", hay bất cứ một cái gì khác).
+\chapter* {\begin{flushleft}
+\end{flushleft}TÀI LIỆU THAM KHẢO} 
+\addcontentsline{toc}{chapter}{ Tài liệu tham khảo}
+\textbf{Tiếng Việt:}
+
+[1] Nguyễn Phương Lan. 	\textit{XML nền tảng và ứng dụng}. NXB Lao \\ \indent \indent  động-Xã hội, 2008.
+
+[2] Nguyễn Tiến, Đặng Xuân Hường. \textit{Nhập môn XML thực hành \\ \indent \indent  và ứng dụng}. NXB Thống kê, 2008.\\
+
+\textbf{Tiếng Anh:}
+
+[1] Erik T. Ray. \textit{Leraning XML}.	Oreilly Press, 2013.\\
+
+\textbf{Liên kết:}
+
+[1] XML Tutorial in PDF: \textit{\url{https://www.tutorialspoint.com}}
+
+\indent \indent \textit{\url{/xml/xml_pdf_version.htm}}.
+
+[2] XML Basics – XML Tutorial: \\ \indent \textit{\url{http://www.w3schools.com/xml(recommend}}.
+
+[3] An Introduction to XML: \textit{\url{ https://www.xmlfiles.com/xml/}}.
+
+[4] XML Tutorial for Beginners: 	\textit{\url{https://beginnersbook.com}}
+\indent \indent \textit{\url{/2018/10/xml-tutorial-learn-xml/}}.
+
