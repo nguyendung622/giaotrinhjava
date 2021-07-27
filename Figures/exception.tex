@@ -1,0 +1,18 @@
+\begin{tikzpicture}[node distance=2cm]
+
+\node (start) [startstop] {Throwable};
+\node (err) [process, below of=start, yshift=-0.5cm, xshift=-2cm] {Error};
+\node (err1) [process, below of=err, yshift=-0.5cm] {Unchecked errors};
+
+\node (exp) [process, below of=start, yshift=-0.5cm, xshift=2cm] {Exception};
+\node (exp1) [process, below of=exp, yshift=-0.5cm, ] {Runtime Exception};
+\node (exp2) [process, below of=exp1, yshift=-0.5cm] {Unchecked exceptions};
+\node (exp3) [process, below of=exp1, yshift=-0.5cm, xshift=4cm] {Checked exceptions};
+
+\draw [thick] (start) -- (err);
+\draw [thick] (start) -- (exp);
+\draw [thick] (err) -- (err1);
+\draw [thick] (exp) -- (exp1);
+\draw [thick] (exp1) -- (exp2);
+\draw [thick] (exp) -| (exp3);
+\end{tikzpicture}

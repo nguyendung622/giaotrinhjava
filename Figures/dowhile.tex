@@ -1,15 +1,15 @@
 \begin{tikzpicture}[node distance=2cm]
 
 \node (start) [startstop] {...};
-\node (pro) [process, below of=start, yshift=-0.5cm] {Khoi\_lenh};
-\node (dec1) [decision, below of=pro, yshift=-2cm] {Dieu\_kien\_lap};
+\node (pro) [process, below of=start, yshift=-0.5cm] {B};
+\node (dec1) [decision, below of=pro, yshift=-2cm] {E};
 \node (protemp) [circlee, right of=dec1, xshift=2cm] {};
 \node (stop) [startstop, below of=dec1,yshift=-2cm] {...};
 
 \draw [arrow] (start) -- (pro);
 \draw [arrow] (pro) -- (dec1);
 \draw [thick] (dec1) -- node[anchor=south] {true} (protemp);
-\draw [arrow] (dec1) -- node[anchor=east] {no} (stop);
+\draw [arrow] (dec1) -- node[anchor=east] {false} (stop);
 \draw [arrow] (protemp) |- (pro);
 
 \end{tikzpicture}

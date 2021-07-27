@@ -1,9 +1,9 @@
 \begin{tikzpicture}[node distance=2cm]
 
 \node (start) [startstop] {...};
-\node (dec1) [decision, below of=start, yshift=-2cm] {Bieu\_thuc\_dieu\_kien};
-\node (pro1) [process, below of=dec1, yshift=-2cm] {Khoi\_lenh\_1};
-\node (pro2) [process, right of=dec1, xshift=4cm] {Khoi\_lenh\_2};
+\node (dec1) [decision, below of=start, yshift=-2cm] {E};
+\node (pro1) [process, below of=dec1, yshift=-2cm] {B1};
+\node (pro2) [process, right of=dec1, xshift=4cm] {B2};
 \node (stop) [startstop, below of=pro1,yshift=-0.5cm] {...};
 
 \draw [arrow] (start) -- (dec1);

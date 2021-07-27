@@ -376,13 +376,51 @@ char&2 bytes&Lưu 1 ký tự đơn trong bảng mã Unicode\\
 {\ttfamily final double PI = 3.1415926535897;}
 \section{Các phép toán cơ bản}
 \subsection{Phép toán số học}
-\indent Java hỗ trợ năm phép toán số học sau:\\
-(bảng)\\
+\indent Java hỗ trợ các phép toán số học sau:
+\begin{center}
+\centering
+\begin{tabular}{ ll}
+\hline
+Toán tử&Ý nghĩa\\
+\hline
++ &Cộng\\
+\hline
+- & Trừ\\
+\hline
+* & Nhân\\
+\hline 
+\% & Chia lấy dư\\
+\hline
+/ & Chia\\
+
+\hline
+++ & Tăng 1 đơn vị\\
+\hline
+-- & Giảm 1 đơn vị\\
+\hline
+\end{tabular}
+\end{center}
+
 \indent Các phép toán này chỉ áp dụng được cho các biến kiểu cơ bản và không áp dụng được cho các kiểu tham chiếu. Lưu ý với phép chia được thực hiện cho hai giá trị kiểu nguyên sẽ cho kết quả là thương nguyên.\\
 \indent Chẳng hạn: biểu thức {\ttfamily 10/3} cho kết quả bằng {\ttfamily 1}, còn {\ttfamily 3/5} cho kết quả bằng {\ttfamily 0}.
 \subsection{Phép toán tăng giảm}
-(bảng)\\
-\indent Các phép toán ++ và – có đặt trước hoặc sau biến và sự khác nhau ở chỗ:
+\begin{center}
+\centering
+\begin{tabular}{ lll}
+\hline
+Toán tử&Ý nghĩa&Dạng thức\\
+\hline
+++ &Tăng&a++\\
+\hline
+++ &Tăng&++a\\
+\hline
+- - &Giảm&a- -\\
+\hline
+- - &Giảm&- -a\\
+\hline
+\end{tabular}
+\end{center}
+\indent Các phép toán ++ và - - có đặt trước hoặc sau biến và sự khác nhau ở chỗ:
 \begin{itemize}
 \item Nếu đặt trước biến a thì tăng/giảm giá trị biến a rồi mới sử dụng giá trị của a
 \item Nếu đặt sau biến a thì sử dụng giá trị của biến a rồi mới tiến hành tăng/giảm giá trị của a.
@@ -461,8 +499,8 @@ Toán tử&Ý nghĩa&Dạng thức\\
 
 \end{tabular}
 \end{center}
-\indent Chú ý: Kết quả của phép toán quan hệ và logic là True/False. \\
-\indent Ý nghĩa của phép toán logic được cho ở bảng sau:\\
+
+\indent Ý nghĩa của phép toán logic được cho ở bảng sau:
 \begin{center}
 \begin{tabular}{ lllll}
 \hline
@@ -478,6 +516,7 @@ false&false&true&false&false\\
 \hline
 \end{tabular}
 \end{center}
+\indent Chú ý: Kết quả của phép toán quan hệ và logic là True/False. \\
 \subsection{Phép toán điều kiện}
 \indent Cú pháp: \\
 {\ttfamily
@@ -516,12 +555,12 @@ int b = (int)a;}\\
 \indent Lúc này b sẽ có giá trị là 10.
 \section{Các cấu trúc điều khiển}
 \subsection{Cấu trúc if}
-\indent Cú pháp:\\
+\indent Cú pháp:
 \begin{lstlisting}[escapechar=',language=java]	
-if ('<điều\_kiện\_exp>') {
-	'<khối\_lệnh\_1>;'
+if (E) {
+	B1;
 } [else {
-	'<khối\_lệnh\_2>;'
+	B2;
 }]
 \end{lstlisting}
 
@@ -532,7 +571,7 @@ if ('<điều\_kiện\_exp>') {
 \caption{Sơ đồ thực hiện cấu trúc if}\label{hinh13} 
 \end{figure}
 
-\indent Ý nghĩa: Nếu biểu thức điều kiện exp là True thì chương trình sẽ thực hiện {\ttfamily khối\_lệnh\_1}, ngược lại thì thực hiện {\ttfamily khối\_lệnh\_2} (nếu có phần else). Các câu lệnh sau if hoặc else có thể là một khối lệnh. Nếu các câu lệnh if lồng nhau trong phạm vi một khối thì else sẽ đi với if gần nó nhất.\\
+\indent Ý nghĩa: Nếu biểu thức điều kiện E là True thì chương trình sẽ thực hiện khối lệnh {\ttfamily B1}, ngược lại thì thực hiện khối lệnh {\ttfamily B2} (nếu có phần else). Các câu lệnh sau if hoặc else có thể là một khối lệnh. Nếu các câu lệnh if lồng nhau trong phạm vi một khối thì else sẽ đi với if gần nó nhất.\\
 \indent Ví dụ 1:
 \begin{lstlisting}[escapechar=!,language=java]	
 int a = 20, b = 10, c = 0;
@@ -560,22 +599,24 @@ if (number % 2 == 0) {
 \indent Kết quả:\\
 {\ttfamily So 13 la so le}
 \subsection{Cấu trúc switch}
-\indent Cú pháp:\\
-{\ttfamily
-switch (<biểu\_thức>) \{\\
-\indent case <giá\_trị\_1>:\\
-\indent \indent <khối\_lệnh\_1>;\\
-\indent \indent break;\\
-\indent \indent …\\
-\indent case <giá\_trị\_n>:\\
-\indent \indent <khối\_lệnh\_n>;\\
-\indent \indent break;\\
-\indent default:\\
-\indent \indent <khối\_lệnh\_default>;\\
-\}}\\
-\indent Ý nghĩa: Nếu {\ttfamily <biểu\_thức>} có giá trị bằng {\ttfamily giá\_trị\_k} nào đó thì chương trình sẽ chuyển điều khiển đến {\ttfamily case giá\_trị\_k} và thực hiện {\ttfamily <khối\_lệnh\_k>} cho đến khi gặp lệnh {\ttfamily break} mới thoát khỏi cấu trúc {\ttfamily switch}. Ngược lại nếu giá trị của {\ttfamily <biểu\_thức>} không có giá trị trong các giá trị được liệt kê sau {\ttfamily case} thì chương trình sẽ thực hiện {\ttfamily <khối\_lệnh\_default>} (nếu có).\\
+\indent Cú pháp:
+\begin{lstlisting}[escapechar=',language=java]	
+switch (E) {
+ 	case A1:
+		B1;
+		break;
+	case An:
+		Bn;
+		break;
+	default:
+		B0;
+}
+\end{lstlisting}
+
+
+\indent Ý nghĩa: Nếu biểu thức{\ttfamily <E>} có giá trị bằng {\ttfamily Ak} nào đó thì chương trình sẽ chuyển điều khiển đến {\ttfamily case Ak} và thực hiện {\ttfamily <Bk>} cho đến khi gặp lệnh {\ttfamily break} mới thoát khỏi cấu trúc {\ttfamily switch}. Ngược lại nếu giá trị của {\ttfamily <E>} không bằng bất kỳ giá trị nào trong các giá trị được liệt kê{\ttfamily case} thì chương trình sẽ thực hiện {\ttfamily <B0>} (nếu có).\\
 \indent Trong đó:\\
-{\ttfamily <biểu\_thức>, <giá\_trị\_1>, …, <giá\_trị\_n>}: phải có giá trị nguyên\\
+{\ttfamily <E>, <A1>, …, <An>}: phải có giá trị nguyên\\
 \indent Ví dụ:
 \begin{lstlisting}[escapechar=!,language=java]	
 int day = 4;
@@ -604,11 +645,13 @@ switch (day) {
 }
 \end{lstlisting}
 \subsection{Cấu trúc for}
-\indent Cú pháp:\\
-{\ttfamily 
-for (<biểu\_thức\_1>;<biểu\_thức\_2>;<biểu\_thức\_3>) {\\
-\indent <khối\_lệnh>;\\
-}}\\
+\indent Cú pháp:
+\begin{lstlisting}[escapechar=',language=java]	
+for (E1;E2;E3) {
+	B;
+}
+\end{lstlisting}
+
 \indent Sơ đồ thực hiện (hình \ref{hinh14}):\\
 \begin{figure}[!ht]
 \centering
@@ -618,14 +661,14 @@ for (<biểu\_thức\_1>;<biểu\_thức\_2>;<biểu\_thức\_3>) {\\
 
 \indent Ý nghĩa: 
 \begin{itemize}
-\item Đầu tiên {\ttfamily biểu\_thức\_1} được thực hiện. Đây thường là phép khởi gán để khởi động một hay nhiều biến. {\ttfamily Biếu\_thức\_1} chỉ được thực hiện 1 lần duy nhất khi bắt đầu thực hiện cấu trúc.
-\item Tiếp theo, {\ttfamily biểu\_thức\_2} được thực hiện. Đây là phần điều kiện thực hiện {\ttfamily khối\_lệnh} của cấu trúc for. Nếu {\ttfamily biểu\_thức\_2} sai thì chương trình sẽ thoát khỏi cấu trúc for. Nếu {\ttfamily biểu\_thức\_2} đúng thì chương trình sẽ thực hiện {\ttfamily khối\_lệnh}.
-\item Sau khi thực hiện {\ttfamily khối\_lệnh} thi các biến tăng/giảm ở {\ttfamily biểu\_thức\_3} mới được thực hiện và cấu trúc sẽ lặp lại việc kiểm tra {\ttfamily biểu\_thức\_2}.
+\item Đầu tiên {\ttfamily E1} được thực hiện. Đây thường là phép khởi gán để khởi động một hay nhiều biến. {\ttfamily E1} chỉ được thực hiện 1 lần duy nhất khi bắt đầu thực hiện cấu trúc.
+\item Tiếp theo, {\ttfamily E2} được thực hiện. Đây là phần điều kiện thực hiện {\ttfamily B} của cấu trúc for. Nếu {\ttfamily E2} sai thì chương trình sẽ thoát khỏi cấu trúc for. Nếu {\ttfamily E2} đúng thì chương trình sẽ thực hiện {\ttfamily B}.
+\item Sau khi thực hiện {\ttfamily B} thi các biến tăng/giảm ở {\ttfamily E3} mới được thực hiện và cấu trúc sẽ lặp lại việc kiểm tra {\ttfamily E2}.
 \end{itemize}
 \indent Ví dụ:\\
 \begin{lstlisting}[escapechar=',language=java]	
 for (int i = 0; i <= 10; i = i + 2) {
-  System.out.println(i);
+	System.out.println(i);
 }
 \end{lstlisting}
 
@@ -639,11 +682,11 @@ for (int i = 0; i <= 10; i = i + 2) {
 10
 \end{verbatim}
 \subsection{Cấu trúc while}
-\indent Cú pháp:\\
-{\ttfamily
-while (<điều\_kiện\_lặp>) {\\
-\indent <khối\_lệnh>;\\
-}}\\
+\indent Cú pháp:
+\begin{lstlisting}[escapechar=',language=java]	
+while (E) {
+	B;
+\end{lstlisting}
 \indent Sơ đồ thực hiện (hình \ref{hinh15}):
 \begin{figure}[!ht]
 \centering
@@ -651,7 +694,7 @@ while (<điều\_kiện\_lặp>) {\\
 \caption{Sơ đồ thực hiện cấu trúc while}\label{hinh15} 
 \end{figure}
 
-\indent Ý nghĩa: Trong khi {\ttfamily điều\_kiện\_lặp} vẫn còn đúng thì thực hiện {\ttfamily khối\_lệnh}.\\
+\indent Ý nghĩa: Trong khi điều kiện lặp {\ttfamily E} vẫn còn đúng thì thực hiện khối lệnh {\ttfamily B}.\\
 \indent Ví dụ:
 \begin{lstlisting}[escapechar=',language=java]	
 int i = 0;
@@ -670,10 +713,11 @@ while (i < 5) {
 \end{verbatim}
 \subsection{Cấu trúc do...while}
 \indent Cú pháp:
-{\ttfamily
-do {\\
-\indent <khối\_lệnh>;\\
-} while (<điều\_kiện\_lặp>);}\\
+\begin{lstlisting}[escapechar=',language=java]	
+do {
+	B;
+} while (E);
+\end{lstlisting}
 
 \indent Sơ đồ thực hiện (hình \ref{hinh16}):
 \begin{figure}[!ht]
@@ -682,7 +726,7 @@ do {\\
 \caption{Sơ đồ thực hiện cấu trúc do…while}\label{hinh16} 
 \end{figure}
 
-\indent Ý nghĩa: Cấu trúc {\ttfamily do…while} sẽ thực hiện {\ttfamily khối\_lệnh} cho đến khi nào {\ttfamily điều\_kiện\_lặp} là sai.\\
+\indent Ý nghĩa: Cấu trúc {\ttfamily do…while} sẽ thực hiện khối lệnh {\ttfamily B} cho đến khi nào điều kiện lặp {\ttfamily E} là sai.\\
 \indent Ví dụ:\\
 
 \begin{lstlisting}[escapechar=!,language=java]	
@@ -807,11 +851,13 @@ for (int i : arr) {
 \end{itemize}
 \indent Ngoại lệ xảy ra có thể do người dùng, lập trình viên hoặc số khác do tài nguyên bị lỗi. Java Exeption được triển khai bằng cách sử dụng các lớp như {\ttfamily Throwable, Exception, RuntimeException} và các từ khóa như {\ttfamily throw, throws, try, catch và finally}.\\
 \indent Dựa vào tính chất các ngoại lệ, người ta chia ngoại lệ thành ba loại như hình \ref{hinh17}:
+
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.76]{Figures//Hinh17.png}
+\input{Figures/exception.tex}
 \caption{Cấu trúc của các ngoại lệ}\label{hinh17} 
 \end{figure}
+
 \begin{itemize}
 \item Ngoại lệ được kiểm tra (Checked Exceptions): Là một ngoại lệ được kiểm tra và thông báo bởi trình biên dịch tại thời điểm biên dịch, chúng cũng có thể được gọi là ngoại lệ thời gian biên dịch (Compile-time Exceptions).
 \item Ngoại lệ không được kiểm tra (Unchecked Exceptions): Là một ngoại lệ không được kiểm tra trong quá trình biên dịch. Chúng cũng được gọi là ngoại lệ thời gian chạy (Runtime Exceptions)
@@ -821,24 +867,24 @@ for (int i : arr) {
 \indent Xử lý ngoại lệ trong Java là một cơ chế mạnh mẽ để xử lý các lỗi runtime (Runtime exeption) để có thể duy trì luồng bình thường của ứng dụng. Khối lệnh try trong java được sử dụng để chứa một đoạn code có thế xảy ra một ngoại lệ. Nó phải được khai báo trong phương thức. Sau một khối lệnh try bạn phải khai báo khối lệnh catch hoặc finally hoặc cả hai.
 \subsection{Khối lệnh try-catch trong Java}
 \indent Cú pháp:
-\begin{verbatim}
+\begin{lstlisting}[escapechar=',language=java]	
 try {  
-     // code có thể ném ra ngoại lệ
+     '// code có thể ném ra ngoại lệ'
 } catch (Exception_class_Name ref) {
-     // code xử lý ngoại lệ
+     '// code xử lý ngoại lệ'
 } 
-\end{verbatim}
- 
+\end{lstlisting}
+
 \indent Khối catch trong Java được sử dụng để xử lý các Exception. Nó phải được sử dụng sau khối try. Chúng ta có thể sử dụng nhiều khối catch với một khối try duy nhất.
 \subsection{Khối lệnh try-finally trong Java}
 \indent Cú pháp:
-\begin{verbatim}
+\begin{lstlisting}[escapechar=',language=java]	
 try {  
-     // code có thể ném ra ngoại lệ
+     '// code có thể ném ra ngoại lệ'
 } finally {
-     // code trong khối này luôn được thực thi
+     '// code trong khối này luôn được thực thi'
 }
-\end{verbatim}
+\end{lstlisting}
 
 \indent Khối lệnh finally trong Java luôn được thực thi cho dù có ngoại lệ xảy ra hay không hoặc gặp lệnh return trong khối try. Khối lệnh finally trong Java được khai báo sau khối lệnh try hoặc sau khối lệnh catch. 
 \section{Hướng dẫn Cài đặt JDK và Eclipse}

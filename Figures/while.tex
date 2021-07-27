@@ -2,13 +2,13 @@
 
 \node (start) [startstop] {...};
 \node (protemp) [ below of=start] {};
-\node (dec1) [decision, below of=protemp, yshift=-1cm] {Dieu\_kien\_lap};
-\node (pro) [process, right of=dec1, xshift=4cm] {Khoi\_lenh};
+\node (dec1) [decision, below of=protemp, yshift=-1cm] {E};
+\node (pro) [process, right of=dec1, xshift=4cm] {B};
 \node (stop) [startstop, below of=dec1,yshift=-2cm] {...};
 
 \draw [arrow] (start) -- (dec1);
 \draw [arrow] (dec1) -- node[anchor=south] {true} (pro);
-\draw [arrow] (dec1) -- node[anchor=east] {no} (stop);
+\draw [arrow] (dec1) -- node[anchor=east] {false} (stop);
 \draw [arrow] (pro) |- (protemp);
 
 \end{tikzpicture}
